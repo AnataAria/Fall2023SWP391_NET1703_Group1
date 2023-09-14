@@ -1,0 +1,59 @@
+#spring.datasource.url=jdbc:mariadb://anataarisa.hopto.org:3306/pim
+#spring.datasource.username=pim
+#spring.datasource.password=Vinh12345.
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.jpa.show-sql=true
+#spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+#spring.jpa.properties.hibernate.format_sql=true
+#spring.sql.init.encoding=UTF-8
+#spring.jpa.properties.hibernate.generate_statistics=true
+#spring.jpa.open-in-view=true
+#spring.profiles.active=dev
+#
+#server.servlet.context-path=/api/v1
+#server.port=9090
+#server.error.include-message=always
+
+spring:
+  datasource:
+    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+    username: pim
+    password: Vinh12345.
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        generate_statistics: true
+    open-in-view: true
+  sql:
+    init:
+      encoding: utf-8
+
+  profiles:
+    active: dev
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 509336143279-ng2g9fdpg8pkt1j3jlj24au6l96hk0qn.apps.googleusercontent.com
+            client-secret: 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
+#            redirect-uri: {base_url}/oauth2/callback/{registrationID}
+
+server:
+  servlet:
+    context-path: /api/v1
+  port: 9090
+  error:
+    include-message: always
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
