@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -14,7 +15,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Customer {
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", columnDefinition = "bigint")
@@ -25,10 +26,6 @@ public class Customer {
     private String password;
     @Column(name="fullname")
     private String fullName;
-    @Column(name="createdate", nullable = false)
-    private Date createDate;
-    @Column(name="isactive")
-    private Boolean isActive;
-    @Column(name="isactive")
-    private Boolean accountStatus;
+    @OneToOne(fetch = FetchType.LAZY,orphanRemoval = false, cascade = CascadeType.ALL, targetEntity = Account.class)
+    private Account account;
 }
