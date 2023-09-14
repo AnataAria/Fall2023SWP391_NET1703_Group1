@@ -31,9 +31,10 @@ spring:
   sql:
     init:
       encoding: utf-8
-
   profiles:
     active: dev
+  session:
+    store-type=jdbc:
 
   security:
     oauth2:
