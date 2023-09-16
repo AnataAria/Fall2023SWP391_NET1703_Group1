@@ -58,3 +58,10 @@ logging:
     org:
       springframework:
         security: TRACE
+
+
+paypal:
+  mode: sandbox
+  client:
+    id: AUT1Z0RRsKw1aazKBzzslShE8dfLWWjd4OWpVFeSJWfdFNuwik1k2-2tQ3mD5dk4BM7vP90SnuESyUYK
+    secret: EKfpcVNpYEkGOAThX2Tqi5tcq560S1FpOhNSeux_U6tNAaVC8LU-7Y-55J3puelLhfKutNH7tkuPQEMu
