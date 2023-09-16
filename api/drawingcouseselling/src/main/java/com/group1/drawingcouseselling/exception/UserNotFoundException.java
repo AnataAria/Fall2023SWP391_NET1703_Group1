@@ -1,4 +1,4 @@
-package com.group1.drawingcouseselling;
+package com.group1.drawingcouseselling.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 
