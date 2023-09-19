@@ -13,6 +13,17 @@
 #server.servlet.context-path=/api/v1
 #server.port=9090
 #server.error.include-message=always
+aws:
+  access:
+    key:
+      id: AKIA2EWSF45CBHDRXQJK
+  s3:
+    region: ap-southeast-1
+    bucket:
+      name: ademyimage
+  secret:
+    access:
+      key: tN7GXYsy2zZHqb1znrfCf/hmNXzdFuRN9MSPdG2P
 
 spring:
   datasource:
