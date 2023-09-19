@@ -3,14 +3,18 @@ package com.group1.drawingcouseselling.model.entity;
 import com.group1.drawingcouseselling.model.enums.ERole;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
-
+import java.util.Collection;
+import java.util.List;
 @Entity(name = "account")
 @NoArgsConstructor
-public class Account implements Serializable {
+public class Account implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", columnDefinition = "bigint")
@@ -83,5 +87,40 @@ public class Account implements Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return getEncodePassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return getStatus();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

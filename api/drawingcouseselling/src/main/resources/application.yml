@@ -22,7 +22,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: true
     properties:
       hibernate:
@@ -33,8 +33,21 @@ spring:
       encoding: utf-8
   profiles:
     active: dev
-  session:
-    store-type=jdbc:
+#  session:
+#    store-type=jdbc:
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username:
+#    password:
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+
+
 
   security:
     oauth2:
@@ -43,7 +56,9 @@ spring:
           google:
             client-id: 509336143279-ng2g9fdpg8pkt1j3jlj24au6l96hk0qn.apps.googleusercontent.com
             client-secret: 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
-#            redirect-uri: {base_url}/oauth2/callback/{registrationID}
+          facebook:
+            client-id: 659086803093851
+            client-secret: 9e4114afc12752f6fdb8bd7b99d4bcc4
 
 server:
   servlet:
@@ -65,3 +80,11 @@ paypal:
   client:
     id: AUT1Z0RRsKw1aazKBzzslShE8dfLWWjd4OWpVFeSJWfdFNuwik1k2-2tQ3mD5dk4BM7vP90SnuESyUYK
     secret: EKfpcVNpYEkGOAThX2Tqi5tcq560S1FpOhNSeux_U6tNAaVC8LU-7Y-55J3puelLhfKutNH7tkuPQEMu
+
+
+frontend:
+  url: http://localhost:3000/
+
+#auththentication:
+#  facebook-url: /oauth2/authorization/facebook
+#  google-url: /oauth2/authorization/google
