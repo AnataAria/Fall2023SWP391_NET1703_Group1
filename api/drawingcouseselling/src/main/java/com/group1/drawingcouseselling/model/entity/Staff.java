@@ -22,7 +22,7 @@ public class Staff implements Serializable {
     @Column(name = "birthday")
     private Date birthDate;
     @Column(name = "gender", nullable = true)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private EGender gender;
     @Column(name = "injob_date")
     private Date injobDate;
