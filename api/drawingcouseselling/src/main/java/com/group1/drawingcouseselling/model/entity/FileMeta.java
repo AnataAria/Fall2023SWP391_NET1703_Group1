@@ -1,10 +1,14 @@
 package com.group1.drawingcouseselling.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@Entity
+@Table(name = "FILE_META")
+@Getter @Setter
 public class FileMeta {
     private static final long serialVersionUID = 1L;
 
@@ -24,38 +28,6 @@ public class FileMeta {
     public FileMeta(String fileName, String filePath, String version) {
         this.fileName = fileName;
         this.filePath = filePath;
-        this.version = version;
-    }
-
-    public int getImgId() {
-        return imgId;
-    }
-
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
         this.version = version;
     }
 }

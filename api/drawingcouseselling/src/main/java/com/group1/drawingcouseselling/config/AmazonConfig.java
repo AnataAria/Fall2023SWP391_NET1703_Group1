@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AWSS3Config {
+public class AmazonConfig {
 
     @Value("${aws.access.key.id}")
     private String accessKey;
