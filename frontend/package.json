@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@tommywalkie/ant-design-svelte": "^0.0.2"
+  }
+}
