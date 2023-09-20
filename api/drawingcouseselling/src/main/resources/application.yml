@@ -35,17 +35,19 @@ spring:
     active: dev
 #  session:
 #    store-type=jdbc:
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username:
-#    password:
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dgnln.2021@gmail.com
+    password: DGNL.2021
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+
+
 
 
 
