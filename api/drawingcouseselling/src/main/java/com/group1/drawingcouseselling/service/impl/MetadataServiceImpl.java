@@ -3,6 +3,7 @@ package com.group1.drawingcouseselling.service.impl;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import com.group1.drawingcouseselling.model.entity.FileMeta;
+import com.group1.drawingcouseselling.model.enums.ES3;
 import com.group1.drawingcouseselling.repository.FileMetaRepository;
 import com.group1.drawingcouseselling.service.AmazonS3Service;
 import com.group1.drawingcouseselling.service.MetadataService;
@@ -27,7 +28,7 @@ public class MetadataServiceImpl implements MetadataService {
     private String bucketName;
 
     @Override
-    public void upload(MultipartFile file) throws IOException {
+    public void upload(MultipartFile file, ES3 folder) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
         }
@@ -36,7 +37,7 @@ public class MetadataServiceImpl implements MetadataService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
 
-        String path = String.format("%s/%s", bucketName, "avatar");
+        String path = String.format("%s/%s", bucketName, folder);
         String fileName = String.format("%s", file.getOriginalFilename());
 
         //upload file to S3
