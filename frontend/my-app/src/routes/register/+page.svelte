@@ -1,8 +1,10 @@
 <script>
-  async function register(){
-    window.location.href = '/register'
-  }
+    async function Login(){
+        window.location.href = '/login'
+    }
 </script>
+
+
 <section class="vh-100 bg-image"
   style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
   <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -19,18 +21,36 @@
                   <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example1cg">Your Name</label>
                 </div>
+
+                <div class="form-outline mb-4">
+                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
+                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                </div>
+
                 <div class="form-outline mb-4">
                   <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
                   <label class="form-label" for="form3Example4cg">Password</label>
                 </div>
 
-                <div class="d-flex justify-content-center">
-                  <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
+                <div class="form-outline mb-4">
+                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
+                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
                 </div>
 
-                <p class="text-center text-muted mt-5 mb-0">Have not have an account? <button on:click={register}
-                    class="fw-bold text-body"><u>Register here</u></button></p>
+                <div class="form-check d-flex justify-content-center mb-5">
+                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
+                  <label class="form-check-label" for="form2Example3g">
+                    I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                  </label>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                  <button type="button"
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
+                </div>
+
+                <p class="text-center text-muted mt-5 mb-0">Have already an account? <button on:click={Login}
+                    class="fw-bold text-body"><u>Login here</u></button></p>
 
               </form>
 
