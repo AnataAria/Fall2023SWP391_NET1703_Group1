@@ -24,7 +24,7 @@ public class Account implements UserDetails, Serializable {
     @Column(name = "password", nullable = false)
     private String encodePassword;
     @Column(name="role", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ERole role;
     @Column(name="create_date", nullable = false, columnDefinition = "date")
     private Date createDate;

@@ -24,8 +24,8 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests(
                 )
-                .requestMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated().and()
+//                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().permitAll().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
