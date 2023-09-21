@@ -13,9 +13,13 @@ public class Course {
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Instructor.class, fetch = FetchType.LAZY)
     @JoinColumn(name="instructor_id", updatable = true, nullable = false)
     private Instructor instuctor;
+    @Column(name="course_name")
     private String name;
-    private String price;
+    @Column(columnDefinition = "bigint", nullable = false, name = "price")
+    private BigDecimal price;
+    @Column(name="description", columnDefinition = "text", nullable = false)
     private String description;
+    @Column(name="duration")
     private String duration;
 
     public BigDecimal getId() {
@@ -42,11 +46,11 @@ public class Course {
         this.name = name;
     }
 
-    public String getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
