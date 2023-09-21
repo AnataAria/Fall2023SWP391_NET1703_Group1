@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/image")
 public class ImageController {
     private MetadataService metadataService;
 
