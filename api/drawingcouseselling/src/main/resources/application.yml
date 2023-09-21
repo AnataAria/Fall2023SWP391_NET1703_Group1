@@ -39,13 +39,13 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: dgnln.2021@gmail.com
-    password: DGNL.2021
+    password: oraifoyezmfedalo
     properties:
       smtp:
         auth: true
         starttls:
           enable: true
-          required: true
+
 
 
 
