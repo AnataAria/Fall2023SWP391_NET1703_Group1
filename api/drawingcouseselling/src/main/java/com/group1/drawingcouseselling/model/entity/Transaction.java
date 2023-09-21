@@ -12,7 +12,7 @@ public class Transaction implements Serializable {
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
-    @Column(name = "total_amount", nullable = false)
+    @Column(name = "total_amount", nullable = false, columnDefinition = "bigint")
     private BigDecimal totalAmount;
     @Column(name = "payment_method")
     private String paymentMethod;
