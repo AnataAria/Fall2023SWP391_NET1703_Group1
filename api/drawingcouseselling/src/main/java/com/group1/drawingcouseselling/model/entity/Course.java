@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "bigint", nullable = false)
     private BigDecimal id;
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Instructor.class, fetch = FetchType.LAZY)
     @JoinColumn(name="instructor_id", updatable = true, nullable = false)
