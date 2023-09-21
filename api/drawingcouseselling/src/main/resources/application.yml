@@ -27,13 +27,14 @@ aws:
 
 spring:
   datasource:
-    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+#    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+    url: jdbc:mariadb://anataarisa.hopto.org:3306/ademy
     username: pim
     password: Vinh12345.
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:

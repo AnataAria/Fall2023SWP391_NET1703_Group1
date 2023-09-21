@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name = "transaction")
 public class Transaction implements Serializable {
     @Id
     private BigDecimal id;
