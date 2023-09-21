@@ -18,7 +18,7 @@ public class EmailServiceImpl {
         JavaMailSender mailSender = getJavaMailSender();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("dgnln.2021@gmail.com");
-        message.setTo(account.getEmail());
+        message.setTo(account.getEmail();
         message.setSubject("Hello");
         message.setText("This is an otp code without ");
 
