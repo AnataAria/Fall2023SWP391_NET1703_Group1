@@ -1,7 +1,7 @@
 package com.group1.drawingcouseselling.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.math.BigDecimal;
 @Builder
