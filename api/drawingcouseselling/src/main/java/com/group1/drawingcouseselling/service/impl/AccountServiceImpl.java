@@ -1,5 +1,7 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.EmailIsMatchedException;
+import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.model.dto.AccountDto;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.model.enums.ERole;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -26,17 +27,17 @@ public class AccountServiceImpl implements AccountService {
     }
     @Override
     public Optional<AccountDto> searchAccountByID(BigDecimal id) {
-        return Optional.of(accountRepository.findById(id).map(account -> account.convertEntityToDto(account)).orElseThrow());
+        return Optional.of(accountRepository.findById(id).map(account -> account.convertEntityToDto(account)).orElseThrow(() -> new UserNotFoundException("Could not find account with ID: " + id.toString())));
     }
 
     @Override
     public Optional<AccountDto> searchAccountByEmail(String email) {
-        return Optional.of( new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow()));
+        return Optional.of( new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email))));
     }
 
     @Override
     public Optional<Account> searchAccountByMail(String email) {
-        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow());
+        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email)));
     }
     @Override
     public List<AccountDto> searchAccountsByRoles(ERole userRole, Integer page){
@@ -55,7 +56,11 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto registerAccountV2(AccountDto account) {
         Account acc = new Account();
         acc = acc.covertDtoToEntity(account);
-        accountRepository.save(acc);
+        try{
+            accountRepository.save(acc);
+        }catch(Exception e){
+            throw new EmailIsMatchedException("Account already exists");
+        }
         return account;
     }
 }
