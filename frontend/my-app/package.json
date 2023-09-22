@@ -20,6 +20,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"antd": "^5.9.2",
 		"bootstrap": "^5.3.2",
 		"framework7-svelte": "^8.3.0"
 	}
