@@ -1,6 +1,46 @@
 <script>
+    import axios from "axios";
+    axios.defaults.withCredentials = true
     async function Login(){
         window.location.href = '/login'
+    }
+    let Sex = ''
+    let username = ''
+    let password = ''
+    let rePassword = ''
+    let Birthday = ''
+    let email = ''
+    let errorMsg = ''
+    
+    async function handleRegister() {
+        
+        if (!username || !password|| !email) {
+            errorMsg = 'Username or Password, email cannot empty'
+            return
+        }
+        if (password !== rePassword) {
+            errorMsg = 'Re-enter password must match with password'
+            return
+        }
+
+        let res = null
+        try {
+            res = await axios.post('http://localhost:3000/users/register', {
+                email : email,
+                username: username,
+                password: password,
+                Birthday:Birthday,
+                Sex:Sex,
+            })
+        } catch(err) {
+            console.log(err)
+        }
+
+        if (res.data.code === 200) {
+            window.location.href = '/'
+        } else {
+            errorMsg = res?.data?.message || 'There\'s some error'
+        }
     }
 </script>
 
@@ -13,28 +53,51 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card" style="border-radius: 15px;">
             <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+              <h2 class="text-uppercase text-center mb-4">Create an account</h2>
 
               <form>
 
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
+                <div class="form-outline mb-2">
+                  <input bind:value={username} type="text" id="yourname" class="form-control form-control-lg" />
+                  <label class="form-label" for="yourname">Your Name</label>
                 </div>
 
-                <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
+                <div class="form-outline mb-2">
+                  <input bind:value={email} type="email" id="email" class="form-control form-control-lg" />
+                  <label class="form-label" for="email">Your Email</label>
                 </div>
 
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example4cg">Password</label>
+                <div class="form-outline mb-2">
+                  <input bind:value={Birthday} type="date" id="birthday" class="form-control form-control-lg" />
+                  <label class="form-label" for="birthday">Your Birthday</label>
                 </div>
 
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
-                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                
+                <div class="form-outline mb-3">
+                  <label class="form-label" for="sex">Your Sex</label>
+                  <label>
+                    <input  type="radio" bind:group={Sex} value={"Boy"} />
+                    Boy
+                  </label>
+                  
+                  <label>
+                    <input type="radio" bind:group={Sex} value={"Girl"} />
+                    Girl
+                  </label>
+                  
+                  <label>
+                    <input type="radio" bind:group={Sex} value={"Else"} />
+                    Else
+                  </label>
+                </div>
+
+                <div class="form-outline mb-2">
+                  <input bind:value={password} type="password" id="password" class="form-control form-control-lg" />
+                  <label class="form-label" for="password">Password</label>
+                </div>
+                <div class="form-outline mb-2">
+                  <input bind:value={rePassword}  type="password" id="repassword" class="form-control form-control-lg" />
+                  <label class="form-label" for="repassword">Repeat your password</label>
                 </div>
 
                 <div class="form-check d-flex justify-content-center mb-5">
@@ -45,12 +108,12 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                  <button type="button"
+                  <button type="button" on:click={handleRegister}
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register</button>
                 </div>
 
                 <p class="text-center text-muted mt-5 mb-0">Have already an account? <button on:click={Login}
-                    class="fw-bold text-body"><u>Login here</u></button></p>
+                    class="btn btn-success btn-block btn-sm  text-body"><u>Login here</u></button></p>
 
               </form>
 
