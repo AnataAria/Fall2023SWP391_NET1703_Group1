@@ -13,20 +13,33 @@
 #server.servlet.context-path=/api/v1
 #server.port=9090
 #server.error.include-message=always
+aws:
+  access:
+    key:
+      id: AKIA2EWSF45CBHDRXQJK
+  s3:
+    region: ap-southeast-1
+    bucket:
+      name: ademyimage
+  secret:
+    access:
+      key: tN7GXYsy2zZHqb1znrfCf/hmNXzdFuRN9MSPdG2P
 
 spring:
   datasource:
-    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+#    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+    url: jdbc:mariadb://anataarisa.hopto.org:3306/ademy
     username: pim
     password: Vinh12345.
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         generate_statistics: true
+        format_sql: true
     open-in-view: true
   sql:
     init:
@@ -35,20 +48,16 @@ spring:
     active: dev
 #  session:
 #    store-type=jdbc:
-#  mail:
-#    host: smtp.gmail.com
-#    port: 587
-#    username:
-#    password:
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-
-
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dgnln.2021@gmail.com
+    password: oraifoyezmfedalo
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
   security:
     oauth2:
       client:
@@ -73,6 +82,12 @@ logging:
     org:
       springframework:
         security: TRACE
+      hibernate:
+        type: trace
+        orm:
+          jdbc:
+            bind: trace
+
 
 
 paypal:

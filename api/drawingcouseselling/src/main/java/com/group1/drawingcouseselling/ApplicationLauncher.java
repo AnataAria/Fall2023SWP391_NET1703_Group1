@@ -6,4 +6,5 @@ public class ApplicationLauncher {
     public static void main(String[] args) {
         SpringApplication.run(ApplicationWebConfig.class, args);
     }
+
 }

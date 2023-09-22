@@ -1,20 +1,21 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.dto.AccountDto;
 import com.group1.drawingcouseselling.model.enums.ERole;
+import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 @Entity(name = "account")
 @NoArgsConstructor
-public class Account implements UserDetails, Serializable {
+public class Account implements UserDetails, ObjectMapper<Account, AccountDto> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", columnDefinition = "bigint")
@@ -24,7 +25,7 @@ public class Account implements UserDetails, Serializable {
     @Column(name = "password", nullable = false)
     private String encodePassword;
     @Column(name="role", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ERole role;
     @Column(name="create_date", nullable = false, columnDefinition = "date")
     private Date createDate;
@@ -122,5 +123,27 @@ public class Account implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Account covertDtoToEntity(AccountDto data) {
+        Account account = new Account();
+        account.setEmail(data.email());
+        account.setEncodePassword(data.password());
+        account.setRole(data.role());
+        account.setCreateDate(data.createDate());
+        account.setActive(data.isActive());
+        return account;
+    }
+
+    @Override
+    public AccountDto convertEntityToDto(Account data) {
+        return new AccountDto(
+                data.getEmail(),
+                data.getEncodePassword(),
+                data.getRole(),
+                data.getCreateDate(),
+                data.isEnabled()
+        );
     }
 }

@@ -9,7 +9,6 @@ import com.group1.drawingcouseselling.model.enums.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +40,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = accountService.searchAccountByMail(request.getEmail()).get();
+        var user = accountService.searchAccountByMail(request.getEmail()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
