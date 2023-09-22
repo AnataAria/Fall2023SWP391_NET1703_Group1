@@ -27,17 +27,19 @@ aws:
 
 spring:
   datasource:
-    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+#    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
+    url: jdbc:mariadb://anataarisa.hopto.org:3306/ademy
     username: pim
     password: Vinh12345.
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         generate_statistics: true
+        format_sql: true
     open-in-view: true
   sql:
     init:
@@ -56,12 +58,6 @@ spring:
         auth: true
         starttls:
           enable: true
-
-
-
-
-
-
   security:
     oauth2:
       client:
@@ -86,6 +82,12 @@ logging:
     org:
       springframework:
         security: TRACE
+      hibernate:
+        type: trace
+        orm:
+          jdbc:
+            bind: trace
+
 
 
 paypal:

@@ -5,12 +5,11 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class EmailIsMatchedException extends BaseException {
-
-    public EmailIsMatchedException(String message) {
+public class InstructorNotFoundException extends BaseException{
+    public InstructorNotFoundException(String message) {
         super(message);
         this.errorMessage = ErrorMessage.builder()
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.NOT_FOUND)
                 .errorList(List.of(message))
                 .build();
     }
