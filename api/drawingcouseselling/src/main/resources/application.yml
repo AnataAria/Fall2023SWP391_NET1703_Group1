@@ -39,6 +39,7 @@ spring:
     properties:
       hibernate:
         generate_statistics: true
+        format_sql: true
     open-in-view: true
   sql:
     init:
@@ -57,12 +58,6 @@ spring:
         auth: true
         starttls:
           enable: true
-
-
-
-
-
-
   security:
     oauth2:
       client:
@@ -87,6 +82,12 @@ logging:
     org:
       springframework:
         security: TRACE
+      hibernate:
+        type: trace
+        orm:
+          jdbc:
+            bind: trace
+
 
 
 paypal:
