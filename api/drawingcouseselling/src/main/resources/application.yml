@@ -93,12 +93,16 @@ logging:
 paypal:
   mode: sandbox
   client:
-    id: AUT1Z0RRsKw1aazKBzzslShE8dfLWWjd4OWpVFeSJWfdFNuwik1k2-2tQ3mD5dk4BM7vP90SnuESyUYK
-    secret: EKfpcVNpYEkGOAThX2Tqi5tcq560S1FpOhNSeux_U6tNAaVC8LU-7Y-55J3puelLhfKutNH7tkuPQEMu
+    id: AWbOtZPREQ6DxSCza2yGZT82kQTW9T17r8xezCuKARBoBM5jli0FdOPrdRVkytKLdeaaFaiM6k-tHlr6 # for testing - change when finished testing
+    secret: EHGsrSIQG-aODbOaHmd5YnhCLNS3Zq3x3einniprXjRkABpA-U0UEXy9w_hp-YElLEwsQv6tmQNJ4ZVS # for testing - change when finished testing
 
 
 frontend:
   url: http://localhost:3000/
+
+api:
+  base:
+    url: http://localhost:9090/api/v1/
 
 #auththentication:
 #  facebook-url: /oauth2/authorization/facebook
