@@ -11,7 +11,7 @@ public class EmailIsMatchedException extends BaseException {
         super(message);
         this.errorMessage = ErrorMessage.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .errorList(List.of(message))
+                .errorList(List.of(message.split(",")))
                 .build();
     }
 }
