@@ -9,10 +9,6 @@ import java.util.Properties;
 
 @Service
 public class EmailServiceImpl {
-
-
-
-
     public void SendEmail(Account account) {
 
         JavaMailSender mailSender = getJavaMailSender();
