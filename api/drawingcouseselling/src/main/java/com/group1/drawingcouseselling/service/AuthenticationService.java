@@ -5,6 +5,7 @@ import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
 import com.group1.drawingcouseselling.model.dto.AuthenticationResponse;
 import com.group1.drawingcouseselling.model.dto.RegisterRequest;
 import com.group1.drawingcouseselling.model.entity.Account;
+import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.model.enums.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,14 +20,26 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final CustomerService customerService;
     public AuthenticationResponse register(RegisterRequest request){
         AccountDto account = AccountDto.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
                 .isActive(true)
                 .role(ERole.CUSTOMER)
                 .build();
         Account a = accountService.registerAccount(account);
+        Customer customer = new Customer();
+        customer.setFullName(request.fullname());
+        customer.setBirthDate(request.birthDate());
+        customer.setGender(request.gender());
+        customer.setPath("");
+        customer.setAccount(a);
+        try{
+            customerService.addCustomer(customer);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
         var jwtToken = jwtService.generateToken(a);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
