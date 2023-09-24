@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,9 +49,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account registerAccount(AccountDto account) {
-        Account acc = new Account();
-        acc.covertDtoToEntity(account);
-        return accountRepository.save(acc);
+        Account acc = new Account().covertDtoToEntity(account);
+        acc.setStatus(true);
+        acc.setCreateDate(Date.valueOf(LocalDate.now()));
+        try{
+            return accountRepository.save(acc);
+        }catch(Exception e){
+            throw new EmailIsMatchedException("Account already exists");
+        }
     }
 
     @Override
