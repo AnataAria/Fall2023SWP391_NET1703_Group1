@@ -23,4 +23,6 @@ public interface AccountRepository extends JpaRepository<Account, BigDecimal> {
     countQuery = "SELECT count(*) FROM account u WHERE u.role = :role"
     )
     public Page<Account> findAccountByRoles(@Param("role") ERole role, Pageable pageable);
+    @Query("SELECT u FROM account u WHERE u.email = :email ")
+    public Account checkAccountByEmail(@Param("email") String email);
 }

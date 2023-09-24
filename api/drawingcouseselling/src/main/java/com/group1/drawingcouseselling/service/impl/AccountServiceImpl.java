@@ -27,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
+
     @Override
     public Optional<AccountDto> searchAccountByID(BigDecimal id) {
         return Optional.of(accountRepository.findById(id).map(account -> account.convertEntityToDto(account)).orElseThrow(() -> new UserNotFoundException("Could not find account with ID: " + id.toString())));
@@ -34,16 +35,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<AccountDto> searchAccountByEmail(String email) {
-        return Optional.of( new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email))));
+        return Optional.of(new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find account with email: " + email))));
     }
 
     @Override
     public Optional<Account> searchAccountByMail(String email) {
-        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email)));
+        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find account with email: " + email)));
     }
+
     @Override
-    public List<AccountDto> searchAccountsByRoles(ERole userRole, Integer page){
-        Page<Account> pages = accountRepository.findAccountByRoles(userRole,PageRequest.of(page-1,10));
+    public List<AccountDto> searchAccountsByRoles(ERole userRole, Integer page) {
+        Page<Account> pages = accountRepository.findAccountByRoles(userRole, PageRequest.of(page - 1, 10));
         return pages.stream().map(account -> new Account().convertEntityToDto(account)).toList();
     }
 
@@ -63,10 +65,24 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto registerAccountV2(AccountDto account) {
         Account acc = new Account();
         acc = acc.covertDtoToEntity(account);
-        try{
+        try {
             accountRepository.save(acc);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new EmailIsMatchedException("Account already exists");
+        }
+        return account;
+    }
+
+    @Override
+    public Account checkAccountByEmail(String email) {
+        Account account;
+        try {
+            account = accountRepository.checkAccountByEmail(email);
+            if (account.getEmail().isEmpty()){
+                throw new UserNotFoundException("Could not find account with email: " + email);
+            }
+        }catch (Exception e){
+            throw new UserNotFoundException("Could not find account with email: " + email);
         }
         return account;
     }

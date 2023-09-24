@@ -1,5 +1,7 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.entity.Account;
+import com.group1.drawingcouseselling.service.AccountService;
 import com.group1.drawingcouseselling.service.EmailService;
 import com.group1.drawingcouseselling.service.OTPService;
 import com.group1.drawingcouseselling.util.EmailTemplate;
@@ -19,18 +21,27 @@ public class OTPController {
     public OTPService otpService;
     @Autowired
     public EmailService emailService;
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("/generateOtp")
     public ResponseEntity<String> generateOTP(@RequestParam("email") String email) throws MessagingException, jakarta.mail.MessagingException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        int otp = otpService.generateOTP(username);
+        Account account;
+        account = accountService.checkAccountByEmail(email);
+        if (account.getEmail().equals(email)) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            int otp = otpService.generateOTP(username);
 
-        EmailTemplate template = new EmailTemplate();
-        String message = template.getMessage(username, String.valueOf(otp));
-        emailService.sendOtpMessage(email, "Ademy - OTP", message);
+            EmailTemplate template = new EmailTemplate();
+            String message = template.getMessage(username, String.valueOf(otp));
+            emailService.sendOtpMessage(email, "Ademy - OTP", message);
 
-        return new ResponseEntity<>("Check your inbox", HttpStatus.OK);
+            return new ResponseEntity<>("Check your inbox", HttpStatus.OK);
+        }
+        if (account.getEmail() == null)
+            return new ResponseEntity<>("The account doesn't exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("The account doesn't exist", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/validateOtp", method = RequestMethod.GET)
@@ -48,7 +59,7 @@ public class OTPController {
                 if (otpnum == serverOtp) {
                     otpService.clearOTP(username);
 
-                    return (SUCCESS);
+                    return (SUCCESS); //add redirect link later
                 } else {
                     return FAIL;
                 }
