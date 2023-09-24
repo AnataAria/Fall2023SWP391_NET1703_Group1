@@ -58,7 +58,7 @@ public class OTPController {
                 if (otpnum == serverOtp) {
                     otpService.clearOTP(username);
 
-                    return (SUCCESS);
+                    return (SUCCESS); //add redirect link later
                 } else {
                     return FAIL;
                 }
