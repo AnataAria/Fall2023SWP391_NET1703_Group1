@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 
 @RestController
+@RequestMapping("/auth")
 public class OTPController {
     @Autowired
     public OTPService otpService;
