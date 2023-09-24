@@ -4,6 +4,7 @@ import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
 import com.group1.drawingcouseselling.model.dto.AuthenticationResponse;
 import com.group1.drawingcouseselling.model.dto.RegisterRequest;
 import com.group1.drawingcouseselling.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authentication")
-    public ResponseEntity<AuthenticationResponse> authentication (AuthenticationRequest request){
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+    public ResponseEntity<Cookie> authentication (@RequestBody AuthenticationRequest request){
+        Cookie cookie = new Cookie("USER",authenticationService.authenticate(request).getToken());
+        cookie.setMaxAge(1440);
+        cookie.setDomain("localhost:9090");
+        return ResponseEntity.ok(cookie);
     }
 
 }
