@@ -10,7 +10,7 @@ public class InstructorNotFoundException extends BaseException{
         super(message);
         this.errorMessage = ErrorMessage.builder()
                 .status(HttpStatus.NOT_FOUND)
-                .errorList(List.of(message))
+                .errorList(List.of(message.split(",")))
                 .build();
     }
 }
