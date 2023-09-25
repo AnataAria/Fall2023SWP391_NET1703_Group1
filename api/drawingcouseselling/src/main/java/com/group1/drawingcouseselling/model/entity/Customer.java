@@ -1,6 +1,8 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.dto.CustomerDto;
 import com.group1.drawingcouseselling.model.enums.EGender;
+import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +14,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity(name = "customer")
-public class Customer implements Serializable {
+public class Customer implements ObjectMapper<Customer, CustomerDto> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", columnDefinition = "bigint")
@@ -23,6 +25,7 @@ public class Customer implements Serializable {
     private Date birthDate;
     @Enumerated(EnumType.ORDINAL)
     private EGender gender;
+    @Column(name="avatar")
     private String path;
     @OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "account_id")
@@ -74,5 +77,25 @@ public class Customer implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public Customer covertDtoToEntity(CustomerDto data) {
+        Customer customer = new Customer();
+        customer.setId(data.customerID());
+        customer.setGender(data.gender());
+        customer.setFullName(data.fullName());
+        customer.setFullName(data.fullName());
+        return customer;
+    }
+
+    @Override
+    public CustomerDto convertEntityToDto(Customer data) {
+        return CustomerDto.builder()
+                .customerID(data.getId())
+                .fullName(data.getFullName())
+                .birthDate(data.getBirthDate())
+                .gender(data.getGender())
+                .build();
     }
 }

@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
     @Query(value = "SELECT c FROM course c",
@@ -18,5 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
     @Query(value = "SELECT u FROM course u WHERE u.name LIKE %:searchName%",
             countQuery = "SELECT count(*) FROM course u WHERE u.name LIKE %:searchName%")
     public Page<Course> searchCourseByNameAndFilter(@Param(value = "searchName") String searchName, Pageable pageable);
-
+    @Query(value = "SELECT u FROM course u WHERE u.id IN :coursesID"
+    )
+    public List<Course> searchCourseByIdList(@Param(value = "coursesID")Collection<BigDecimal> coursesID);
 }

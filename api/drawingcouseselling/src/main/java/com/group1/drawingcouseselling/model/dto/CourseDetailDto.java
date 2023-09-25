@@ -1,4 +1,6 @@
 package com.group1.drawingcouseselling.model.dto;
 
-public record CourseDetailDto() {
+import java.util.List;
+
+public record CourseDetailDto(CourseDto course, List<LessonDto> lessonDtoList) {
 }

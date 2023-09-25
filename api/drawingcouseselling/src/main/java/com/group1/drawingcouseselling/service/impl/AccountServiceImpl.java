@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountServiceImpl(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
+
     @Override
     public Optional<AccountDto> searchAccountByID(BigDecimal id) {
         return Optional.of(accountRepository.findById(id).map(account -> account.convertEntityToDto(account)).orElseThrow(() -> new UserNotFoundException("Could not find account with ID: " + id.toString())));
@@ -32,35 +35,58 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<AccountDto> searchAccountByEmail(String email) {
-        return Optional.of( new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email))));
+        return Optional.of(new Account().convertEntityToDto(accountRepository.findAccountByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find account with email: " + email))));
     }
 
     @Override
     public Optional<Account> searchAccountByMail(String email) {
-        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow(()->new UserNotFoundException("Could not find account with email: " + email)));
+        return Optional.of(accountRepository.findAccountByEmail(email).orElseThrow(() -> new UserNotFoundException("Could not find account with email: " + email)));
     }
+
     @Override
-    public List<AccountDto> searchAccountsByRoles(ERole userRole, Integer page){
-        Page<Account> pages = accountRepository.findAccountByRoles(userRole,PageRequest.of(page-1,10));
+    public List<AccountDto> searchAccountsByRoles(ERole userRole, Integer page) {
+        Page<Account> pages = accountRepository.findAccountByRoles(userRole, PageRequest.of(page - 1, 10));
         return pages.stream().map(account -> new Account().convertEntityToDto(account)).toList();
     }
 
     @Override
     public Account registerAccount(AccountDto account) {
-        Account acc = new Account();
-        acc.covertDtoToEntity(account);
-        return accountRepository.save(acc);
+        Account acc = new Account().covertDtoToEntity(account);
+        acc.setStatus(true);
+        acc.setCreateDate(Date.valueOf(LocalDate.now()));
+        try{
+            return accountRepository.save(acc);
+        }catch(Exception e){
+            throw new EmailIsMatchedException("Account already exists");
+        }
     }
 
     @Override
     public AccountDto registerAccountV2(AccountDto account) {
         Account acc = new Account();
         acc = acc.covertDtoToEntity(account);
-        try{
+        try {
             accountRepository.save(acc);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new EmailIsMatchedException("Account already exists");
         }
+        return account;
+    }
+
+    @Override
+    public Account checkAccountByEmail(String email) {
+        Account account;
+        account = accountRepository.checkAccountByEmail(email);
+        if(account == null) throw new UserNotFoundException("Could not find account with email:" + email);
+
+//        try {
+//            account = accountRepository.checkAccountByEmail(email);
+//            if (account.getEmail().isEmpty()){
+//                throw new UserNotFoundException("Could not find account with email: " + email);
+//            }
+//        }catch (Exception e){
+//            throw new UserNotFoundException("Could not find account with email: " + email);
+//        }
         return account;
     }
 }

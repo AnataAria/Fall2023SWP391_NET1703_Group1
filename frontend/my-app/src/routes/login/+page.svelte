@@ -1,3 +1,4 @@
+
 <div class="login-wrap">
 	<div class="login-html">
 		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
@@ -203,6 +204,7 @@
     let rePassword = ''
     let email = ''
     let errorMsg = ''
+	let jwtToken = "";
     async function handleRegister() {
         
         if (!username || !password|| !email) {
@@ -232,3 +234,5 @@
         }
     }
 </script>
+
+

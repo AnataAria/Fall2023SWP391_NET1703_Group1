@@ -21,4 +21,6 @@ public interface AccountService {
     public AccountDto registerAccountV2(AccountDto account);
 
     public List<AccountDto> searchAccountsByRoles(ERole role, Integer page);
+
+    Account checkAccountByEmail(String email);
 }
