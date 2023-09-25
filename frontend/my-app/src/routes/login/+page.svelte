@@ -195,7 +195,7 @@
 		text-align:center;
 	}
 </style>
-<script>
+<script lang="ts">
    import axios from "axios";
    axios.defaults.withCredentials = true
     let username = ''
