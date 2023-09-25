@@ -31,5 +31,6 @@ public class CourseController {
     public ResponseEntity<CourseDto> getCourseByID(@RequestParam(value = "id")BigDecimal id){
         return new ResponseEntity<>(courseService.searchCourseById(id), HttpStatus.OK);
     }
+    
 
 }
