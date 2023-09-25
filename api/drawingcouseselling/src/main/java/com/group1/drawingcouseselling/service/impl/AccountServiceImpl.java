@@ -76,14 +76,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account checkAccountByEmail(String email) {
         Account account;
-        try {
-            account = accountRepository.checkAccountByEmail(email);
-            if (account.getEmail().isEmpty()){
-                throw new UserNotFoundException("Could not find account with email: " + email);
-            }
-        }catch (Exception e){
-            throw new UserNotFoundException("Could not find account with email: " + email);
-        }
+        account = accountRepository.checkAccountByEmail(email);
+        if(account == null) throw new UserNotFoundException("Could not find account with email:" + email);
+
+//        try {
+//            account = accountRepository.checkAccountByEmail(email);
+//            if (account.getEmail().isEmpty()){
+//                throw new UserNotFoundException("Could not find account with email: " + email);
+//            }
+//        }catch (Exception e){
+//            throw new UserNotFoundException("Could not find account with email: " + email);
+//        }
         return account;
     }
 }
