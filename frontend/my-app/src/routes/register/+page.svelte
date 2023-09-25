@@ -1,5 +1,6 @@
 <script>
     import axios from "axios";
+    import Snackbar, { Label, Actions } from '@smui/snackbar';
     axios.defaults.withCredentials = true
     async function Login(){
         window.location.href = '/login'
