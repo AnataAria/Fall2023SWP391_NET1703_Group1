@@ -1,10 +1,17 @@
 <script>
-	import Nested from './Nested.svelte';
+  import { onMount } from 'svelte';
+  import Nested from './Nested.svelte';
+  import Top from './Top.svelte';
+  import LandingPage from './LandingPage.svelte';
+
+  // Add this to initialize the Bootstrap tooltip
+  onMount(() => {
+   
+  });
 </script>
 
-<p>These styles...</p>
-<Nested />
 
+<LandingPage />
 <style>
 	p {
 		color: purple;
