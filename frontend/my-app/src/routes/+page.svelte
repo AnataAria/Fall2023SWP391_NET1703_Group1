@@ -1,6 +1,5 @@
 <script>
     import { onMount } from 'svelte';
-    import Nested from './Nested.svelte';
     import Top from './Top.svelte';
     import LandingPage from './LandingPage.svelte';
   
