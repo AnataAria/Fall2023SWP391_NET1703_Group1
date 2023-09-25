@@ -27,14 +27,15 @@ public class CartServiceImpl implements CartService {
         this.courseRepository = courseRepository;
     }
     @Override
-    public void addCart(String email, Integer courseID){
+    public CartDto addCart(String email, Integer courseID){
         String cartCookie = cartRepository.searchCartByAccountEmail(email);
         if(cartCookie != null) {
             Collection<BigDecimal> cartList = Arrays.stream(cartCookie.split(",")).map(a -> BigDecimal.valueOf(Long.parseLong(a))).collect(Collectors.toSet());
-            if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseMissMatchException("");
+            if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseMissMatchException("This course with ID:"+ courseID +" has already been added");
             cartCookie = String.join(",", cartList.stream().map(BigDecimal::toString).toList());
             cartRepository.updateCart(email, cartCookie);
         }
+        return getAllCartOnPaging(1, 5,email);
     }
     @Override
     public void removeCart(String email, Integer courseID){
@@ -62,7 +63,7 @@ public class CartServiceImpl implements CartService {
         List<CourseDto> courseList = null;
         if(!cartList.isEmpty()){
             courseList = courseRepository.searchCourseByIdList(cartList).stream().map(a -> new Course().convertEntityToDto(a)).toList();
-            Pageable pageable = PageRequest.of(page, maxPage);
+            Pageable pageable = PageRequest.of(page-1, maxPage);
             int start = (int) pageable.getOffset();
             int end = Math.min((start + pageable.getPageSize()), courseList.size());
             courseList  = courseList.subList(start,end);
