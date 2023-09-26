@@ -16,14 +16,17 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register (@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<Cookie> register (@RequestBody RegisterRequest request){
+        Cookie cookie = new Cookie("USER",authenticationService.register(request).getToken());
+        cookie.setMaxAge(24*64*64);
+        cookie.setDomain("localhost:9090");
+        return ResponseEntity.ok(cookie);
     }
 
     @PostMapping("/authentication")
     public ResponseEntity<Cookie> authentication (@RequestBody AuthenticationRequest request){
         Cookie cookie = new Cookie("USER",authenticationService.authenticate(request).getToken());
-        cookie.setMaxAge(1440);
+        cookie.setMaxAge(24*60*60);
         cookie.setDomain("localhost:9090");
         return ResponseEntity.ok(cookie);
     }
