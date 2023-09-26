@@ -7,12 +7,12 @@
     fullname: "",
     password: "",
     birthDate: "",
-    gender: ""
+    gender: "",
   };
 
   let loginForm = {
     email: "",
-    password: ""
+    password: "",
   };
 
   let repass = "";
@@ -35,10 +35,7 @@
     let res = null;
     try {
       res = await axios
-        .post(
-          "http://localhost:9090/api/v1/auth/register",
-          registerForm
-        )
+        .post("http://localhost:9090/api/v1/auth/register", registerForm)
         .then((response) => {
           console.log(JSON.stringify(registerForm));
           if (response.status === 200) {
@@ -65,12 +62,13 @@
         });
     } catch (err) {}
   }
-  function handleSelectChange(selectElement) { // For handle gender selection change
+  function handleSelectChange(selectElement) {
+    // For handle gender selection change
     const selectedValue = selectElement.target.value;
     registerForm.gender = selectedValue.toString();
   }
 
-  function checkCookie(){
+  function checkCookie() {
     const cookie = document.cookie.split(";");
     for (let i = 0; i < cookie.length; i++) {
       const c = cookie[i].trim();
@@ -78,12 +76,12 @@
         return true;
       }
     }
-    return false
+    return false;
   }
   onMount(() => {
     var jwt = checkCookie();
-    if(jwt === true) window.location.href = "/";
-  })
+    if (jwt === true) window.location.href = "/";
+  });
 </script>
 
 <div class="login-wrap">
