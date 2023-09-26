@@ -1,7 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
-import com.group1.drawingcouseselling.model.dto.AuthenticationResponse;
 import com.group1.drawingcouseselling.model.dto.RegisterRequest;
 import com.group1.drawingcouseselling.service.AuthenticationService;
 import jakarta.servlet.http.Cookie;
