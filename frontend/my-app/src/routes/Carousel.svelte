@@ -1,8 +1,18 @@
-<script>
+<script lang="ts">
 	// Props
-	export let items = [...Array(16).keys()];
+	export let items = [...Array(16).keys()];	
 	export let scrollBy = 3;
-  
+	let name = '';
+	let price = '';
+	let description;
+	let durations;
+	let instructorID;
+	let instructorName;
+	
+ 
+
+	
+
 	const paginationFactor = 350;
 	const totalPaginationPixels = scrollBy * paginationFactor;
   
@@ -22,7 +32,7 @@
   <main>
 	<div class="items" style="transform: translateX({offset}px);">
 	  {#each items as item, i}
-	  <div class="item" style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}</div>
+	  <a href="/Cousera/{item}"  class="item" style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}</a>
 	  {/each}
 	</div>
   </main>
@@ -48,7 +58,7 @@
 	  min-width: 334px;
 	  height: 200px;
 	  margin: 0 8px;
-	  background-color: #ef4322;
+	  background-color: #2222ef;
 	  border-radius: 1.4rem;
 	  color: white;
 	  display: flex;
@@ -59,6 +69,9 @@
 	  user-select: none;
 	  overflow: hidden;
 	}
+	.item:hover{
+    box-shadow: 3px 3px  8px 1px #464545;
+}
   
 	.items .item:first-child {
 	  margin-left: 0;
