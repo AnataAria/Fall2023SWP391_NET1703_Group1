@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
   import Carousel from "./Carousel.svelte";
   import { onMount } from "svelte";
   let status = "Login";
   let jwt;
   const loginButtonStatus = {
     status: "Login",
-    path: "/"
-  }
+    path: "/",
+  };
   function checkCookie() {
     const cookie = document.cookie.split(";");
     for (let i = 0; i < cookie.length; i++) {
@@ -22,16 +22,16 @@
     jwt = checkCookie();
   });
 
-  function loginLogoutHandle(){
-    if(checkCookie()?.length > 0) {
+  function loginLogoutHandle() {
+    if (checkCookie()?.length > 0) {
       removeCookie("USER");
       window.location.reload();
-    }else{
+    } else {
       window.location.href = "/login";
     }
   }
-  function removeCookie(cookieName){
-    const pastDate = new Date('Thu, 01 Jan 1970 00:00:00 UTC');
+  function removeCookie(cookieName) {
+    const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
     document.cookie = `${cookieName}=; expires=${pastDate.toUTCString()}; path=/;`;
   }
 </script>
@@ -88,7 +88,9 @@
       <!-- .navbar -->
 
       <a href="#about" class="get-started-btn scrollto">Get Started</a>
-      <button on:click={loginLogoutHandle} class="get-started-btn scrollto">{status}</button>
+      <button on:click={loginLogoutHandle} class="get-started-btn scrollto"
+        >{status}</button
+      >
     </div>
   </header>
   <!-- End Header -->
@@ -188,7 +190,6 @@
                 </div>
               </div>
             </div>
-            <!-- End .content-->
           </div>
         </div>
       </div>
@@ -550,65 +551,19 @@
   <!-- Vendor JS Files -->
   <!-- Vendor JS Files -->
   <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- Vendor JS Files -->
-  <!-- <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script> -->
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
   <!-- Template Main JS File -->
   <!-- Template Main JS File -->
   <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- Template Main JS File -->
-  <!-- <script src="assets/js/main.js"></script> -->
+  <script src="assets/js/main.js"></script>
 </body>
 
 <style>
