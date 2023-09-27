@@ -1,30 +1,38 @@
 package com.group1.drawingcouseselling.service.impl;
 
 import com.group1.drawingcouseselling.exception.CourseMissMatchException;
+import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CartDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
+import com.group1.drawingcouseselling.model.entity.Cart;
 import com.group1.drawingcouseselling.model.entity.Course;
+import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.repository.CartRepository;
 import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.service.CartService;
+import com.group1.drawingcouseselling.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CourseRepository courseRepository;
+    private final CustomerService customerService;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, CourseRepository courseRepository) {
+    public CartServiceImpl(CartRepository cartRepository, CourseRepository courseRepository, CustomerService customerService) {
         this.cartRepository = cartRepository;
         this.courseRepository = courseRepository;
+        this.customerService = customerService;
     }
     @Override
     public CartDto addCart(String email, Integer courseID){
@@ -34,6 +42,13 @@ public class CartServiceImpl implements CartService {
             if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseMissMatchException("This course with ID:"+ courseID +" has already been added");
             cartCookie = String.join(",", cartList.stream().map(BigDecimal::toString).toList());
             cartRepository.updateCart(email, cartCookie);
+        }else{
+            Cart temp = new Cart();
+            Optional<Customer> customer = customerService.searchCustomerByEmail(email);
+            if(customer.isEmpty()) throw new UserNotFoundException("User with email " + email + " is not founded");
+            temp.setCustomer(customer.get());
+            temp.setCartCookie(courseID.toString());
+            cartRepository.save(temp);
         }
         return getAllCartOnPaging(1, 5,email);
     }

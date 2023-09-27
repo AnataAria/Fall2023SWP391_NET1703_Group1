@@ -32,4 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> addCustomer(Customer customer) {
         return Optional.of(customerRepository.save(customer));
     }
+
+    @Override
+    public Optional<Customer> searchCustomerByEmail(String customerEmail) {
+        return Optional.of(customerRepository.searchCustomerByAccountEmail(customerEmail));
+    }
 }
