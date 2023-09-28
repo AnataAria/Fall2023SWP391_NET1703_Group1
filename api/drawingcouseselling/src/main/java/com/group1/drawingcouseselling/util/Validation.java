@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-@Component
 public class Validation {
     public static String EMAIL_PATTERN = "^(.+)@(.+)$";
     @Bean
