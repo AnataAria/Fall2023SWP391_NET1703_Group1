@@ -45,10 +45,10 @@ public class OTPController {
     }
 
     @RequestMapping(value = "/validateOtp", method = RequestMethod.GET)
-    public @ResponseBody String validateOtp(@RequestParam("otpnum") int otpnum) {
+    public ResponseEntity<?> validateOtp(@RequestParam("otpnum") int otpnum) {
 
-        final String SUCCESS = "Entered Otp is valid";
-        final String FAIL = "Entered Otp is NOT valid. Please Retry!";
+//        final String SUCCESS = "Entered Otp is valid";
+//        final String FAIL = "Entered Otp is NOT valid. Please Retry!";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         //Validate the Otp
@@ -59,15 +59,15 @@ public class OTPController {
                 if (otpnum == serverOtp) {
                     otpService.clearOTP(username);
 
-                    return (SUCCESS); //add redirect link later
+                    return new ResponseEntity<>(HttpStatus.OK); //add redirect link later
                 } else {
-                    return FAIL;
+                    return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
                 }
             } else {
-                return FAIL;
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
         } else {
-            return FAIL;
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }
