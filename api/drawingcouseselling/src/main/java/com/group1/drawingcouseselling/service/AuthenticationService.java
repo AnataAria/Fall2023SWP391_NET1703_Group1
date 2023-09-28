@@ -63,7 +63,7 @@ public class AuthenticationService {
     public String changePassword(AuthenticationRequest changePasswordRequest){
         final String SUCCESS = "CHANGE PASSWORD FOR EMAIL " + changePasswordRequest.getEmail() + " SUCCESS";
         final String FAIL = "CHANGE PASSWORD FOR EMAIL " + changePasswordRequest.getEmail() + " FAILED";
-        var account  = accountService.changgePasswordAccount(changePasswordRequest.getEmail(), passwordEncoder.encode(changePasswordRequest.getPassword()));
+        var account  = accountService.changePasswordAccount(changePasswordRequest.getEmail(), passwordEncoder.encode(changePasswordRequest.getPassword()));
         if(account != null) return SUCCESS;
         return FAIL;
     }
