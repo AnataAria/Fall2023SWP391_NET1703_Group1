@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.dto.AccountDto;
 import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
 import com.group1.drawingcouseselling.model.dto.RegisterRequest;
 import com.group1.drawingcouseselling.service.AuthenticationService;
@@ -31,6 +32,11 @@ public class AuthenticationController {
         cookie.setPath("/");
         response.addCookie(cookie);
         return ResponseEntity.ok(cookie);
+    }
+
+    @PutMapping("/changgePassword")
+    public ResponseEntity<String> changePassword(@RequestBody AuthenticationRequest changePasswordRequest){
+        return ResponseEntity.ok(authenticationService.changePassword(changePasswordRequest));
     }
 
 }
