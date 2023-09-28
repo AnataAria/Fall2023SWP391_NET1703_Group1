@@ -34,7 +34,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(cookie);
     }
 
-    @PutMapping("/changgePassword")
+    @PutMapping("/changePassword")
     public ResponseEntity<String> changePassword(@RequestBody AuthenticationRequest changePasswordRequest){
         return ResponseEntity.ok(authenticationService.changePassword(changePasswordRequest));
     }
