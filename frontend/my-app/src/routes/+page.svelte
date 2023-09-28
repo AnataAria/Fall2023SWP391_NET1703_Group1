@@ -8,7 +8,9 @@
     import SearchBar from './SearchBar.svelte';
     import LandingPage from './LandingPage.svelte';
     import SubLanding from './SubLanding.svelte';
-    
+    import Header from './Header.svelte';
+    import Banner from './Banner.svelte';
+  import Carousel from './Carousel.svelte';
   
     // Add this to initialize the Bootstrap tooltip
     onMount(() => {
@@ -17,6 +19,6 @@
   </script>
   
   
-  <LandingPage />
+  <Carousel />
   
 
