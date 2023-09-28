@@ -8,7 +8,6 @@
   let durations;
   let instructorID;
   let instructorName;
-
   const paginationFactor = 350;
   const totalPaginationPixels = scrollBy * paginationFactor;
 
@@ -25,20 +24,22 @@
   };
 </script>
 
-<main>
-  <div class="items" style="transform: translateX({offset}px);">
-    {#each items as item, i}
-      <a
-        href="/course/{item}"
-        class="item"
-        style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}</a
-      >
-    {/each}
-  </div>
-</main>
-<br />
-<button disabled={atStart} on:click={() => move(-1)}>&lsaquo; </button>
-<button disabled={atEnd} on:click={() => move(1)}> &rsaquo;</button>
+<center>
+  <main>
+    <div class="items" style="transform: translateX({offset}px);">
+      {#each items as item, i}
+        <a
+          href="/Cousera/{item}"
+          class="item"
+          style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}</a
+        >
+      {/each}
+    </div>
+  </main>
+  <br />
+  <button disabled={atStart} on:click={() => move(-1)}>&lsaquo; </button>
+  <button disabled={atEnd} on:click={() => move(1)}> &rsaquo;</button>
+</center>
 
 <!--Style-->
 <style>
