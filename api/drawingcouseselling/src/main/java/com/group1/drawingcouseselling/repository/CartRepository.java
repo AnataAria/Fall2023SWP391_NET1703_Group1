@@ -2,6 +2,7 @@ package com.group1.drawingcouseselling.repository;
 
 import com.group1.drawingcouseselling.model.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,8 @@ public interface CartRepository extends JpaRepository<Cart, BigDecimal> {
             "INNER JOIN customer c ON c.id = ca.customer.id " +
             "INNER JOIN account a ON a.id = c.account.id WHERE a.email = :accountEmail")
     public String searchCartByAccountEmail(@Param("accountEmail") String accountEmail);
-    @Query(value = "UPDATE cart ca SET ca.cartCookie = :cartCookie WHERE ca.id IN (" +
+    @Modifying
+    @Query(value = "UPDATE cart ca SET ca.cartCookie = :cartCookie WHERE ca.customer.id IN (" +
             "SELECT c.id FROM customer c " +
             "INNER JOIN account a ON a.id = c.account.id " +
             "WHERE a.email = :accountEmail)")

@@ -22,5 +22,7 @@ public interface AccountService {
 
     public List<AccountDto> searchAccountsByRoles(ERole role, Integer page);
 
-    Account checkAccountByEmail(String email);
+    public Account checkAccountByEmail(String email);
+
+    public Account changgePasswordAccount(String email, String password);
 }

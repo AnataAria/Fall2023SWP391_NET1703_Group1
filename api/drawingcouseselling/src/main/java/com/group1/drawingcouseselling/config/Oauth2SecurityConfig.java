@@ -23,7 +23,8 @@ public class Oauth2SecurityConfig {
 //                        oauth2.requestMatchers("/oauth/*").permitAll();
                             oauth2.anyRequest().permitAll();
                         }
-                ).oauth2Login().and()
+                )
+//                .oauth2Login().and()
                 .build();
     }
 }

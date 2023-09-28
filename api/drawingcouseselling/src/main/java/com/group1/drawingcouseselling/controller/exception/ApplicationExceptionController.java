@@ -1,9 +1,6 @@
 package com.group1.drawingcouseselling.controller.exception;
 
-import com.group1.drawingcouseselling.exception.CourseMissMatchException;
-import com.group1.drawingcouseselling.exception.EmailIsMatchedException;
-import com.group1.drawingcouseselling.exception.ExistedUserException;
-import com.group1.drawingcouseselling.exception.InstructorNotFoundException;
+import com.group1.drawingcouseselling.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +31,12 @@ public class ApplicationExceptionController {
     @ExceptionHandler(InstructorNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<?> instructorNotFoundException(InstructorNotFoundException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> userNotFoundException(UserNotFoundException exception){
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }
 }
