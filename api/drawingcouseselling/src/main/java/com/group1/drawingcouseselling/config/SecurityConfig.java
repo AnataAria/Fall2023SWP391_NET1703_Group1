@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final LogoutConfig logoutConfig;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -25,13 +27,21 @@ public class SecurityConfig {
                 .disable()
                 .authorizeHttpRequests(
                 )
-//                .requestMatchers("/auth/**").permitAll().and()
+//                .requestMatchers("/auth/**").permitAll().anyRequest().authenticated().and()
                 .anyRequest().permitAll().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout ->{
+                    logout.logoutUrl("/auth/logout");
+                    logout.addLogoutHandler(logoutConfig);
+                    logout.logoutSuccessHandler(
+                            (request, response, authentication) ->
+                                    SecurityContextHolder.clearContext()
+                    );
+                })
                 .build();
     }
 }
