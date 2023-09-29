@@ -1,9 +1,6 @@
 package com.group1.drawingcouseselling.service;
 
-import com.group1.drawingcouseselling.model.dto.AccountDto;
-import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
-import com.group1.drawingcouseselling.model.dto.AuthenticationResponse;
-import com.group1.drawingcouseselling.model.dto.RegisterRequest;
+import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.model.enums.ERole;
@@ -60,7 +57,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String changePassword(AuthenticationRequest changePasswordRequest){
+    public String changePassword(ChangePasswordDto changePasswordRequest){
         final String SUCCESS = "CHANGE PASSWORD FOR EMAIL " + changePasswordRequest.getEmail() + " SUCCESS";
         final String FAIL = "CHANGE PASSWORD FOR EMAIL " + changePasswordRequest.getEmail() + " FAILED";
         var account  = accountService.changePasswordAccount(changePasswordRequest.getEmail(), passwordEncoder.encode(changePasswordRequest.getPassword()));

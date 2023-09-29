@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.dto.ResetPasswordDto;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.service.AccountService;
 import com.group1.drawingcouseselling.service.EmailService;
@@ -34,7 +35,7 @@ public class OTPController {
             int otp = otpService.generateOTP(username);
 
             EmailTemplate template = new EmailTemplate();
-            String message = template.getMessage(username, String.valueOf(otp));
+            String message = template.OTPNumber(username, String.valueOf(otp));
             emailService.sendOtpMessage(email, "Ademy - OTP", message);
 
             return new ResponseEntity<>("Check your inbox", HttpStatus.OK);
@@ -70,4 +71,25 @@ public class OTPController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @GetMapping("/resetpassword")
+    public ResponseEntity<String> resetPassword(@RequestParam("email") String email, @RequestParam("url") String url) throws MessagingException, jakarta.mail.MessagingException {
+        Account account;
+        account = accountService.checkAccountByEmail(email);
+        if (account.getEmail().equals(email)) {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            int otp = otpService.generateOTP(username);
+
+            EmailTemplate template = new EmailTemplate();
+            String message = template.resetPasswordOTP(username, otp, url);
+            emailService.sendOtpMessage(email, "Ademy - Reset Password", message);
+
+            return new ResponseEntity<>("Check your inbox", HttpStatus.OK);
+        }
+        if (account.getEmail() == null)
+            return new ResponseEntity<>("The account doesn't exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("The account doesn't exist", HttpStatus.NOT_FOUND);
+    }
+
 }
