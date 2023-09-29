@@ -90,7 +90,7 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    public Account changgePasswordAccount(String email, String password){
+    public Account changePasswordAccount(String email, String password){
         var account = accountRepository.checkAccountByEmail(email);
         if(account == null) throw new UserNotFoundException("Could not find account with email:" + email);
         account.setEncodePassword(password);
