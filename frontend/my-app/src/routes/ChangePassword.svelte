@@ -97,11 +97,14 @@ button[disabled] {
 <script lang="ts">
     import axios, { Axios, AxiosError, type AxiosResponse } from "axios";
     import { apiBaseUrl } from "../service";
+    import { page } from '$app/stores';
     let password:string
     let confirmPassword:string
     let message:string
-
-
+    //let email:string
+    let email = $page.url.searchParams.get('email');
+    let otp = $page.url.searchParams.get('otp');
+    
     enableSubmitButton
     function validatePassword(){
         if (password != confirmPassword || password == null){
@@ -113,12 +116,17 @@ button[disabled] {
         }
     }
     async function changepassword() {
+      console.log(email)
+      console.log(otp)
       let res;
-          res = await axios.put(apiBaseUrl + 'auth/changePassword',{
-            params: {
-              password
-            },
-            withCredentials: true,
+          res = await axios({
+            method: 'put',
+            url: apiBaseUrl + 'auth/changePassword',
+            data:{
+              password,
+              email,
+              otp
+            }
           })
           .then ((response : AxiosResponse) => {
             if (response.status === 200){
@@ -136,6 +144,7 @@ button[disabled] {
             }
             else{
               message = "There's some error, please try again"
+              console.log(reason)
               // color = "red"
             }
           })

@@ -8,25 +8,20 @@
       import axios, { AxiosError, type AxiosResponse } from "axios";
       import { BaseUrl, apiBaseUrl } from "../service";
       import { BarLoader, Circle, Circle2, Circle3, Jumper } from 'svelte-loading-spinners';
-      import bcrypt from 'bcryptjs'
       let email:string;
       let message:string = "";
       let color: string;
-      var SECRET_RESET = "Lbl9DyH6kb0XQ2nrhMSCk"
+      //var SECRET_RESET = "Lbl9DyH6kb0XQ2nrhMSCk"
 
       async function generateOTP() {
         disableSubmitButton();
         let res;
-        const token = generateToken(12);
-            res = await axios.post('https://api.emailjs.com/api/v1.0/email/send',{
-                service_id:'service_ah251jx',
-                    template_id: 'template_lsgy5wj',
-                    user_id:'7n0NeW1es2o8M2HFE',
-                    accessToken: 'Lbl9DyH6kb0XQ2nrhMSCk',
-                    template_params:{
-                        email,
-                        url:BaseUrl+"changepassword?email="+email +"&token="+ token
-                    }
+        //const token = generateToken(12);
+            res = await axios.get(apiBaseUrl + 'auth/resetpassword',{
+              params:{
+                email,
+                url:BaseUrl+"changepassword?email="+email +"&otp="
+              }
             })
             .then ((response : AxiosResponse) => {
               message = ""
@@ -52,7 +47,7 @@
             })
       }
 
-      function generateToken(n: number) {
+    function generateToken(n: number) {
     var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     var token = '';
     for(var i = 0; i < n; i++) {
@@ -90,7 +85,6 @@
                     <div class="panel-body">
       
                       <form id="register-form" role="form" autocomplete="off" class="form">
-      
                         <div class="form-group">
                           <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
