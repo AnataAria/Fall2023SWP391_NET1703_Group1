@@ -2,7 +2,6 @@
   import { page } from "$app/stores";
   import axios from "axios";
   import { onMount } from "svelte";
-
   let course = $page.params.course;
   let Cousera = "";
   let name = "";

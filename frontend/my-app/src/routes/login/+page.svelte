@@ -1,7 +1,9 @@
+<link href="/src/theme/style.sass" rel="stylesheet"/>
 <script lang="ts">
   // import { USERNAME } from "$env/static/private";
   import axios from "axios";
   import { onMount } from "svelte";
+  import {MDCSnackbar} from '@material/snackbar';
   axios.defaults.withCredentials = true;
   let registerForm = {
     email: "",
@@ -70,6 +72,10 @@
 			text: `Others`
 		}
 	];
+
+  function showMessage(message:string){
+    document.getElementById(message)?.textContent = "";
+  }
  
 </script>
 
@@ -87,7 +93,8 @@
       <div class="sign-in-htm">
         <div class="group">
           <label for="user" class="label">Email</label>
-          <input id="user" type="text" class="input" bind:value={loginForm.email}/>
+          <input id="user" type="text" class="input" bind:value={loginForm.email} on:focusout={}/>
+          <p></p>
         </div>
         <div class="group">
           <label for="pass" class="label">Password</label>
@@ -144,6 +151,19 @@
     </div>
   </div>
 </div>
+<aside class="mdc-snackbar" id="mdc-snackbar">
+  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+    <div class="mdc-snackbar__label" aria-atomic="false">
+      Can't send photo. Retry in 5 seconds.
+    </div>
+    <div class="mdc-snackbar__actions" aria-atomic="true">
+      <button type="button" class="mdc-button mdc-snackbar__action">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Retry</span>
+      </button>
+    </div>
+  </div>
+</aside>
 
 <style>
   *,
