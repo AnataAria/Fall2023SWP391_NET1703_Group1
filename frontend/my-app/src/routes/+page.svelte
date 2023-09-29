@@ -14,16 +14,10 @@
   import Detail from './Detail.svelte';
   
   
+  
     // Add this to initialize the Bootstrap tooltip
     onMount(() => {
      
     });
   </script>
-  <Header />
-  <SearchBar />
-  <Banner />
-  <br/>
-  <br/>
-  <Carousel />
-  
-<Banner />
+  <Detail />
