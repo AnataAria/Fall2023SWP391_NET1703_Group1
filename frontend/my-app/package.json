@@ -40,6 +40,7 @@
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.2",
 		"save-dev": "^0.0.1-security",
+		"svelte-routing": "^2.4.0",
 		"swiper": "^10.3.0"
 	}
 }
