@@ -1,3 +1,42 @@
+<script lang="ts">
+  import Carousel from "./Carousel.svelte";
+  import { onMount } from "svelte";
+  let status = "";
+  let jwts;
+  function getUserCookie() {
+    const name = "USER";
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      const cookieParts = cookie.split("=");
+      const cookieName = cookieParts[0];
+      if (cookieName === name) {
+        return cookieParts[1];
+      }
+    }
+    return null; // Cookie not found
+  }
+  function removeUserCookies(name) {
+    const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
+    document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
+  }
+  function loginLogoutHandler() {
+    const jwt = getUserCookie();
+    if (jwt) {
+      removeUserCookies("USER");
+      window.location.reload();
+    } else {
+      window.location.href = "/login";
+    }
+  }
+  onMount(() => {
+    const jwt = getUserCookie();
+    if (jwt) {
+      status = "Logout";
+    } else status = "Login";
+  });
+</script>
+
 <body>
   
     <!-- ======= Header ======= -->
@@ -39,6 +78,7 @@
         </nav><!-- .navbar -->
   
         <a href="#about" class="get-started-btn scrollto">Get Started</a>
+        <button class="get-started-btn scrollto" on:click={loginLogoutHandler}>{status}</button>
       </div>
     </header><!-- End Header -->
 </body>
