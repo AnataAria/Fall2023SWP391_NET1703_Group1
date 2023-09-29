@@ -1,13 +1,6 @@
 package com.group1.drawingcouseselling.util;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-@Component
 public class Validation {
     public static String EMAIL_PATTERN = "^(.+)@(.+)$";
     @Bean
