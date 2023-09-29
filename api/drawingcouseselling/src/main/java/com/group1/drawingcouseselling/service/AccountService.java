@@ -4,10 +4,8 @@ package com.group1.drawingcouseselling.service;
 import com.group1.drawingcouseselling.model.dto.AccountDto;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.model.enums.ERole;
-import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,5 +22,5 @@ public interface AccountService {
 
     public Account checkAccountByEmail(String email);
 
-    public Account changgePasswordAccount(String email, String password);
+    public Account changePasswordAccount(String email, String password);
 }

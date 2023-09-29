@@ -46,7 +46,7 @@
         style="width: 5rem; height: auto; margin-left: -57px; margin-right: 19px;"
         alt="logo"
       />
-      <h1 class="logo me-auto"><a href="index.html">Ademy<span>.</span></a></h1>
+      <h1 class="logo me-auto"><a href="/">Ademy<span>.</span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
 
