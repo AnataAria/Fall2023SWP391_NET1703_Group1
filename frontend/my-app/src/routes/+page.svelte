@@ -12,13 +12,17 @@
     import Banner from './Banner.svelte';
   import Carousel from './Carousel.svelte';
   
+  
     // Add this to initialize the Bootstrap tooltip
     onMount(() => {
      
     });
   </script>
-  
-  
+  <Header />
+  <SearchBar />
+  <Banner />
+  <br/>
+  <br/>
   <Carousel />
   
 
