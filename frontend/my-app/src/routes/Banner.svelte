@@ -43,9 +43,9 @@ h6 {
     #hero{
   width: 100%;
   height: 100vh;
-  background-image: url("https://opt.net.au/wp-content/uploads/HOW-DRAWING-CAN-HELP-CHILDREN-EXPRESS-FEELINGS-EMOTIONS.png");
+  background-image: url("https://www.momswhothink.com/wp-content/uploads/2023/01/shutterstock_2135434057-scaled.jpg");
   background-size: cover;
- 
+      
   padding-top: 82px;
   
 }
@@ -55,9 +55,10 @@ h6 {
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
   bottom: 0;
-  top: 0;
+  top: 13.4rem;
   left: 0;
   right: 0;
+  height: 45.5rem;
 }
 
 #hero h1 {
