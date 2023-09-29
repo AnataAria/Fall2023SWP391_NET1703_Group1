@@ -11,6 +11,7 @@
     import Header from './Header.svelte';
     import Banner from './Banner.svelte';
   import Carousel from './Carousel.svelte';
+  import Detail from './Detail.svelte';
   
   
     // Add this to initialize the Bootstrap tooltip
@@ -25,4 +26,4 @@
   <br/>
   <Carousel />
   
-
+<Banner />
