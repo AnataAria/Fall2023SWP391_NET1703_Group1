@@ -66,9 +66,6 @@ spring:
           google:
             client-id: 509336143279-ng2g9fdpg8pkt1j3jlj24au6l96hk0qn.apps.googleusercontent.com
             client-secret: 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
-          facebook:
-            client-id: 659086803093851
-            client-secret: 9e4114afc12752f6fdb8bd7b99d4bcc4
 
 server:
   servlet:
@@ -104,6 +101,9 @@ frontend:
 api:
   base:
     url: http://localhost:9090/api/v1/
+
+security:
+  secret-key: 49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038
 
 #auththentication:
 #  facebook-url: /oauth2/authorization/facebook
