@@ -1,0 +1,33 @@
+name: Auto Create Pull Request
+
+on:
+  push:
+    branches:
+      - $(git branch --show-current)
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        run: |
+          # Get the current branch name
+          CURRENT_BRANCH=$(git branch --show-current)
+          
+          # Set the token for API access
+          TOKEN=${{ secrets.GITHUB_TOKEN }}
+          
+          # Create a new pull request
+          curl -X POST \
+            -H "Authorization: token $TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/pulls \
+            -d '{
+              "title": "Auto-generated PR from '$CURRENT_BRANCH' to develop",
+              "head": "'$CURRENT_BRANCH'",
+              "base": "main"
+            }'
