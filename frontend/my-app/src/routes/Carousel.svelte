@@ -10,12 +10,13 @@
   let instructorName;
   const paginationFactor = 350;
   const totalPaginationPixels = scrollBy * paginationFactor;
+  import CourseCard from "./CourseCard.svelte";
 
   $: offset = 0;
   $: atStart = offset === 0;
   $: atEnd = offset <= paginationFactor * (items.length - scrollBy * 2) * -1;
 
-  const move = (direction) => {
+  const move = (direction:number) => {
     if (direction > 0 && !atEnd) {
       offset -= totalPaginationPixels;
     } else if (direction < 0 && !atStart) {
@@ -27,12 +28,13 @@
 <center>
   <main>
     <div class="items" style="transform: translateX({offset}px);">
-      {#each items as item, i}
-        <a
-          href="/Cousera/{item}"
+      {#each items as item}
+        <!-- <a
+          href="/course/{item}"
           class="item"
-          style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}</a
-        >
+          style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}
+        </a> -->
+        <CourseCard id={item} isFetchManual={false}></CourseCard>
       {/each}
     </div>
   </main>

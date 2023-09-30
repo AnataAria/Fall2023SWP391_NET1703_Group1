@@ -1,6 +1,12 @@
+<script lang="ts">
+    let input = "";
+    function handleSearch(){
+        window.location.href = "/search/" + input;
+    }
+</script>
 <form class="form-wrapper cf" >
-  <input type="text" placeholder="Search here..." required>
-  <button type="submit">Search</button>
+  <input type="text" placeholder="Lets search some course" required bind:value={input}>
+  <button type="submit" on:click={handleSearch}>Search</button>
 </form> 
 
 <style>

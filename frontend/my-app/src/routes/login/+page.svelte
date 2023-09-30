@@ -1,8 +1,13 @@
+<link href="/src/theme/style.sass" rel="stylesheet"/>
+
 <script lang="ts">
   // import { USERNAME } from "$env/static/private";
   import axios from "axios";
   import { onMount } from "svelte";
   axios.defaults.withCredentials = true;
+  import Toastify from 'toastify-js';
+  import "toastify-js/src/toastify.css"
+  import Header from "../Header.svelte";
   let registerForm = {
     email: "",
     fullname: "",
@@ -19,34 +24,55 @@
   let errorMsg = "";
   let jwtToken = "";
   async function handleRegister() {
+    let status = true;
     if (!registerForm.email || !registerForm.password || !registerForm.birthDate) {
       errorMsg = "Full Name or Password, email cannot empty";
-      return;
+      status = false;
     }
     if (registerForm.password !== rePassword) {
       errorMsg = "Re-enter password must match with password";
-      return;
+      status = false;
     }
 
     let res = null;
-    try {
+    if(status) {
+      try {
       res = await axios.post("http://localhost:9090/api/v1/auth/register", registerForm)
       .then((response) => {
         if(response.status === 200) {
+          errorMsg = "Login successful"
           window.location.href = "/";
         }
       });
     } catch (err) {
       console.log(err);
     }
+    }
+    
+    Toastify({
+    text: errorMsg,
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function(){} // Callback after click
+  }).showToast();
   }
 
   async function handleLogin(){
+    let status = true;
     if(!loginForm.email || !loginForm.password){
       errorMsg = "Email or password cannot empty";
-      return;
+      status = false;
     }
-    try{
+    if(status){
+      try{
       await axios.post("http://localhost:9090/api/v1/auth/authentication", loginForm)
       .then((response) => {
         if(response.status === 200){
@@ -55,6 +81,22 @@
       });
     }catch(err) {
     }
+    }
+    
+    Toastify({
+    text: errorMsg,
+    duration: 3000,
+    // destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function(){} // Callback after click
+  }).showToast();
   }
   let questions = [
 		{
@@ -70,10 +112,34 @@
 			text: `Others`
 		}
 	];
- 
-</script>
 
-<div class="login-wrap">
+  // function showMessage(message:string){
+  //   document.getElementById(message)?.textContent = "";
+  // }
+  function getUserCookie() {
+    const name = "USER";
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      const cookieParts = cookie.split("=");
+      const cookieName = cookieParts[0];
+      if (cookieName === name) {
+        return cookieParts[1];
+      }
+    }
+    return null; // Cookie not found
+  }
+
+  onMount(()=>{
+    kickBackToLandingPage();
+  });
+  function kickBackToLandingPage(){
+    if(getUserCookie())
+    window.location.href = "/";
+  }
+ </script>
+ <Header></Header>
+<div class="login-wrap" style="margin-top: 8em;">
   <div class="login-html">
     <input id="tab-1" type="radio" name="tab" class="sign-in" checked /><label
       for="tab-1"
@@ -87,7 +153,8 @@
       <div class="sign-in-htm">
         <div class="group">
           <label for="user" class="label">Email</label>
-          <input id="user" type="text" class="input" bind:value={loginForm.email}/>
+          <input id="user" type="text" class="input" bind:value={loginForm.email} />
+          <p></p>
         </div>
         <div class="group">
           <label for="pass" class="label">Password</label>
@@ -144,7 +211,6 @@
     </div>
   </div>
 </div>
-
 <style>
   *,
   :after,
@@ -171,14 +237,14 @@
     max-width: 525px;
     min-height: 670px;
     position: relative;
-    background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)
-      no-repeat center;
+    /* background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) */
+      /* no-repeat center; */
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
       0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }
   .login-html {
     width: 100%;
-    height: 100%;
+    height: 110%;
     position: absolute;
     padding: 90px 70px 50px 70px;
     background: rgba(40, 57, 101, 0.9);
@@ -245,7 +311,7 @@
     -webkit-text-security: circle;
   }
   .login-form .group .label {
-    color: #aaa;
+    color: white;
     font-size: 12px;
   }
   .login-form .group .button {

@@ -1,5 +1,40 @@
 <script lang="ts">
   import SearchBar from "./SearchBar.svelte";
+  import { onMount } from "svelte";
+  let status = "";
+  let jwts;
+  function getUserCookie() {
+    const name = "USER";
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      const cookieParts = cookie.split("=");
+      const cookieName = cookieParts[0];
+      if (cookieName === name) {
+        return cookieParts[1];
+      }
+    }
+    return null; // Cookie not found
+  }
+  function removeUserCookies(name:string) {
+    const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
+    document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
+  }
+  function loginLogoutHandler() {
+    const jwt = getUserCookie();
+    if (jwt) {
+      removeUserCookies("USER");
+      window.location.reload();
+    } else {
+      window.location.href = "/login";
+    }
+  }
+  onMount(() => {
+    const jwt = getUserCookie();
+    if (jwt) {
+      status = "Logout";
+    } else status = "Login";
+  });
 </script>
 <body>
   
@@ -7,13 +42,14 @@
     <header id="header" class="fixed-top d-flex align-items-center" style="background-color: white;">
       <div class="container d-flex align-items-center">
         <img src="http://webcoban.vn/image/flower.gif" style="width: 5rem; height: auto; margin-left: -57px; margin-right: 19px;" alt="logo">
-        <h1 class="logo me-auto"><a href="index.html">Ademy<span>.</span></a></h1>
+        <h1 class="logo me-auto"><a href="/">Ademy<span>.</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
   
         <SearchBar />
   
         <a href="#about" class="get-started-btn scrollto">Get Started</a>
+        <button class="get-started-btn scrollto" on:click={loginLogoutHandler}>{status}</button>
       </div>
     </header><!-- End Header -->
 </body>

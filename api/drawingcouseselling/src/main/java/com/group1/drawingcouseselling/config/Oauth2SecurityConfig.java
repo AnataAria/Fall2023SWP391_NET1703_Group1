@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @Order(2)
@@ -19,8 +17,8 @@ public class Oauth2SecurityConfig {
                 csrf()
                 .disable()
                 .authorizeHttpRequests(oauth2 ->{
-//                        oauth2.requestMatchers("/accounts").authenticated();
-//                        oauth2.requestMatchers("/oauth/*").permitAll();
+//                        oauth2.requestMatchers("/accounts","/courses").authenticated();
+//                        oauth2.requestMatchers("/oauth/*","/auth/**").permitAll();
                             oauth2.anyRequest().permitAll();
                         }
                 )

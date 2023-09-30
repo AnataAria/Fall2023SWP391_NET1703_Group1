@@ -32,6 +32,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@material/snackbar": "^14.0.0",
 		"antd": "^5.9.2",
 		"axios": "^1.5.0",
 		"bcryptjs": "^2.4.3",
