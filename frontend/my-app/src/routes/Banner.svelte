@@ -4,7 +4,8 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-6" style=" z-index:1;">
-          <h1>Bettter digital experience with Presento</h1>
+          <h1></h1>
+          <br/><br/><br/>
           <h2>
             We are team of talented designers making websites with Bootstrap
           </h2>
@@ -15,6 +16,7 @@
   </section>
   <!-- End Hero -->
 </body>
+
 <style>
     body {
   font-family: "Open Sans", sans-serif;
@@ -43,7 +45,7 @@ h6 {
     #hero{
   width: 100%;
   height: 100vh;
-  background-image: url("https://www.momswhothink.com/wp-content/uploads/2023/01/shutterstock_2135434057-scaled.jpg");
+  background-image: url("https://img.freepik.com/premium-photo/vector-multicolor-floral-design_575980-2781.jpg");
   background-size: cover;
       
   padding-top: 82px;
@@ -53,20 +55,19 @@ h6 {
 #hero:before {
   content: "";
   background: rgba(0, 0, 0, 0.6);
-  position: absolute;
+  
   bottom: 0;
-  top: 13.4rem;
+  top: 0;
   left: 0;
   right: 0;
-  height: 45.5rem;
-}
+ 
+}red
 
 #hero h1 {
   margin: 0;
   font-size: 48px;
   font-weight: 700;
-  color: #fff;
-}
+  color: rgb(255, 0, 0)}
 
 #hero h2 {
   color: #fff;
@@ -85,8 +86,8 @@ h6 {
   transition: 0.5s;
   margin-top: 30px;
   color: #fff;
-  background: #e03a3c;
-  border: 2px solid #e03a3c;
+  background: #0fd04c;
+  border: 2px solid #18ba3b;
 }
 
 #hero .btn-get-started:hover {

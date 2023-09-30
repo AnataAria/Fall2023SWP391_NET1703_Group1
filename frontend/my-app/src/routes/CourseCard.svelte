@@ -1,21 +1,61 @@
-<script>
+<script lang="ts">
+    import axios from "axios";
     import Star from "./Star.svelte";
+    import { onMount } from "svelte";
+    export let id: number;
+    export let name: string;
+    export let price: number;
+    export let description: string;
+    export let duration: string;
+    export let instructorName: string;
+    export let isFetchManual: boolean;
+    let course = {
+        name: "",
+        price: "",
+        description: "",
+        durations: "",
+        instructorName: ""
+    }
+    async function handleGetCourse() {
+    try {
+      let res = await axios
+        .get(`http://localhost:9090/api/v1/course?id=${id+1}`)
+        .then((response) => {
+          console.log(response.data);
+          course = response.data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  onMount(() => {
+    if(!isFetchManual){
+      handleGetCourse();
+    }else{
+      course = {
+        name: name,
+        price: price,
+        description: description,
+        durations: duration,
+        instructorName: instructorName
+      }
+    }
+  });
     
 </script>
 
     <div class="course-card">
-        <img class="thumbnail" src="https://edyoda.s3.amazonaws.com/media/blog-images/6.png" style="width: 230px; height: 130px;"/>
-        <h3>LAMP Stack Vs MEAN </h3>
-        <span class="author">Author</span>
+        <img class="thumbnail" src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c" style="width: 230px; height: 130px;"/>
+        <h3><a href="/course/{id}">{course.name}</a></h3>
+        <span class="author">Author {course.instructorName}</span>
         <p class="disc">
-            In today’s dynamic world, rapid web application 
+            {course.description}
         </p>
        <Star />
        <button  style="border: none; background-color: white;"><svg xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 10px;margin-left: 10px;"  width="25" height="25" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
         <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
       </svg></button>
     </div>
-
 
 
 <style>

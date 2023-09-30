@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Carousel from "./Carousel.svelte";
   import { onMount } from "svelte";
   let status = "";
@@ -16,7 +16,7 @@
     }
     return null; // Cookie not found
   }
-  function removeUserCookies(name) {
+  function removeUserCookies(name:string) {
     const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
     document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
   }

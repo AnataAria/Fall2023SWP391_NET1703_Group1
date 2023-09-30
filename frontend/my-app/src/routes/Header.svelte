@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Carousel from "./Carousel.svelte";
+  import SearchBar from "./SearchBar.svelte";
   import { onMount } from "svelte";
   let status = "";
   let jwts;
@@ -16,7 +16,7 @@
     }
     return null; // Cookie not found
   }
-  function removeUserCookies(name) {
+  function removeUserCookies(name:string) {
     const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
     document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
   }
@@ -36,46 +36,17 @@
     } else status = "Login";
   });
 </script>
-
 <body>
   
     <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center">
+    <header id="header" class="fixed-top d-flex align-items-center" style="background-color: white;">
       <div class="container d-flex align-items-center">
         <img src="http://webcoban.vn/image/flower.gif" style="width: 5rem; height: auto; margin-left: -57px; margin-right: 19px;" alt="logo">
-        <h1 class="logo me-auto"><a href="index.html">Ademy<span>.</span></a></h1>
+        <h1 class="logo me-auto"><a href="/">Ademy<span>.</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
   
-        <nav id="navbar" class="navbar order-last order-lg-0">
-          <ul>
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#about">About</a></li>
-            <li><a class="nav-link scrollto" href="#services">Services</a></li>
-            <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-            <li><a class="nav-link scrollto" href="#team">Team</a></li>
-            <li><a href="#">Blog</a></li>
-            <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="#">Drop Down 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Drop Down 1</a></li>
-                    <li><a href="#">Deep Drop Down 2</a></li>
-                    <li><a href="#">Deep Drop Down 3</a></li>
-                    <li><a href="#">Deep Drop Down 4</a></li>
-                    <li><a href="#">Deep Drop Down 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Drop Down 2</a></li>
-                <li><a href="#">Drop Down 3</a></li>
-                <li><a href="#">Drop Down 4</a></li>
-              </ul>
-            </li>
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          </ul>
-          <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav><!-- .navbar -->
+        <SearchBar />
   
         <a href="#about" class="get-started-btn scrollto">Get Started</a>
         <button class="get-started-btn scrollto" on:click={loginLogoutHandler}>{status}</button>
@@ -88,6 +59,8 @@
   font-family: "Open Sans", sans-serif;
   color: #444444;
 }
+
+
 
 a {
   color: #e03a3c;
