@@ -3,7 +3,7 @@ name: Auto Create Pull Request
 on:
   push:
     branches:
-      - $(git branch ---show-current)
+      - $(git branch --show-current)
 
 jobs:
   create_pull_request:
