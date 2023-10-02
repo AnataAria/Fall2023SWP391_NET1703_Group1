@@ -1,10 +1,16 @@
 <script lang="ts">
     let input = "";
+    import { ShowMessage } from "../service"
     function handleSearch(){
-        window.location.href = "/search/" + input;
+        if(!input){
+            ShowMessage("You should enter at least 3 word for search", 3000, 1);
+        }else{
+            window.location.href = "/search/" + input;
+        }
+
     }
 </script>
-<form class="form-wrapper cf" >
+<form class="form-wrapper cf" on:submit={handleSearch}>
   <input type="text" placeholder="Lets search some course" required bind:value={input}>
   <button type="submit" on:click={handleSearch}>Search</button>
 </form> 
@@ -26,7 +32,6 @@
 .form-wrapper {
     width: 480px;
     padding: 15px;
-    margin-right: 400px;
     background: #444;
     background: rgba(0,0,0,0);
     border: none;
