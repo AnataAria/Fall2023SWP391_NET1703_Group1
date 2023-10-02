@@ -1,0 +1,22 @@
+name: Create Pull Request
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: 'Automated PR from ${{ github.ref }}'
+          branch: ${{ github.ref }}
+          base: 'main'  # Change this to the target branch
+          body: 'Automatically created PR from a GitHub Action.'
+          labels: 'automated-pr'
