@@ -137,7 +137,7 @@ button[disabled] {
           })
           .catch((reason : AxiosError) =>{
             enableSubmitButton();
-            if(reason.response?.status === 404){
+            if(reason.response?.status === 401){
               message = "Email not found!"
               // color = "red"
               // console.log(error)
