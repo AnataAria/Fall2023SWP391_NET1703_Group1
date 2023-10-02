@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
   axios.defaults.withCredentials = true;
   import Toastify from 'toastify-js';
-  import "toastify-js/src/toastify.css"
+  import "toastify-js/src/toastify.css";
   import Header from "../Header.svelte";
   let registerForm = {
     email: "",
@@ -33,7 +33,6 @@
       errorMsg = "Re-enter password must match with password";
       status = false;
     }
-
     let res = null;
     if(status) {
       try {
