@@ -3,6 +3,11 @@ export const BaseUrl : string = "http://localhost:3000/"
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
+let headerRequest = {
+  "Content-Type": "application/json",
+  "Accept": "application/json"
+}
+
 const alarm = {
   background: "linear-gradient(to right, #eb4034, #d6261a)"
 }
@@ -53,4 +58,13 @@ export function ShowMessage(message: string , duration: number, notificationType
     style: styles,
     onClick: function(){} // Callback after click
   }).showToast();
+}
+
+export function CurrencyHandler(value:number){
+  const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+    
+  });
+  return formatter.format(value);
 }

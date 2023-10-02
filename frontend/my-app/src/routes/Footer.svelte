@@ -1,4 +1,8 @@
 <link rel="stylesheet" href="/src/lib/style.css">
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
 <footer id="footer">
 
     <div class="footer-top">
@@ -74,7 +78,7 @@
       </div>
     </div>
   </footer><!-- End Footer -->
-
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <style>
 
   </style>
