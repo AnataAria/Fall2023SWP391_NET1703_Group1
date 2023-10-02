@@ -4,18 +4,17 @@
     import Header from './Header.svelte';
     import Banner from './Banner.svelte';
   import Carousel from './Carousel.svelte';
+  import Footer from './Footer.svelte';
+  import CourseCarousel from './CourseCarousel.svelte';
   
     // Add this to initialize the Bootstrap tooltip
     onMount(() => {
     });
   </script>
   <Header />
-  <SearchBar />
   <Banner />
   <br/>
   <br/>
-  <Carousel />
-
-  
-  
-
+  <!-- <Carousel /> -->
+<CourseCarousel></CourseCarousel>
+  <Footer></Footer>
