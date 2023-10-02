@@ -2,12 +2,6 @@
   // Props
   export let items = [...Array(16).keys()];
   export let scrollBy = 3;
-  let name = "";
-  let price = "";
-  let description;
-  let durations;
-  let instructorID;
-  let instructorName;
   const paginationFactor = 350;
   const totalPaginationPixels = scrollBy * paginationFactor;
   import CourseCard from "./CourseCard.svelte";
@@ -25,6 +19,7 @@
   };
 </script>
 
+<h1>Recommended for you</h1>
 <center>
   <main>
     <div class="items" style="transform: translateX({offset}px);">
@@ -34,7 +29,7 @@
           class="item"
           style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}
         </a> -->
-        <CourseCard id={item} isFetchManual={false}></CourseCard>
+        <CourseCard id={item+1} isFetchManual={false}></CourseCard>
       {/each}
     </div>
   </main>
