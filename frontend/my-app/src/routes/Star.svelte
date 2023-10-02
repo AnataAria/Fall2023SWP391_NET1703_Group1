@@ -1,5 +1,7 @@
-<div class="Stars" style="--rating: 3.5;" aria-label="Rating of this product is 2.3 out of 5."></div>
-
+<div class="Stars" style="--rating: {score};" aria-label="Rating of this product is 2.3 out of 5."></div>
+<script lang="ts">
+  export let score:number = 4.2;
+</script>
 <style>
     :root {
   --star-size: 30px;
@@ -28,7 +30,7 @@
 
 
 body {
-  background: #eee;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
