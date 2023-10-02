@@ -1,21 +1,16 @@
-<body>
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-6" style=" z-index:1;">
-          <h1></h1>
-          <br/><br/><br/>
-          <h2>
-            We are team of talented designers making websites with Bootstrap
-          </h2>
-          <a href="#about" class="btn-get-started scrollto">Get Started</a>
-        </div>
+ <!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+  <div class="container" data-aos="zoom-out" data-aos-delay="100">
+    <div class="row">
+      <div class="col-xl-6">
+        <h1>Bettter design experience for children with Ademy </h1>
+        <h2>We are team of talented graphic instructors teaching drawing for everyone</h2>
+        <a href="#about" class="btn-get-started scrollto">Get Started</a>
       </div>
     </div>
-  </section>
-  <!-- End Hero -->
-</body>
+</section>
+<!-- End Hero -->
+ 
 
 <style>
     body {
@@ -44,18 +39,16 @@ h6 {
     
     #hero{
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   background-image: url("https://img.freepik.com/premium-photo/vector-multicolor-floral-design_575980-2781.jpg");
   background-size: cover;
-      
-  padding-top: 82px;
-  
+  /* padding-top: 82px; */
 }
 
 #hero:before {
   content: "";
-  background: rgba(0, 0, 0, 0.6);
-  
+  /* 
+   */
   bottom: 0;
   top: 0;
   left: 0;
