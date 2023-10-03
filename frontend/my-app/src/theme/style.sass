@@ -1,0 +1,11 @@
+@use "@material/snackbar"
+
+@media (max-width: snackbar.$mobile-breakpoint) 
+  .my-snackbar 
+    @include snackbar.layout-stacked
+  
+
+
+@media (min-width: snackbar.$mobile-breakpoint) 
+  .my-snackbar 
+    @include snackbar.position-leading

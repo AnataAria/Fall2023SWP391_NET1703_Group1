@@ -5,8 +5,9 @@ import lombok.Builder;
 
 import java.math.BigDecimal;
 @Builder
-public record CourseDto(String name, BigDecimal price, String description, String durations, @JsonIgnore BigDecimal instructorID, String instructorName) {
-    public CourseDto(String name, BigDecimal price, String description, String durations, BigDecimal instructorID, String instructorName) {
+public record CourseDto(BigDecimal id,String name, BigDecimal price, String description, String durations, BigDecimal instructorID, String instructorName) {
+    public CourseDto(BigDecimal id, String name, BigDecimal price, String description, String durations, BigDecimal instructorID, String instructorName) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;

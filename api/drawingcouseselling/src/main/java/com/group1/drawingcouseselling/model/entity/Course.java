@@ -75,6 +75,7 @@ public class Course implements ObjectMapper<Course, CourseDto> {
     @Override
     public Course covertDtoToEntity(CourseDto data) {
         Course dataset = new Course();
+        dataset.setId(data.id());
         dataset.setName(data.name());
         dataset.setPrice(data.price());
         dataset.setDescription(data.durations());
@@ -84,6 +85,7 @@ public class Course implements ObjectMapper<Course, CourseDto> {
     @Override
     public CourseDto convertEntityToDto(Course data) {
         return CourseDto.builder()
+                .id(data.getId())
                 .name(data.getName())
                 .price(data.getPrice())
                 .description(data.getDescription())
