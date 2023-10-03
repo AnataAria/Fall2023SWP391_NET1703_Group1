@@ -1,102 +1,73 @@
 <script lang="ts">
   import Header from "./Header.svelte";
 
+    import {
+        Card,
+        Button,
+        Rating,
+        Badge,
+        Progressbar,
+        CardPlaceholder,
+    } from "flowbite-svelte";
     var i = 0;
     let percent: number;
+    var rating = 5;
+    var title = 'My Wife'
+    var url = '/'
+    var img_url = 'https://gameranx.com/wp-content/uploads/2022/10/Screenshot-1249.png'
+    var instructor = 'Thang'
     percent = 90;
-    // function move() {
-    //     if (i == 0) {
-    //         i = 1;
-    //         var elem = document.getElementById("myBar");
-    //         var percent = document.getElementById('percent');
-    //         var width = 10;
-    //         var id = setInterval(frame, 10);
-    //         function frame() {
-    //             if (width >= 100) {
-    //                 clearInterval(id);
-    //                 i = 0;
-    //             } else {
-    //                 width++;
-    //                 elem.style.width = width + "%";
-    //                 percent.innerHTML = width + "% complete";
-    //             }
-    //         }
-    //     }
-    // }
 </script>
-<Header></Header>
 <head
     ><link
         href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
         rel="stylesheet"
     />
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="v1_4">
-        <div class="v1_5" />
-        <span class="v1_10">All courses</span>
-        <span class="v1_9">My Learning</span>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container mx-auto mt-24 mb-10">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">My</span> Learning</h1>
 </div>
+    
+
+<!-- <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-3 hover:grid-flow-row ml-24 mr-auto">
+    <div>
+        <a href="#" class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="{img_url}" alt="">
+            <div class="flex flex-col justify-between p-4 leading-normal">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{title}</h5>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{instructor}</p>
+                <Rating {rating} size="24" class="mt-2.5 mb-5">
+                    <Badge slot="text" class="ml-3">{rating}</Badge>
+                </Rating>
+                <Progressbar progress={percent} size="h-4" color="red" labelInside />
+            </div>
+        </a>
+    </div>
+</div> -->
+<div class="p-10 ml-20 mr-auto px-48">
+    <a href="https://www.youtube.com/watch?v=v1POP-m76ac" class="bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+    <div class=" w-full lg:max-w lg:flex">
+      <div class="h-48 lg:h-auto lg:w-2/4 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('{img_url}')" title="Mountain">
+      </div>
+      <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div class="mb-8">
+          
+          <div class="text-gray-900 font-bold text-xl mb-2">{title}</div>
+          <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+        </div>
+        <div class="text-sm">
+            <p class="text-gray-900 leading-none">John Smith</p>
+          </div>
+        <Rating {rating} size="24" class="mt-2.5 mb-5">
+            <Badge slot="text" class="ml-3">{rating}</Badge>
+        </Rating>
+        <Progressbar progress={percent} size="h-4" color="red" labelInside />
+
+      </div>
+    </div>
+    </a>
+  </div>
 
 <style>
     * {
@@ -174,9 +145,11 @@
     #myProgress {
         width: 100%;
         background-color: #d1d7dc;
+        transition: visibility 0s, opacity 0.5s linear;
     }
 
     #myBar {
+        transition: visibility 0s, opacity 0.5s linear;
         width: 0%;
         height: 5px;
         background-color: #5624d0;
