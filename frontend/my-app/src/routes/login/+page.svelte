@@ -6,6 +6,7 @@
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
   import Header from "../Header.svelte";
+  import Footer from "../Footer.svelte";
   let registerForm = {
     email: "",
     fullname: "",
@@ -140,8 +141,7 @@
   }
 </script>
 
-<link href="/src/theme/style.sass" rel="stylesheet" />
-<Header />
+<!-- <link href="/src/theme/style.sass" rel="stylesheet" /> -->
 <div class="login-wrap" style="margin-top: 8em;">
   <div class="login-html">
     <input id="tab-1" type="radio" name="tab" class="sign-in" checked /><label
@@ -269,22 +269,13 @@
     </div>
   </div>
 </div>
-
 <style>
   *,
   :after,
   :before {
     box-sizing: border-box;
   }
-  .clearfix:after,
-  .clearfix:before {
-    content: "";
-    display: table;
-  }
-  .clearfix:after {
-    clear: both;
-    display: block;
-  }
+
   a {
     color: inherit;
     text-decoration: none;
