@@ -5,6 +5,8 @@
   import "../app.postcss";
   import Footer from "./Footer.svelte";
   import CourseCard from "./CourseCard.svelte";
+  import Cart from "./Cart.svelte";
+  import CartItem from "./CartItem.svelte";
   export const images = [
     {
       alt: 'Cosmic timetraveler',
@@ -22,6 +24,5 @@
   onMount(() => {});
   const scaleAnimation = (x) => scale(x, { duration: 500, easing: quintOut });
 </script>
-<Banner></Banner>
 
-<CourseCard></CourseCard>
+<Cart />
