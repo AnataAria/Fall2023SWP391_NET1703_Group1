@@ -1,31 +1,33 @@
-<link href="/src/theme/style.sass" rel="stylesheet"/>
-
 <script lang="ts">
   // import { USERNAME } from "$env/static/private";
   import axios from "axios";
   import { onMount } from "svelte";
   axios.defaults.withCredentials = true;
-  import Toastify from 'toastify-js';
-  import "toastify-js/src/toastify.css"
+  import Toastify from "toastify-js";
+  import "toastify-js/src/toastify.css";
   import Header from "../Header.svelte";
   let registerForm = {
     email: "",
     fullname: "",
     password: "",
     birthDate: "",
-    gender: ""
+    gender: "",
   };
 
   let loginForm = {
     email: "",
-    password: ""
-  }
+    password: "",
+  };
   let rePassword = "";
   let errorMsg = "";
   let jwtToken = "";
   async function handleRegister() {
     let status = true;
-    if (!registerForm.email || !registerForm.password || !registerForm.birthDate) {
+    if (
+      !registerForm.email ||
+      !registerForm.password ||
+      !registerForm.birthDate
+    ) {
       errorMsg = "Full Name or Password, email cannot empty";
       status = false;
     }
@@ -33,85 +35,85 @@
       errorMsg = "Re-enter password must match with password";
       status = false;
     }
-
     let res = null;
-    if(status) {
+    if (status) {
       try {
-      res = await axios.post("http://localhost:9090/api/v1/auth/register", registerForm)
-      .then((response) => {
-        if(response.status === 200) {
-          errorMsg = "Login successful"
-          window.location.href = "/";
-        }
-      });
-    } catch (err) {
-      console.log(err);
+        res = await axios
+          .post("http://localhost:9090/api/v1/auth/register", registerForm)
+          .then((response) => {
+            if (response.status === 200) {
+              errorMsg = "Login successful";
+              window.location.href = "/";
+            }
+          });
+      } catch (err) {
+        console.log(err);
+      }
     }
-    }
-    
+
     Toastify({
-    text: errorMsg,
-    duration: 3000,
-    destination: "https://github.com/apvarun/toastify-js",
-    newWindow: true,
-    close: true,
-    gravity: "bottom", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    onClick: function(){} // Callback after click
-  }).showToast();
+      text: errorMsg,
+      duration: 3000,
+      destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "bottom", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
   }
 
-  async function handleLogin(){
+  async function handleLogin() {
     let status = true;
-    if(!loginForm.email || !loginForm.password){
+    if (!loginForm.email || !loginForm.password) {
       errorMsg = "Email or password cannot empty";
       status = false;
     }
-    if(status){
-      try{
-      await axios.post("http://localhost:9090/api/v1/auth/authentication", loginForm)
-      .then((response) => {
-        if(response.status === 200){
-          window.location.href = "/";
-        }
-      });
-    }catch(err) {
+    if (status) {
+      try {
+        await axios
+          .post("http://localhost:9090/api/v1/auth/authentication", loginForm)
+          .then((response) => {
+            if (response.status === 200) {
+              window.location.href = "/";
+            }
+          });
+      } catch (err) {}
     }
-    }
-    
+
     Toastify({
-    text: errorMsg,
-    duration: 3000,
-    // destination: "https://github.com/apvarun/toastify-js",
-    newWindow: true,
-    close: true,
-    gravity: "bottom", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    onClick: function(){} // Callback after click
-  }).showToast();
+      text: errorMsg,
+      duration: 3000,
+      // destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "bottom", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
   }
   let questions = [
-		{
-			id: 1,
-			text: `Male`
-		},
-		{
-			id: 2,
-			text: `Female`
-		},
-		{
-			id: 3,
-			text: `Others`
-		}
-	];
+    {
+      id: 1,
+      text: `Male`,
+    },
+    {
+      id: 2,
+      text: `Female`,
+    },
+    {
+      id: 3,
+      text: `Others`,
+    },
+  ];
 
   // function showMessage(message:string){
   //   document.getElementById(message)?.textContent = "";
@@ -130,15 +132,16 @@
     return null; // Cookie not found
   }
 
-  onMount(()=>{
+  onMount(() => {
     kickBackToLandingPage();
   });
-  function kickBackToLandingPage(){
-    if(getUserCookie())
-    window.location.href = "/";
+  function kickBackToLandingPage() {
+    if (getUserCookie()) window.location.href = "/";
   }
- </script>
- <Header></Header>
+</script>
+
+<link href="/src/theme/style.sass" rel="stylesheet" />
+<Header />
 <div class="login-wrap" style="margin-top: 8em;">
   <div class="login-html">
     <input id="tab-1" type="radio" name="tab" class="sign-in" checked /><label
@@ -153,19 +156,35 @@
       <div class="sign-in-htm">
         <div class="group">
           <label for="user" class="label">Email</label>
-          <input id="user" type="text" class="input" bind:value={loginForm.email} />
-          <p></p>
+          <input
+            id="user"
+            type="text"
+            class="input"
+            bind:value={loginForm.email}
+          />
+          <p />
         </div>
         <div class="group">
           <label for="pass" class="label">Password</label>
-          <input id="pass" type="password" class="input" data-type="password" bind:value={loginForm.password}/>
+          <input
+            id="pass"
+            type="password"
+            class="input"
+            data-type="password"
+            bind:value={loginForm.password}
+          />
         </div>
         <div class="group">
           <input id="check" type="checkbox" class="check" checked />
           <label for="check"><span class="icon" /> Keep me Signed in</label>
         </div>
         <div class="group">
-          <input type="button" class="button" value="Sign In" on:click={handleLogin}/>
+          <input
+            type="button"
+            class="button"
+            value="Sign In"
+            on:click={handleLogin}
+          />
         </div>
         <div class="hr" />
         <div class="foot-lnk" style="color: white;">
@@ -175,42 +194,82 @@
       <div class="sign-up-htm">
         <div class="group">
           <label for="user" class="label">Email</label>
-          <input id="user" type="text" class="input" bind:value={registerForm.email}/>
+          <input
+            id="user"
+            type="text"
+            class="input"
+            bind:value={registerForm.email}
+          />
         </div>
         <div class="group">
           <label for="pass" class="label">Password</label>
-          <input id="pass" type="password" class="input" data-type="password" bind:value={registerForm.password}/>
+          <input
+            id="pass"
+            type="password"
+            class="input"
+            data-type="password"
+            bind:value={registerForm.password}
+          />
         </div>
         <div class="group">
           <label for="pass" class="label">Repeat Password</label>
-          <input id="pass" type="password" class="input" data-type="password" bind:value={rePassword}/>
+          <input
+            id="pass"
+            type="password"
+            class="input"
+            data-type="password"
+            bind:value={rePassword}
+          />
         </div>
         <div class="group">
           <label for="pass" class="label">Full Name</label>
-          <input id="pass" type="text" class="input" bind:value={registerForm.fullname}/>
+          <input
+            id="pass"
+            type="text"
+            class="input"
+            bind:value={registerForm.fullname}
+          />
         </div>
         <div class="group">
           <label for="pass" class="label">Birthday</label>
-          <input id="pass" type="date" class="input" bind:value={registerForm.birthDate}/>
+          <input
+            id="pass"
+            type="date"
+            class="input"
+            bind:value={registerForm.birthDate}
+          />
         </div>
-        <div class="group" >
+        <div class="group">
           <label for="pass" class="label">Gender</label>
-          <select class="input" bind:value={registerForm.gender} on:change={() => {console.log(registerForm.gender)}} id="gender">
+          <select
+            class="input"
+            bind:value={registerForm.gender}
+            on:change={() => {
+              console.log(registerForm.gender);
+            }}
+            id="gender"
+          >
             {#each questions as question (question.id)}
-			        <option value={question.id}>
-				        {question.text}
-			        </option>
-		        {/each} 
+              <option value={question.id}>
+                {question.text}
+              </option>
+            {/each}
           </select>
         </div>
         <div class="group">
-          <input type="submit" class="button" value="Sign Up" on:click={handleRegister}/>
+          <input
+            type="submit"
+            class="button"
+            value="Sign Up"
+            on:click={handleRegister}
+          />
         </div>
         <div class="hr" />
       </div>
     </div>
   </div>
 </div>
+
 <style>
   *,
   :after,
@@ -238,7 +297,7 @@
     min-height: 670px;
     position: relative;
     /* background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) */
-      /* no-repeat center; */
+    /* no-repeat center; */
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
       0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }

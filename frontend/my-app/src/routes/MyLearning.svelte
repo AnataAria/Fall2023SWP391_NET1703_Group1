@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Header from "./Header.svelte";
+
     var i = 0;
     let percent: number;
     percent = 90;
@@ -22,7 +24,7 @@
     //     }
     // }
 </script>
-
+<Header></Header>
 <head
     ><link
         href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"

@@ -2,6 +2,7 @@
   import SearchBar from "./SearchBar.svelte";
   import { onMount } from "svelte";
   let status = "";
+  import headerImage from "$lib/assets/Header.jpg"
   let jwts;
   function getUserCookie() {
     const name = "USER";
@@ -36,23 +37,47 @@
     } else status = "Login";
   });
 </script>
-<body>
-  
-    <!-- ======= Header ======= -->
-    <header id="header" class="fixed-top d-flex align-items-center" style="background-color: white;">
-      <div class="container d-flex align-items-center">
-        <img src="http://webcoban.vn/image/flower.gif" style="width: 5rem; height: auto; margin-left: -57px; margin-right: 19px;" alt="logo">
-        <h1 class="logo me-auto"><a href="/">Ademy<span>.</span></a></h1>
-        <!-- Uncomment below if you prefer to use an image logo -->
-        <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>-->
-  
-        <SearchBar />
-  
-        <a href="#about" class="get-started-btn scrollto">Get Started</a>
-        <button class="get-started-btn scrollto" on:click={loginLogoutHandler}>{status}</button>
-      </div>
-    </header><!-- End Header -->
-</body>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center" style="background-color: white;">
+  <div class="container d-flex align-items-center">
+    <a href="/"><img style="width: 15rem; height: auto; margin-left: -10em; margin-right: 15px;" src="{headerImage}" alt=""/></a>
+    <SearchBar />
+    <nav id="navbar" class="navbar order-last order-lg-0">
+      <ul>
+        <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <li><a class="nav-link scrollto" href="#about">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li class="dropdown">
+          <a href="#"
+            ><span>Drop Down</span> <i class="bi bi-chevron-down" /></a
+          >
+          <ul>
+            <li><a href="#">Drop Down 1</a></li>
+            <li class="dropdown">
+              <a href="#"
+                ><span>Deep Drop Down</span>
+                <i class="bi bi-chevron-right" /></a
+              >
+              <ul>
+                <li><a href="#">Deep Drop Down 1</a></li>
+                <li><a href="#">Deep Drop Down 2</a></li>
+                <li><a href="#">Deep Drop Down 3</a></li>
+                <li><a href="#">Deep Drop Down 4</a></li>
+                <li><a href="#">Deep Drop Down 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Drop Down 2</a></li>
+            <li><a href="#">Drop Down 3</a></li>
+            <li><a href="#">Drop Down 4</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#about" class="get-started-btn scrollto">Get Started</a>
+    <button class="get-started-btn scrollto" on:click={loginLogoutHandler}>{status}</button>
+  </div>
+</header><!-- End Header -->
 
 <style>
   body {
@@ -130,7 +155,7 @@ h6 {
   background: #fff;
   transition: all 0.5s;
   z-index: 997;
-  padding: 20px 0;
+  border-bottom: #444444 0.5px solid;
 }
 
 #header.header-scrolled {
