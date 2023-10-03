@@ -25,4 +25,7 @@ public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
     @Query(value = "SELECT u FROM course u WHERE u.id IN :coursesID"
     )
     public List<Course> searchCourseByIdList(@Param(value = "coursesID")Collection<BigDecimal> coursesID);
+    @Query(value = "SELECT u FROM course u WHERE u.name LIKE %:searchName%",
+            countQuery = "SELECT count(*) FROM course u WHERE u.name LIKE %:searchName%")
+    public Page<Course> searchCourseByNameRandom(@Param(value = "searchName") String searchName, Pageable pageable);
 }

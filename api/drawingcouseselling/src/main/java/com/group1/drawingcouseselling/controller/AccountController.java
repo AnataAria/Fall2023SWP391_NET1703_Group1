@@ -17,7 +17,7 @@ import java.util.List;
 public class AccountController {
     private final AccountService accountService ;
     @GetMapping("/account")
-    public ResponseEntity<AccountDto> getAccountByEmail(@RequestParam(value = "email", required = false) String email){
+    public ResponseEntity<AccountDto> getAccountByEmail(@RequestParam(value = "email", required = false) String email, @RequestHeader(value = "Authorization", required = false) String authorization){
         return new ResponseEntity<>(accountService.searchAccountByEmail(email).get(), HttpStatus.OK);
     }
 

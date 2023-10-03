@@ -63,4 +63,12 @@ public class CourseServiceImpl implements CourseService {
               .collect(Collectors.toList());
     }
 
+    public List<CourseDto> searchCourseByNameAndFilterRandom(String name, Integer page, Integer maxPage){
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        return courseRepository.searchCourseByNameAndFilter(name,PageRequest.of(page-1,maxPage, sort))
+                .stream()
+                .map(course -> new Course().convertEntityToDto(course))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -20,9 +20,11 @@ public class CourseController {
     @GetMapping(value = "/courses")
     public ResponseEntity<List<CourseDto>> getAllCourse(@RequestParam(required = false, value = "name") String name,
                                                         @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                        @RequestParam(value = "maxPage", defaultValue = "5") Integer maxSize)
+                                                        @RequestParam(value = "maxPage", defaultValue = "5") Integer maxSize,
+                                                        @RequestParam(value = "random", defaultValue = "false") Boolean isRandom)
     {
         if(name!=null){
+            if(isRandom) return new ResponseEntity<>(courseService.searchCourseByNameAndFilter(name, page,maxSize), HttpStatus.OK);
             return new ResponseEntity<>(courseService.searchCourseByNameAndFilter(name, page, maxSize), HttpStatus.OK);
         }
         return new ResponseEntity<>(courseService.getAllCourseByPaging(page, maxSize), HttpStatus.OK);
