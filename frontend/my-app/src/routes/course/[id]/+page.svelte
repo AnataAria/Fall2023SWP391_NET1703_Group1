@@ -38,7 +38,6 @@
     handleGetCourse();
   });
 </script>
-<Header></Header>
 <div class = "card-wrapper">
     <div class = "card">
       <!-- card left -->

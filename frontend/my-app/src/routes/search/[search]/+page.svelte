@@ -54,7 +54,8 @@ async function handleSearch() {
     price={item.price}
     instructorName={item.instructorName}
     isFetchManual={true}
-    duration={item.durations}></CourseCard>
+    duration={item.durations}
+    instructorId={item.instructorID}></CourseCard>
   </div>
   {/each}
 </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SearchBar from "./SearchBar.svelte";
   import { onMount } from "svelte";
   import {
     Navbar,
@@ -97,6 +96,9 @@
       </form>
     </div>
     <div class="ml-20 w-1">
+      <Button>
+        Login
+      </Button>
       <Avatar
       id="user-drop"
       src=""
