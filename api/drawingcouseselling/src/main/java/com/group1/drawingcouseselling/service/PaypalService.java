@@ -1,16 +1,21 @@
 package com.group1.drawingcouseselling.service;
 
+import com.group1.drawingcouseselling.model.dto.OrderDto;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.sound.midi.Track;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PaypalService {
@@ -39,10 +44,9 @@ public class PaypalService {
         transactions.add(transaction);
 
         Payer payer = new Payer();
-        payer.setPaymentMethod(method.toString());
-
+        payer.setPaymentMethod(method);
         Payment payment = new Payment();
-        payment.setIntent(intent.toString());
+        payment.setIntent(intent);
         payment.setPayer(payer);
         payment.setTransactions(transactions);
         RedirectUrls redirectUrls = new RedirectUrls();
