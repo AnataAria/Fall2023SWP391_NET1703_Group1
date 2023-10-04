@@ -1,187 +1,51 @@
 <script lang="ts">
   import Header from "./Header.svelte";
 
-    var i = 0;
+    import {
+        Rating,
+        Badge,
+        Progressbar,
+    } from "flowbite-svelte";
+    let i = 0;
     let percent: number;
+    let rating = 5;
+    let title = 'My Wife'
+    let url = '/'
+    let img_url = 'https://gameranx.com/wp-content/uploads/2022/10/Screenshot-1249.png'
+    let instructor = 'Thang'
     percent = 90;
-    // function move() {
-    //     if (i == 0) {
-    //         i = 1;
-    //         var elem = document.getElementById("myBar");
-    //         var percent = document.getElementById('percent');
-    //         var width = 10;
-    //         var id = setInterval(frame, 10);
-    //         function frame() {
-    //             if (width >= 100) {
-    //                 clearInterval(id);
-    //                 i = 0;
-    //             } else {
-    //                 width++;
-    //                 elem.style.width = width + "%";
-    //                 percent.innerHTML = width + "% complete";
-    //             }
-    //         }
-    //     }
-    // }
 </script>
-<Header></Header>
 <head
     ><link
         href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
         rel="stylesheet"
     />
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="v1_4">
-        <div class="v1_5" />
-        <span class="v1_10">All courses</span>
-        <span class="v1_9">My Learning</span>
-    </div>
-</nav>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <a href="#" style="text-decoration: none;">
-                    <img src="" class="card-img-top" alt="Card Img" />
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Name</p>
-                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                    <div id="myProgress">
-                        <div id="myBar" style=" width: {percent}%" />
-                    </div>
-                    <div id="percent" style="font-size: 14px; color: #6A6F73;">
-                        {percent}% complete
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container mx-auto mt-24 mb-10">
+    <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">My</span> Learning</h1>
 </div>
+    
+<div class="p-10 ml-20 mr-auto px-48">
+    <a href="https://www.youtube.com/watch?v=v1POP-m76ac" class="bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
-    body {
-        font-size: 14px;
-    }
-    .v1_4 {
-        width: 100%;
-        /* height: 1024px; */
-        background: rgba(255, 255, 255, 1);
-        opacity: 1;
-        position: relative;
-        top: 0px;
-        left: 0px;
-        overflow: hidden;
-    }
-    .v1_5 {
-        width: 100%;
-        height: 188px;
-        background: rgba(45, 47, 49, 1);
-        opacity: 1;
-        position: relative;
-        top: 0px;
-        left: 0px;
-        overflow: hidden;
-    }
-    .v1_10 {
-        width: 178px;
-        color: rgba(255, 255, 255, 1);
-        position: absolute;
-        top: 158px;
-        left: 277px;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        font-family: Black Han Sans;
-        font-weight: Regular;
-        font-size: 14px;
-        opacity: 1;
-        text-align: left;
-    }
-    .v1_9 {
-        width: 464px;
-        color: rgba(255, 255, 255, 1);
-        position: absolute;
-        top: 81px;
-        left: 277px;
-        font-family: Black Han Sans;
-        font-weight: Regular;
-        font-size: 40px;
-        opacity: 1;
-        text-align: left;
-    }
-    .name {
-        color: #fff;
-    }
-    /* .card {
-        margin-top: 80px;
-        width: 464px;
-        position: absolute;
-        left: 277px;
-        font-weight: Regular;
-        opacity: 1;
-        text-align: left;
-    } */
-    .card-title {
-        font-weight: bold;
-        color: #2d2f31;
-        font-size: 20px;
-    }
-    .card-text {
-        color: #6a6f73;
-        font-size: 14px;
-    }
-    #myProgress {
-        width: 100%;
-        background-color: #d1d7dc;
-    }
+    <div class=" w-full lg:max-w lg:flex">
+      <div class="h-48 lg:h-auto lg:w-2/4 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('{img_url}')" title="Mountain">
+      </div>
+      <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div class="mb-8">
+          
+          <div class="text-gray-900 font-bold text-xl mb-2">{title}</div>
+          <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+        </div>
+        <div class="text-sm">
+            <p class="text-gray-900 leading-none">John Smith</p>
+          </div>
+        <Rating {rating} size="24" class="mt-2.5 mb-5">
+            <Badge slot="text" class="ml-3">{rating}</Badge>
+        </Rating>
+        <Progressbar progress={percent} size="h-4" color="red" labelInside />
 
-    #myBar {
-        width: 0%;
-        height: 5px;
-        background-color: #5624d0;
-        text-align: center; /* To center it horizontally (if you want) */
-        line-height: 30px; /* To center it vertically */
-        color: white;
-    }
-</style>
+      </div>
+    </div>
+    </a>
+  </div>
