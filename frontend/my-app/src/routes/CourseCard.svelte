@@ -1,9 +1,8 @@
 <script lang="ts">
     import axios from "axios";
-    import Star from "./Star.svelte";
     import { onMount } from "svelte";
     import {CurrencyHandler} from "../service";
-    import { GetUserCookie } from "../service";
+    import { GetCookie } from "../service";
     export let id: number;
     export let name: string;
     export let price: number;
@@ -23,7 +22,7 @@
         instructorID: 0
     }
     async function handleAddCart(){
-      jwtToken = GetUserCookie();
+      jwtToken = GetCookie("USER");
       if(!jwtToken){
         window.location.href = "/login";
       }
