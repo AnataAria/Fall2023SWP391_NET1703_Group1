@@ -27,4 +27,12 @@ public class CartController {
         String email = jwtService.extractUserEmail(token.substring(7));
         return ResponseEntity.ok(cartService.addCart(email, courseID));
     }
+    @GetMapping("/carts")
+    public ResponseEntity<CartDto> getCarts(@RequestHeader(value = "Authorization", defaultValue = "") String token,
+                                            @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                            @RequestParam(value = "maxPage", defaultValue = "5") Integer maxSize,
+                                            @RequestParam(value = "random", defaultValue = "false") Boolean isRandom){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(cartService.getAllCartOnPaging(page,maxSize,email));
+    }
 }
