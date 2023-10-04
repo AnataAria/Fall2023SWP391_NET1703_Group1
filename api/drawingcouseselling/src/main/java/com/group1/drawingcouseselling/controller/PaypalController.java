@@ -1,14 +1,15 @@
 package com.group1.drawingcouseselling.controller;
 
-import com.group1.drawingcouseselling.model.dto.Order;
+import com.group1.drawingcouseselling.model.dto.OrderDto;
 import com.group1.drawingcouseselling.service.PaypalService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class PaypalController {
@@ -25,7 +26,7 @@ public class PaypalController {
     }
 
     @PostMapping("/pay")
-    public String payment(@ModelAttribute("order") Order order) {
+    public String payment(@RequestBody OrderDto order) {
         try {
             Payment payment = paypalService.createPayment(order.getPrice(),
                     order.getCurrency(), order.getMethod(),
@@ -33,7 +34,7 @@ public class PaypalController {
                     apiBaseUrl + CANCEL_URL, apiBaseUrl + SUCCESS_URL);
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {
-                    return "redirect:" + links.getHref();
+                    return links.getHref();
                 }
             }
         } catch (PayPalRESTException e) {
@@ -48,7 +49,7 @@ public class PaypalController {
     }
 
     @GetMapping(value = SUCCESS_URL)
-    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("payerId") String payerId) {
+    public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             System.out.println(payment.toJSON());

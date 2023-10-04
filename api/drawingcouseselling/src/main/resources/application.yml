@@ -89,10 +89,10 @@ logging:
 
 
 paypal:
-  mode: sandbox
   client:
-    id: AWbOtZPREQ6DxSCza2yGZT82kQTW9T17r8xezCuKARBoBM5jli0FdOPrdRVkytKLdeaaFaiM6k-tHlr6 # for testing - change when finished testing
-    secret: EHGsrSIQG-aODbOaHmd5YnhCLNS3Zq3x3einniprXjRkABpA-U0UEXy9w_hp-YElLEwsQv6tmQNJ4ZVS # for testing - change when finished testing
+    secret: EHGsrSIQG-aODbOaHmd5YnhCLNS3Zq3x3einniprXjRkABpA-U0UEXy9w_hp-YElLEwsQv6tmQNJ4ZVS
+    app: AWbOtZPREQ6DxSCza2yGZT82kQTW9T17r8xezCuKARBoBM5jli0FdOPrdRVkytKLdeaaFaiM6k-tHlr6
+  mode: sandbox
 
 
 frontend:
