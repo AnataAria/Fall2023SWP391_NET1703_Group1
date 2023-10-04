@@ -13,5 +13,5 @@ public interface CustomerService {
 
     public Optional<Customer> addCustomer(Customer customer);
     public Optional<Customer> searchCustomerByEmail(String customerEmail);
-
+    public Optional<CustomerDto> searchCustomerByEmailDto(String customerEmailDto);
 }
