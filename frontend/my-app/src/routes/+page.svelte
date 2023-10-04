@@ -1,9 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import Header from "./Header.svelte";
   import "../app.postcss";
-  import Footer from "./Footer.svelte";
-  import CourseCard from "./CourseCard.svelte";
   export const images = [
     {
       alt: 'Cosmic timetraveler',
