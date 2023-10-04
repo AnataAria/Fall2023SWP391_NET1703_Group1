@@ -1,6 +1,9 @@
 <script lang="ts">
   import SearchBar from "./SearchBar.svelte";
   import { onMount } from "svelte";
+  import { DarkMode } from 'flowbite-svelte';
+
+  let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2';
   import {
     Navbar,
     NavBrand,
@@ -126,6 +129,7 @@
     <NavLi href="/about">About</NavLi>
     <NavLi href="/docs/components/navbar">Navbar</NavLi>
     <NavLi href="/contact">Contact</NavLi>
+    
   </NavUl>
 </Navbar>
 <!-- End Header -->
