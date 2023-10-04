@@ -6,7 +6,10 @@
   import Footer from "./Footer.svelte";
   import CourseCard from "./CourseCard.svelte";
   import Cart from "./Cart.svelte";
+  import Profile from "./Profile.svelte";
   import CartItem from "./CartItem.svelte";
+  import Star from "./Star.svelte";
+  
   export const images = [
     {
       alt: 'Cosmic timetraveler',
@@ -25,4 +28,10 @@
   const scaleAnimation = (x) => scale(x, { duration: 500, easing: quintOut });
 </script>
 
-<Cart />
+<!-- fix container for fixed footer height -->
+<!-- 
+<body class="flex flex-col min-h-screen">
+  <Profile />
+</body> -->
+
+<body class="flex flex-col min-h-screen"><Profile /></body>
