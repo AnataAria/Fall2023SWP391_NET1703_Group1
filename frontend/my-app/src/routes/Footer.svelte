@@ -17,8 +17,8 @@
   // import Dribble from "../../utils/icons/Dribble.svelte";
 </script>
 
-<Footer footerType="socialmedia">
-  <div class="md:flex md:justify-between">
+<Footer footerType="socialmedia" class="absolute inset-x-0 bottom-0 h-50">
+  <div class="md:flex md:justify-between top-px">
     <div class="mb-6 md:mb-0">
       <FooterBrand
         href="/"
@@ -64,7 +64,7 @@
     </div>
   </div>
   <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-  <div class="sm:flex sm:items-center sm:justify-between">
+  <div class="sm:flex sm:items-center sm:justify-between foot">
     <FooterCopyright href="/" by="Flowbite™" />
     <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
       <FooterIcon href="/">
@@ -95,4 +95,5 @@
 </Footer>
 
 <style>
+  
 </style>
