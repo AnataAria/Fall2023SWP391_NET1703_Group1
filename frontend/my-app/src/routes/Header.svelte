@@ -1,5 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { DarkMode } from 'flowbite-svelte';
+
+  let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2';
   import {
     Navbar,
     NavBrand,
@@ -16,7 +19,7 @@
   } from "flowbite-svelte";
   import { SearchOutline } from "flowbite-svelte-icons";
   import { IsLogin } from "../service";
-  import { GetCookie } from "../service";
+  import { GetCookie, Logout } from "../service";
   import headerImage from "$lib/assets/Header.jpg";
   let jwts;
   let loginStatus = false;
@@ -93,13 +96,20 @@
           </DropdownHeader>
           <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
           <DropdownDivider />
-          <DropdownItem>Profile</DropdownItem>
+          <DropdownItem on:click={()=>{
+            window.location.href = "/profile";
+          }}>Profile</DropdownItem>
           <DropdownItem>Settings</DropdownItem>
           <DropdownItem>Earnings</DropdownItem>
-          <DropdownItem>Cart</DropdownItem>
+          <DropdownItem on:click={()=>{
+            window.location.href = "/cart";
+          }}>Cart</DropdownItem>
           <DropdownItem>My Learning</DropdownItem>
           <DropdownDivider />
-          <DropdownItem>Sign out</DropdownItem>
+          <DropdownItem on:click={()=>{
+            Logout();
+            window.location.reload();
+          }}>Sign out</DropdownItem>
         </Dropdown>
       {:else}
         <div class="flex justify-center">
