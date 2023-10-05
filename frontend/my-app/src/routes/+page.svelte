@@ -7,6 +7,7 @@
   import CourseCard from "./CourseCard.svelte";
   import Cart from "./Cart.svelte";
   import CartItem from "./CartItem.svelte";
+  import TeacherProfile from "./TeacherProfile.svelte";
   export const images = [
     {
       alt: 'Cosmic timetraveler',
@@ -20,9 +21,11 @@
     }
   ];
   import Banner from "./Banner.svelte";
+  
   // import { images } from './imageData/+server.js';
   onMount(() => {});
   const scaleAnimation = (x) => scale(x, { duration: 500, easing: quintOut });
 </script>
 
-<Cart />
+<!-- <Cart /> -->
+<TeacherProfile/>
