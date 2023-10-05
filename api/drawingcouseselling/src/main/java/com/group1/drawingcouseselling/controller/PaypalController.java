@@ -7,6 +7,7 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -15,8 +16,8 @@ import java.util.Map;
 public class PaypalController {
     public static final String SUCCESS_URL = "pay/success";
     public static final String CANCEL_URL = "pay/cancel";
-    @Value("${api.base.url}")
-    public static String apiBaseUrl;
+    @Value("#{applicationProperty.API_BASE_URL}")
+    public String apiBaseUrl;
     @Autowired
     PaypalService paypalService;
 

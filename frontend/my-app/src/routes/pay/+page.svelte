@@ -3,9 +3,9 @@
     import { ChevronDownSolid } from 'flowbite-svelte-icons';
     import { Select, Label } from 'flowbite-svelte';
     import headerImage from "$lib/assets/Header.jpg";
-    import Header from '../Header.svelte';
     import axios, { Axios, AxiosError, type AxiosResponse } from 'axios';
-    import { apiBaseUrl } from '../../service';
+    import { GetCookie, apiBaseUrl } from '../../service';
+  import { onMount } from 'svelte';
                     let countries = [
                       { value: 'USD', name: 'USD' },
                     ];
@@ -48,6 +48,25 @@
         paypal = false;
         other = true;
     }
+    async function GetTotalPriceMethod(){
+        try{
+            await axios.get(apiBaseUrl + "carts/total",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GetCookie("USER")}`,
+                }
+            }).then((response)=>{
+                order.price = response.data;
+                order.currency = "USD";
+            })
+        }catch(e){
+
+        }
+    }
+    onMount(()=>{
+        GetTotalPriceMethod();
+    })
 </script>
 
 <div class="min-w-screen min-h-screen bg-gray-200 flex items-center justify-center px-5 pb-10 pt-16 mt-20">
