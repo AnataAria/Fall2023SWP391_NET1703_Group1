@@ -19,9 +19,9 @@
     cartTotal.subtotal = cartTotal.subtotal + price;
   }
   let cartTotal= {
-    subtotal:19.99,
-    taxes: 1.99,
-    shipping: 0.00,
+    subtotal:19,
+    taxes: 2,
+    shipping: 0,
     total: 0
   }
 let courses:CourseTemplate[] = [];
@@ -36,6 +36,7 @@ let courses:CourseTemplate[] = [];
         .then((response) => {
           console.log(response.data);
           courses = response.data.courseList;
+          cartTotal.subtotal = response.data.localTotal;
         });
     } catch (error) {
       console.log(error);
@@ -67,8 +68,7 @@ let courses:CourseTemplate[] = [];
               <TotalCart 
               sub={cartTotal.subtotal}
               taxes={cartTotal.taxes}
-              shipping={cartTotal.shipping}
-              total={cartTotal.total + cartTotal.taxes + cartTotal.shipping}
+              total={cartTotal.subtotal + cartTotal.taxes + cartTotal.shipping}
               />
           </div>
       </div>
