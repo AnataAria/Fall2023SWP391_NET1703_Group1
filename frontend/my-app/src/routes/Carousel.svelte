@@ -4,6 +4,19 @@
   export let scrollBy = 3;
   const paginationFactor = 350;
   const totalPaginationPixels = scrollBy * paginationFactor;
+  import { Carousel } from 'flowbite-svelte';
+  export const images = [
+    {
+      alt: 'Cosmic timetraveler',
+      src: 'https://assetsio.reedpopcdn.com/nahida-build.jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp',
+      title: 'cosmic-timetraveler-pYyOZ8q7AII-unsplash.com'
+    },
+    {
+      alt: 'Cristina Gottardi',
+      src: 'https://lh4.googleusercontent.com/I1t_SGk_u_Dqz6GARX_9YowniYN4X2fklKh7AYaToc2DTlFz0HXLDtbULx3uuayMibqsyfpm8i5IYiATQBctBDUZaymgQuH5ts_WjxbRkxbZqPJ2QicXkv7U90z6r_wI0ikN_aWYJk-bDVQDWYcdLDAle2c5sE2bm20Ubfto56EmdoMqR4DnDlWNVIHQLg',
+      title: 'cristina-gottardi-CSpjU6hYo_0-unsplash.com'
+    }
+  ];  
   import CourseCard from "./CourseCard.svelte";
 
   $: offset = 0;
@@ -19,27 +32,36 @@
   };
 </script>
 
-<h1>Recommended for you</h1>
+<div class="flex flex-col justify-center mt-32 px-36">
+  <div class="">
+  <Carousel {images} let:Controls duration="3000">
+    <Controls />
+    
+  </Carousel>
+</div>
+</div>
+
+<!-- <h1>Recommended for you</h1>
 <center>
   <main>
     <div class="items" style="transform: translateX({offset}px);">
       {#each items as item}
-        <!-- <a
+         <a
           href="/course/{item}"
           class="item"
           style="background-color: hsla({i * 50}deg, 75%, 55%);">{item}
         </a> -->
-        <CourseCard id={item+1} isFetchManual={false}></CourseCard>
-      {/each}
-    </div>
+        <!-- <CourseCard id={item+1} isFetchManual={false}></CourseCard> -->
+      <!-- {/each} -->
+    <!-- </div>
   </main>
   <br />
   <button disabled={atStart} on:click={() => move(-1)}>&lsaquo; </button>
-  <button disabled={atEnd} on:click={() => move(1)}> &rsaquo;</button>
-</center>
+  <button disabled={atEnd} on:click={() => move(1)}> &rsaquo;</button> -->
+<!-- </center> --> 
 
 <!--Style-->
-<style>
+<!-- <style>
   main {
     width: 1400px;
     overflow: hidden;
@@ -83,4 +105,4 @@
     font-style: italic;
     color: #9f9f9f;
   }
-</style>
+</style> -->
