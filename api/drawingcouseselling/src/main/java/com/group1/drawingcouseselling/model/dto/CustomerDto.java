@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 @Builder
-public record CustomerDto(BigDecimal customerID, String fullName, Date birthDate, EGender gender, Byte[] avatar, String email) {
+public record CustomerDto(BigDecimal customerID, String fullName, Date birthDate, EGender gender, String email, Date joinDate) {
 
 }

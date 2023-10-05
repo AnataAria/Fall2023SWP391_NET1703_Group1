@@ -76,14 +76,40 @@ public class CartServiceImpl implements CartService {
     public CartDto getAllCartOnPaging(Integer page, Integer maxPage, String email) {
         Collection<BigDecimal> cartList = convertStringToArray(email);
         List<CourseDto> courseList = null;
+        BigDecimal baseTotal = BigDecimal.ZERO;
         if(!cartList.isEmpty()){
-            courseList = courseRepository.searchCourseByIdList(cartList).stream().map(a -> new Course().convertEntityToDto(a)).toList();
+            var course = courseRepository.searchCourseByIdList(cartList);
+            baseTotal = calculateBaseTotalCart(course);
+            courseList = course.stream().map(a -> new Course().convertEntityToDto(a)).toList();
             Pageable pageable = PageRequest.of(page-1, maxPage);
             int start = (int) pageable.getOffset();
             int end = Math.min((start + pageable.getPageSize()), courseList.size());
             courseList  = courseList.subList(start,end);
         }
         if(courseList == null) courseList = new ArrayList<>();
-        return CartDto.builder().courseList(courseList).build();
+        return CartDto.builder()
+                .courseList(courseList)
+                .localTotal(baseTotal)
+                .build();
+    }
+    @Override
+    public BigDecimal calculateBaseTotalCart(String email){
+        Collection<BigDecimal> cartList = convertStringToArray(email);
+        BigDecimal baseTotal = BigDecimal.ZERO;
+        if(!cartList.isEmpty()){
+            var course = courseRepository.searchCourseByIdList(cartList);
+            baseTotal = calculateBaseTotalCart(course);
+        }
+        return baseTotal;
+    }
+
+    private BigDecimal calculateBaseTotalCart(List<Course> courseList){
+        BigDecimal totalPrice = BigDecimal.ZERO;
+        if(courseList != null){
+            for(Course c : courseList){
+                totalPrice = totalPrice.add(c.getPrice());
+            }
+        }
+        return totalPrice;
     }
 }

@@ -1,3 +1,36 @@
+<script lang="ts">
+  import axios from "axios";
+    import {GetCookie, apiBaseUrl} from "../../service";
+  import { onMount } from "svelte";
+    interface CustomerInterface{
+        customerID: number,
+        fullName: string,
+        birthDate: Date,
+        gender: number,
+        email: string,
+        joinDate: Date
+    }
+    let customerInfo:CustomerInterface = [];
+    async function getCustomerInfo(){
+        try{
+            await axios.get(apiBaseUrl + 'customer',
+            {
+                headers: {
+                    Authorization: `Bearer ${GetCookie("USER")}`,
+                }
+            }
+            ).then((response) => {
+                 if(response.status === 200){
+                    console.log(response.data);
+                    customerInfo = response.data;
+                 }
+            })
+        }catch(e){}
+    }
+    onMount(() => {
+        getCustomerInfo();
+    })
+</script>
 <div class="bg-gray-100 mt-20">
     <div class="container mx-auto py-8">
         <div class="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
@@ -7,7 +40,7 @@
                         <img src="https://randomuser.me/api/portraits/men/94.jpg" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
 
                         
-                        <h1 class="text-xl font-bold">John Doe</h1>
+                        <h1 class="text-xl font-bold">{customerInfo.fullName}</h1>
                         
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
                             <a href="#" class="bg-orange-500 text-white py-2 px-4 rounded">Edit Profile</a>
@@ -31,7 +64,7 @@
                 <div class="bg-white shadow rounded-lg p-6">
                     <div class="bg-white p-3 shadow-sm rounded-sm">
                         <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                            <span clas="text-green-500">
+                            <span class="text-green-500">
                                 <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -43,38 +76,30 @@
                         <div class="text-gray-700">
                             <div class="grid md:grid-cols-2 text-sm">
                                 <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">First Name</div>
-                                    <div class="px-4 py-2">Jane</div>
-                                </div>
-                                <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Last Name</div>
-                                    <div class="px-4 py-2">Doe</div>
+                                    <div class="px-4 py-2 font-semibold">Full Name</div>
+                                    <div class="px-4 py-2">{customerInfo.fullName}</div>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Gender</div>
-                                    <div class="px-4 py-2">Female</div>
+                                    <div class="px-4 py-2">{customerInfo.gender}</div>
                                 </div>
                                 <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Contact No.</div>
-                                    <div class="px-4 py-2">+11 998001001</div>
+                                    <div class="px-4 py-2 font-semibold">Customer ID</div>
+                                    <div class="px-4 py-2">{customerInfo.customerID}</div>
                                 </div>
                                 <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Current Address</div>
-                                    <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                                </div>
-                                <div class="grid grid-cols-2">
-                                    <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                                    <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
+                                    <div class="px-4 py-2 font-semibold">Join Date</div>
+                                    <div class="px-4 py-2">{customerInfo.joinDate}</div>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Email.</div>
                                     <div class="px-4 py-2">
-                                        <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a>
+                                        <a class="text-blue-800" href="mailto:jane@example.com">{customerInfo.email}</a>
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Birthday</div>
-                                    <div class="px-4 py-2">Feb 06, 1998</div>
+                                    <div class="px-4 py-2">{customerInfo.birthDate}</div>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,7 @@
 <script lang="ts">
-    import Star from "../../Star.svelte";
     import { page } from "$app/stores";
   import axios from "axios";
   import { onMount } from "svelte";
-  import Header from "../../Header.svelte";
   let course = $page.params.id;
   let name = "";
   let price = "";
@@ -38,7 +36,6 @@
     handleGetCourse();
   });
 </script>
-<Header></Header>
 <div class = "card-wrapper">
     <div class = "card">
       <!-- card left -->
@@ -75,8 +72,6 @@
           </button>
           <button type = "button" class = "btn">Wishlist</button>
         </div>
-  
-       
       </div>
     </div>
   </div>
