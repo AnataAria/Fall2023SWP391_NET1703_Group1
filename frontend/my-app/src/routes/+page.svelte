@@ -3,6 +3,7 @@
   import "../app.postcss";
   
   import Banner from "./Banner.svelte";
+  
 </script>
 <Banner></Banner>
 
