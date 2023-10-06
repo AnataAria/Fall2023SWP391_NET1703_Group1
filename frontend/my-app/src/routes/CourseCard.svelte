@@ -84,7 +84,7 @@
     }
   }
 </script>
-<Card padding="none" class="w-64 h-auto" href="/course/{id}">
+<Card padding="none" class="w-auto h-auto" href="/course/{id}">
   <a href="/course/{id}">
     <img class="p-11 rounded-t-sm" src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c" alt="product 1" />
   </a>
