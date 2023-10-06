@@ -8,7 +8,7 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'please build')
+    if: contains(github.event.head_commit.message, 'create pr')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
