@@ -17,7 +17,7 @@
   // import Dribble from "../../utils/icons/Dribble.svelte";
 </script>
 
-
+<footer>
   <Footer footerType="socialmedia" class="mt-auto" >
     <div class="md:flex md:justify-between top-px">
       <div class="mb-6 md:mb-0">
@@ -94,4 +94,6 @@
       </div>
     </div>
   </Footer>
+</footer>
+  
 
