@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - '*'
-
 jobs:
   create-pr:
     runs-on: ubuntu-latest
