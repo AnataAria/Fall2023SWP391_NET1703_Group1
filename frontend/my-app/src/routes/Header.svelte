@@ -1,6 +1,8 @@
 <script lang="ts">
-  import SearchBar from "./SearchBar.svelte";
   import { onMount } from "svelte";
+  import { DarkMode } from 'flowbite-svelte';
+
+  let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2';
   import {
     Navbar,
     NavBrand,
@@ -16,28 +18,18 @@
     DropdownDivider,
   } from "flowbite-svelte";
   import { SearchOutline } from "flowbite-svelte-icons";
-  let status = "";
+  import { IsLogin } from "../service";
+  import { GetCookie, Logout } from "../service";
   import headerImage from "$lib/assets/Header.jpg";
   let jwts;
-  function getUserCookie() {
-    const name = "USER";
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      const cookieParts = cookie.split("=");
-      const cookieName = cookieParts[0];
-      if (cookieName === name) {
-        return cookieParts[1];
-      }
-    }
-    return null; // Cookie not found
-  }
+  let loginStatus = false;
+  let status: boolean = false;
   function removeUserCookies(name: string) {
     const pastDate = new Date("Thu, 01 Jan 1970 00:00:00 UTC");
     document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
   }
   function loginLogoutHandler() {
-    const jwt = getUserCookie();
+    const jwt = GetCookie("USER");
     if (jwt) {
       removeUserCookies("USER");
       window.location.reload();
@@ -47,6 +39,7 @@
   }
   let input = "";
   import { ShowMessage } from "../service";
+  import LoginModal from "./LoginModal.svelte";
   function handleSearch() {
     if (!input) {
       ShowMessage("You should enter at least 3 word for search", 3000, 1);
@@ -54,22 +47,17 @@
       window.location.href = "/search/" + input;
     }
   }
-  // onMount(() => {
-  //   const jwt = getUserCookie();
-  //   if (jwt) {
-  //     status = "Logout";
-  //   } else status = "Login";
-  // });
+  onMount(() => {
+    if (IsLogin()) {
+      status = true;
+    }
+  });
 </script>
 
 <!-- ======= Header ======= -->
 <Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 left-0 border-b">
   <NavBrand href="/">
-    <img
-      src="{headerImage}"
-      class="mr-3 h-6 lg:h-20"
-      alt="Ademy Logo"
-    />
+    <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
   </NavBrand>
   <div class="flex md:order-2">
     <Button
@@ -97,28 +85,41 @@
       </form>
     </div>
     <div class="ml-20 w-1">
-      <Avatar
-      id="user-drop"
-      src=""
-      class="cursor-pointer"
-    />
-    <Dropdown triggeredBy="#user-drop">
-      <DropdownHeader>
-        <span class="block text-sm">Bonnie Green</span>
-        <span class="block truncate text-sm font-medium">name@flowbite.com</span>
-      </DropdownHeader>
-      <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
-      <DropdownDivider />
-      <DropdownItem>Profile</DropdownItem>
-      <DropdownItem>Settings</DropdownItem>
-      <DropdownItem>Earnings</DropdownItem>
-      <DropdownItem>Cart</DropdownItem>
-      <DropdownItem>My Learning</DropdownItem>
-      <DropdownDivider />
-      <DropdownItem>Sign out</DropdownItem>
-    </Dropdown>
+      {#if status === true}
+        <Avatar id="user-drop" src="" class="cursor-pointer" />
+        <Dropdown triggeredBy="#user-drop">
+          <DropdownHeader>
+            <span class="block text-sm">Bonnie Green</span>
+            <span class="block truncate text-sm font-medium"
+              >name@flowbite.com</span
+            >
+          </DropdownHeader>
+          <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
+          <DropdownDivider />
+          <DropdownItem on:click={()=>{
+            window.location.href = "/profile";
+          }}>Profile</DropdownItem>
+          <DropdownItem>Settings</DropdownItem>
+          <DropdownItem>Earnings</DropdownItem>
+          <DropdownItem on:click={()=>{
+            window.location.href = "/cart";
+          }}>Cart</DropdownItem>
+          <DropdownItem>My Learning</DropdownItem>
+          <DropdownDivider />
+          <DropdownItem on:click={()=>{
+            Logout();
+            window.location.reload();
+          }}>Sign out</DropdownItem>
+        </Dropdown>
+      {:else}
+        <div class="flex justify-center">
+          <Button color="red" on:click={()=>{
+            loginStatus=true;
+          }}>Login</Button>
+          <Button color="alternative">Sign Up</Button>
+        </div>
+      {/if}
     </div>
-    
     <NavHamburger />
   </div>
   <NavUl>
@@ -128,4 +129,5 @@
     <NavLi href="/contact">Contact</NavLi>
   </NavUl>
 </Navbar>
+<LoginModal formModal={loginStatus}></LoginModal>
 <!-- End Header -->

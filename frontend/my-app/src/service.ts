@@ -1,8 +1,8 @@
 export const apiBaseUrl : string = "http://localhost:9090/api/v1/"
 export const BaseUrl : string = "http://localhost:3000/"
+import axios from 'axios';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
-
 let headerRequest = {
   "Content-Type": "application/json",
   "Accept": "application/json"
@@ -14,19 +14,50 @@ const alarm = {
 const ok = {
   background: "linear-gradient(to right, #00b09b, #96c93d)"
 }
-
-export function GetUserCookie() {
-    const name = "USER";
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      const cookieParts = cookie.split("=");
-      const cookieName = cookieParts[0];
-      if (cookieName === name) {
-        return cookieParts[1];
-      }
+// function getUserCookie() {
+//   const name = "USER";
+//   const cookies = document.cookie.split(";");
+//   for (let i = 0; i < cookies.length; i++) {
+//     const cookie = cookies[i].trim();
+//     const cookieParts = cookie.split("=");
+//     const cookieName = cookieParts[0];
+//     if (cookieName === name) {
+//       return cookieParts[1];
+//     }
+//   }
+//   return null; // Cookie not found
+// }
+export async function Logout(){
+  const jwt = GetCookie("USER");
+  if(jwt){
+    try{
+      await axios.get(apiBaseUrl + 'auth/logout', {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        }
+      }).then((response) => {
+        if(response.status === 200){
+          RemoveUserCookies("USER");
+          window.location.href = "/";
+        }
+      })
+    }catch(error){
+      RemoveUserCookies("USER");
+      window.location.href = "/";
     }
-    return null; // Cookie not found
+  }
+}
+export function GetCookie(name: string ){
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    const cookieParts = cookie.split("=");
+    const cookieName = cookieParts[0];
+    if (cookieName ===  name) {
+      return cookieParts[1];
+    }
+  }
+  return null; // Cookie not found
 }
 
 export function RemoveUserCookies(name:string) {
@@ -67,4 +98,44 @@ export function CurrencyHandler(value:number){
     
   });
   return formatter.format(value);
+}
+
+
+export async function AuthenticatePage(roles:string){
+  let jwtData = {
+    email: "",
+    roles: "",
+    createDate:"",
+    isActive:false
+  }
+  
+  const token = GetCookie("USER");
+  if(token!= null){
+    let header = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+    await axios.get(apiBaseUrl + 'account', {
+      headers: header
+    })
+    .then((res) => {
+      if(res.status === 200){
+        jwtData = res.data;
+        console.log(jwtData);
+      }
+    });
+    if(jwtData.roles !== roles) {
+      // ShowMessage("Bạn không có quyền truy cập vào trang này", 3000, 2);
+      window.location.href = "/";
+    }
+  }
+}
+
+export function IsLogin(){
+  const token = GetCookie("USER");
+  if(token!= null){
+    return true;
+  }
+  return false;
 }

@@ -1,13 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import SearchBar from "./SearchBar.svelte";
-  import Header from "./Header.svelte";
   import "../app.postcss";
-  import Footer from "./Footer.svelte";
-  import CourseCard from "./CourseCard.svelte";
-  import Cart from "./Cart.svelte";
-  import CartItem from "./CartItem.svelte";
-  import TeacherProfile from "./TeacherProfile.svelte";
   export const images = [
     {
       alt: 'Cosmic timetraveler',
@@ -22,10 +15,5 @@
   ];
   import Banner from "./Banner.svelte";
   
-  // import { images } from './imageData/+server.js';
-  onMount(() => {});
-  const scaleAnimation = (x) => scale(x, { duration: 500, easing: quintOut });
 </script>
-
-<!-- <Cart /> -->
-<TeacherProfile/>
+<Banner></Banner>

@@ -1,15 +1,14 @@
 package com.group1.drawingcouseselling.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Order {
+@Getter
+@Setter
+public class OrderDto {
     private double price;
     private String currency;
     private String method;
