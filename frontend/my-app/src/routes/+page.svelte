@@ -3,7 +3,10 @@
   import "../app.postcss";
   
   import Banner from "./Banner.svelte";
+  import CourseDetail from "./CourseDetail.svelte";
+  import Carousel from "./Carousel.svelte";
   
 </script>
-<Banner></Banner>
+<Carousel></Carousel>
 
+<CourseDetail></CourseDetail>
