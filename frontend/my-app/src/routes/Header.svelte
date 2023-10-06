@@ -55,7 +55,7 @@
 </script>
 
 <!-- ======= Header ======= -->
-<Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 left-0 border-b">
+<Navbar class="px-2 sm:px-4 py-2.5 fixed  z-20 top-0 left-0 border-b md:flex md:justify-between ">
   <NavBrand href="/">
     <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
   </NavBrand>
@@ -114,7 +114,7 @@
       {:else}
         <div class="flex justify-center">
           <Button color="red" on:click={()=>{
-            loginStatus=true;
+            loginLogoutHandler();
           }}>Login</Button>
           <Button color="alternative">Sign Up</Button>
         </div>
