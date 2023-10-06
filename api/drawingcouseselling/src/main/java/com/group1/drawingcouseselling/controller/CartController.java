@@ -1,6 +1,5 @@
 package com.group1.drawingcouseselling.controller;
 
-import com.group1.drawingcouseselling.config.JwtAuthenticationFilter;
 import com.group1.drawingcouseselling.model.dto.CartDto;
 import com.group1.drawingcouseselling.service.CartService;
 import com.group1.drawingcouseselling.service.JwtService;
@@ -26,5 +25,18 @@ public class CartController {
     public ResponseEntity<CartDto> addCart(@RequestParam(required = true) Integer courseID, @RequestHeader(value = "Authorization", defaultValue = "") String token){
         String email = jwtService.extractUserEmail(token.substring(7));
         return ResponseEntity.ok(cartService.addCart(email, courseID));
+    }
+    @GetMapping("/carts")
+    public ResponseEntity<CartDto> getCarts(@RequestHeader(value = "Authorization", defaultValue = "") String token,
+                                            @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                            @RequestParam(value = "maxPage", defaultValue = "5") Integer maxSize
+                                            ){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(cartService.getAllCartOnPaging(page,maxSize,email));
+    }
+    @GetMapping("/carts/total")
+    public ResponseEntity<BigDecimal> getCartTotal(@RequestHeader(value = "Authorization", defaultValue = "") String token) {
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(cartService.calculateBaseTotalCart(email));
     }
 }

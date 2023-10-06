@@ -1,27 +1,28 @@
 <script lang="ts">
     import axios from "axios";
-    import Star from "./Star.svelte";
     import { onMount } from "svelte";
     import {CurrencyHandler} from "../service";
-    import { GetUserCookie } from "../service";
+    import { GetCookie } from "../service";
     export let id: number;
     export let name: string;
     export let price: number;
     export let description: string;
     export let duration: string;
     export let instructorName: string;
+    export let instructorId: number;
     export let isFetchManual: boolean;
     import { Card, Button, Rating, Badge } from 'flowbite-svelte';
-    let jwtToken:string = "";
+    let jwtToken:string | null = "";
     let course = {
         name: "",
         price: 0,
         description: "",
         durations: "",
-        instructorName: ""
+        instructorName: "",
+        instructorID: 0
     }
     async function handleAddCart(){
-      jwtToken = GetUserCookie();
+      jwtToken = GetCookie("USER");
       if(!jwtToken){
         window.location.href = "/login";
       }
@@ -33,7 +34,6 @@
           }
         })
         .then((response) => {
-          
             if(response.data.status === 200){
               alert("Add cart successfully")
             }
@@ -66,7 +66,8 @@
         price: price,
         description: description,
         durations: duration,
-        instructorName: instructorName
+        instructorName: instructorName,
+        instructorID: instructorId
       }
     }
   });
@@ -84,14 +85,14 @@
   }
 </script>
 <Card padding="none" class="w-64 h-auto" href="/course/{id}">
-  <a href="/">
+  <a href="/course/{id}">
     <img class="p-11 rounded-t-sm" src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c" alt="product 1" />
   </a>
   <div class="px-5 pb-5">
-    <a href="/">
-      <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white overflow-x-hidden">{course.name}</h5>
+    <a href="/course/{id}">
+      <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white whitespace-nowrap w-50 overflow-hidden truncate">{course.name}</h5>
     </a>
-    <a href="/">
+    <a href="/instructor/{1}">
       <h5 class="text-sm font-semibold tracking-tight text-gray-900 dark:text-white">By {course.instructorName}</h5>
     </a>
     <Rating rating={4} size={24} class="mt-2.5 mb-5">

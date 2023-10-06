@@ -50,7 +50,7 @@
               enableSubmitButton();
               message = "Password changed successfully! Redirecting"
               setTimeout(() => {
-                window.location.href = '/login'
+                window.location.href = '/'
               }, 1500)
               // enableSubmitButton();
             }

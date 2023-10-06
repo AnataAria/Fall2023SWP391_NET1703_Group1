@@ -12,7 +12,7 @@
     fullname: "",
     password: "",
     birthDate: "",
-    gender: "",
+    gender: ""
   };
 
   let loginForm = {
