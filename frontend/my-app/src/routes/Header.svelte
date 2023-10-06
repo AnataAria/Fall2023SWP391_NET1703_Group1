@@ -39,7 +39,7 @@
   }
   let input = "";
   import { ShowMessage } from "../service";
-  import LoginModal from "./LoginModal.svelte";
+  // import LoginModal from "./LoginModal.svelte";
   function handleSearch() {
     if (!input) {
       ShowMessage("You should enter at least 3 word for search", 3000, 1);
@@ -129,5 +129,5 @@
     <NavLi href="/contact">Contact</NavLi>
   </NavUl>
 </Navbar>
-<LoginModal formModal={loginStatus}></LoginModal>
+<!-- <LoginModal formModal={loginStatus}></LoginModal> -->
 <!-- End Header -->
