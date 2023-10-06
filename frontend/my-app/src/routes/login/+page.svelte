@@ -5,14 +5,13 @@
   axios.defaults.withCredentials = true;
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
-  import Header from "../Header.svelte";
-  import Footer from "../Footer.svelte";
+
   let registerForm = {
     email: "",
     fullname: "",
     password: "",
     birthDate: "",
-    gender: ""
+    gender: "",
   };
 
   let loginForm = {
@@ -142,290 +141,118 @@
 </script>
 
 <!-- <link href="/src/theme/style.sass" rel="stylesheet" /> -->
-<div class="login-wrap" style="margin-top: 8em;">
-  <div class="login-html">
-    <input id="tab-1" type="radio" name="tab" class="sign-in" checked /><label
-      for="tab-1"
-      class="tab">Sign In</label
-    >
-    <input id="tab-2" type="radio" name="tab" class="sign-up" /><label
-      for="tab-2"
-      class="tab">Sign Up</label
-    >
-    <div class="login-form">
-      <div class="sign-in-htm">
-        <div class="group">
-          <label for="user" class="label">Email</label>
-          <input
-            id="user"
-            type="text"
-            class="input"
-            bind:value={loginForm.email}
-          />
-          <p />
+<div
+  class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+>
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+      Sign in to your account
+    </h2>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <form class="space-y-6" on:submit={handleLogin}>
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email address
+          </label>
+          <div class="mt-1">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Enter your email address"
+              bind:value={loginForm.email}
+            />
+          </div>
         </div>
-        <div class="group">
-          <label for="pass" class="label">Password</label>
-          <input
-            id="pass"
-            type="password"
-            class="input"
-            data-type="password"
-            bind:value={loginForm.password}
-          />
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <div class="mt-1">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Enter your password"
+              bind:value={loginForm.password}
+            />
+          </div>
         </div>
-        <div class="group">
-          <input id="check" type="checkbox" class="check" checked />
-          <label for="check"><span class="icon" /> Keep me Signed in</label>
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input
+              id="remember_me"
+              name="remember_me"
+              type="checkbox"
+              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+            />
+            <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
+          </div>
+
+          <div class="text-sm">
+            <a
+              href="/forgotpassword"
+              class="font-medium text-blue-600 hover:text-blue-500"
+            >
+              Forgot your password?
+            </a>
+          </div>
         </div>
-        <div class="group">
-          <input
-            type="button"
-            class="button"
-            value="Sign In"
-            on:click={handleLogin}
-          />
-        </div>
-        <div class="hr" />
-        <div class="foot-lnk" style="color: white;">
-          <a href="/forgotpassword">Forgot Password?</a>
-        </div>
-      </div>
-      <div class="sign-up-htm">
-        <div class="group">
-          <label for="user" class="label">Email</label>
-          <input
-            id="user"
-            type="text"
-            class="input"
-            bind:value={registerForm.email}
-          />
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Password</label>
-          <input
-            id="pass"
-            type="password"
-            class="input"
-            data-type="password"
-            bind:value={registerForm.password}
-          />
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Repeat Password</label>
-          <input
-            id="pass"
-            type="password"
-            class="input"
-            data-type="password"
-            bind:value={rePassword}
-          />
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Full Name</label>
-          <input
-            id="pass"
-            type="text"
-            class="input"
-            bind:value={registerForm.fullname}
-          />
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Birthday</label>
-          <input
-            id="pass"
-            type="date"
-            class="input"
-            bind:value={registerForm.birthDate}
-          />
-        </div>
-        <div class="group">
-          <label for="pass" class="label">Gender</label>
-          <select
-            class="input"
-            bind:value={registerForm.gender}
-            on:change={() => {
-              console.log(registerForm.gender);
-            }}
-            id="gender"
-          >
-            {#each questions as question (question.id)}
-              <option value={question.id}>
-                {question.text}
-              </option>
-            {/each}
-          </select>
-        </div>
-        <div class="group">
-          <input
+
+        <div>
+          <button
             type="submit"
-            class="button"
-            value="Sign Up"
-            on:click={handleRegister}
-          />
+            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Sign in
+          </button>
         </div>
-        <div class="hr" />
+      </form>
+      <div class="mt-6">
+        
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300" />
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-gray-100 text-gray-500">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols">
+          <div>
+            <a
+              href="#"
+              class="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <img
+                class="h-5 w-5"
+                src="https://www.svgrepo.com/show/380993/google-logo-search-new.svg  "
+                alt=""
+              />
+            </a>
+          </div>
+        </div>
+        <p class="mt-10 text-center text-sm text-gray-500">
+          Not a member?
+          <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register here</a>
+        </p>
       </div>
     </div>
   </div>
 </div>
-<style>
-  *,
-  :after,
-  :before {
-    box-sizing: border-box;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .login-wrap {
-    width: 100%;
-    margin: auto;
-    max-width: 525px;
-    min-height: 670px;
-    position: relative;
-    /* background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) */
-    /* no-repeat center; */
-    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
-      0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  }
-  .login-html {
-    width: 100%;
-    height: 110%;
-    position: absolute;
-    padding: 90px 70px 50px 70px;
-    background: rgba(40, 57, 101, 0.9);
-  }
-  .login-html .sign-in-htm,
-  .login-html .sign-up-htm {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    transform: rotateY(180deg);
-    backface-visibility: hidden;
-    transition: all 0.4s linear;
-  }
-  .login-html .sign-in,
-  .login-html .sign-up,
-  .login-form .group .check {
-    display: none;
-  }
-  .login-html .tab,
-  .login-form .group .label,
-  .login-form .group .button {
-    text-transform: uppercase;
-  }
-  .login-html .tab {
-    font-size: 22px;
-    margin-right: 15px;
-    padding-bottom: 5px;
-    margin: 0 15px 10px 0;
-    display: inline-block;
-    border-bottom: 2px solid transparent;
-  }
-  .login-html .sign-in:checked + .tab,
-  .login-html .sign-up:checked + .tab {
-    color: #fff;
-    border-color: #1161ee;
-  }
-  .login-form {
-    min-height: 345px;
-    position: relative;
-    perspective: 1000px;
-    transform-style: preserve-3d;
-  }
-  .login-form .group {
-    margin-bottom: 15px;
-  }
-  .login-form .group .label,
-  .login-form .group .input,
-  .login-form .group .button {
-    width: 100%;
-    color: #fff;
-    display: block;
-  }
-  .login-form .group .input,
-  .login-form .group .button {
-    border: none;
-    padding: 15px 20px;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.1);
-  }
-  .login-form .group input[data-type="password"] {
-    text-security: circle;
-    -webkit-text-security: circle;
-  }
-  .login-form .group .label {
-    color: white;
-    font-size: 12px;
-  }
-  .login-form .group .button {
-    background: #1161ee;
-  }
-  .login-form .group label .icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 2px;
-    position: relative;
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.1);
-  }
-  .login-form .group label .icon:before,
-  .login-form .group label .icon:after {
-    content: "";
-    width: 10px;
-    height: 2px;
-    background: #fff;
-    position: absolute;
-    transition: all 0.2s ease-in-out 0s;
-  }
-  .login-form .group label .icon:before {
-    left: 3px;
-    width: 5px;
-    bottom: 6px;
-    transform: scale(0) rotate(0);
-  }
-  .login-form .group label .icon:after {
-    top: 6px;
-    right: 0;
-    transform: scale(0) rotate(0);
-  }
-  .login-form .group .check:checked + label {
-    color: #fff;
-  }
-  .login-form .group .check:checked + label .icon {
-    background: #1161ee;
-  }
-  .login-form .group .check:checked + label .icon:before {
-    transform: scale(1) rotate(45deg);
-  }
-  .login-form .group .check:checked + label .icon:after {
-    transform: scale(1) rotate(-45deg);
-  }
-  .login-html
-    .sign-in:checked
-    + .tab
-    + .sign-up
-    + .tab
-    + .login-form
-    .sign-in-htm {
-    transform: rotate(0);
-  }
-  .login-html .sign-up:checked + .tab + .login-form .sign-up-htm {
-    transform: rotate(0);
-  }
-
-  .hr {
-    height: 2px;
-    margin: 60px 0 50px 0;
-    background: rgba(255, 255, 255, 0.2);
-  }
-  .foot-lnk {
-    text-align: center;
-  }
-</style>
