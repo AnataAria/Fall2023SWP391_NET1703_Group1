@@ -3,13 +3,6 @@
   import axios from "axios";
   import { onMount } from "svelte";
   let course = $page.params.id;
-  let name = "";
-  let price = "";
-  let description = "";
-  let durations = "";
-  let instructorID = "";
-  let instructorName = "";
-  let token = "";
   export let id;
   let courseForm = {
         name: "",
@@ -54,7 +47,6 @@
         <h2 class = "product-title">{courseForm.name}</h2>
         <a href = "#" class = "product-link">@{courseForm.instructorName}</a>
         <br/>
-          <Star />
         <div class = "product-price">
           <p class = "last-price">Price: <span>{courseForm.price} VND</span></p>
           

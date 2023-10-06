@@ -15,14 +15,12 @@
   ];
   import Carousel from "./Carousel.svelte";
   import CourseCard from "./CourseCard.svelte";
+  import CardScrollContainer from "./CardScrollContainer.svelte";
 </script>
 <Carousel/>
-<div class="">
+<div class="flex justify-center">
+  <div class="w-11/12">
+    <CardScrollContainer></CardScrollContainer>
+  </div>
+</div>
 
-</div>
-<div class="flex flex-nowrap space-x-8">
-  <CourseCard></CourseCard>
-  <CourseCard></CourseCard>
-  <CourseCard></CourseCard>
-  <CourseCard></CourseCard>
-</div>
