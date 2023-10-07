@@ -5,8 +5,6 @@
   axios.defaults.withCredentials = true;
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
-  import Header from "../Header.svelte";
-  import Footer from "../Footer.svelte";
   let registerForm = {
     email: "",
     fullname: "",
@@ -151,7 +149,7 @@
 
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form class="space-y-6" action="#" method="POST">
+          <form class="space-y-6" on:submit={handleLogin}>
               <div>
                   <label for="email" class="block text-sm font-medium text-gray-700">
                       Email address
@@ -159,7 +157,8 @@
                   <div class="mt-1">
                       <input id="email" name="email" type="email" autocomplete="email" required
                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Enter your email address">
+                          placeholder="Enter your email address"
+                          bind:value={loginForm.email}>
                   </div>
               </div>
 
@@ -170,7 +169,8 @@
                   <div class="mt-1">
                       <input id="password" name="password" type="password" autocomplete="current-password" required
                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                          placeholder="Enter your password">
+                          placeholder="Enter your password"
+                          bind:value={loginForm.password}>
                   </div>
               </div>
 
@@ -184,7 +184,7 @@
                   </div>
 
                   <div class="text-sm">
-                      <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                      <a href="/forgotpassword" class="font-medium text-blue-600 hover:text-blue-500">
                           Forgot your password?
                       </a>
                   </div>
@@ -193,17 +193,11 @@
               <div>
                   <button type="submit"
                       class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-
                       Sign in
                   </button>
               </div>
           </form>
           <div class="mt-6">
-            <p class="mt-2 text-right text-sm text-gray-600 max-w">
-              <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-                  create an account
-              </a>
-            </p>
               <div class="relative">
                   <div class="absolute inset-0 flex items-center">
                       <div class="w-full border-t border-gray-300"></div>
@@ -224,6 +218,10 @@
                       </a>
                   </div>
               </div>
+              <p class="mt-10 text-center text-sm text-gray-500">
+                Not a member?
+                <a href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register</a>
+              </p>
           </div>
       </div>
   </div>

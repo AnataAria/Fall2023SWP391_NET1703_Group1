@@ -1,137 +1,62 @@
-<script>
+<script lang="ts">
+  import axios from "axios";
   import CourseCard from "./CourseCard.svelte";
-</script>
+  import { onMount } from "svelte";
+  import { page } from "$app/stores";
 
-<div class="mt-32">
+  interface CourseTemplate {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    durations: string;
+    instructorID: number;
+    instructorName: string;
+  }
+  let searchValue: string;
+  let course: CourseTemplate[] = [];
+  onMount(() => {
+    handlePull();
+  });
+  async function handlePull() {
+    try {
+      await axios
+        .get<CourseTemplate[]>(
+          `http://localhost:9090/api/v1/courses?maxPage=20`
+        )
+        .then((response) => {
+          console.log(response.data);
+          course = response.data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+</script>
+<div class="mt-32 mt-10 mb-10">
+  <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
+    Course Most Choices
+  </h1>
   <div class="media-scroller snaps-inline">
+    {#each course as item}
     <div class="media-element">
-      <CourseCard />
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <CourseCard />
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <CourseCard />
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <CourseCard />
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <CourseCard />
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <CourseCard/>
-      <p class="title">Short title</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc2Mw&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
+      <CourseCard id={item.id}
+      name={item.name}
+      description={item.description}
+      price={item.price}
+      instructorId={item.instructorID}
+      instructorName={item.instructorName}
+      duration={item.durations}
+      isFetchManual={true}
       />
-      <p class="title">Duis aute irure dolor</p>
     </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1641118961077-440391095cdc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc2Mw&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Cillum dolore eu</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1640767014413-b7d27c58b058?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc5NQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title" />
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1640948612546-3b9e29c23e98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc5NQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Excepteur sint occaecat cupidatat non proident</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1642484865851-111e68695d71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc5NQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">At lectus urnaVestibulum</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1642237778207-24985a0bf876?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc5NQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Vestibulum</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1642177584449-fa0b017dccc7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODc5NQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Adipiscing tristique risus nec feugiat</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1643249960396-d39d2a63ce8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg0Mw&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Rutrum tellus pellentesque eu tincidunt</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1641424222187-1c336d21804c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg0OA&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Bibendum enim</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1640998483268-d1faffa789ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODkwNA&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Amet commodo</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1642034451735-2a8df1eaa2c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg4OQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">A erat nam at lectus</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1640808238224-5520de93c939?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg4OQ&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Pellentesque eu tincidunt tortor aliquam nulla</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1643039952431-38adfa91f320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg0OA&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Quam adipiscing vitae</p>
-    </div>
-    <div class="media-element">
-      <img
-        src="https://images.unsplash.com/photo-1643148636637-58b3eb95cdad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTY0MzM5ODg0OA&ixlib=rb-1.2.1&q=80&w=400"
-        alt=""
-      />
-      <p class="title">Fermentum</p>
-    </div>
+    {/each}
   </div>
 </div>
 
 <style>
-  @import "https://unpkg.com/open-props";
-  @import "https://unpkg.com/open-props/normalize.min.css";
+  /* @import "https://unpkg.com/open-props";
+  @import "https://unpkg.com/open-props/normalize.min.css"; */
 
   .media-scroller {
     --_spacer: var(--size-3);
@@ -196,7 +121,7 @@
   .page-header {
     padding-block: var(--size-9);
     margin-block-end: var(--size-9);
-    background: var(--gradient-16);
+    /* background: var(--gradient-16); */
     color: var(--gray-0);
     box-shadow: var(--shadow-2);
   }

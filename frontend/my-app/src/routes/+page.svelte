@@ -13,6 +13,14 @@
       title: 'cristina-gottardi-CSpjU6hYo_0-unsplash.com'
     }
   ];
-  import Banner from "./Banner.svelte";
+  import Carousel from "./Carousel.svelte";
+  import CourseCard from "./CourseCard.svelte";
+  import CardScrollContainer from "./CardScrollContainer.svelte";
 </script>
-<Banner></Banner>
+<Carousel/>
+<div class="flex justify-center">
+  <div class="w-11/12">
+    <CardScrollContainer></CardScrollContainer>
+  </div>
+</div>
+

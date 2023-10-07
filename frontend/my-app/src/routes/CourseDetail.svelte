@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Star from "./Star.svelte";
+  import { Rating, AdvancedRating, ScoreRating } from 'flowbite-svelte';
 </script>
 
 <section class="text-gray-700 body-font overflow-hidden bg-white">
@@ -19,7 +19,7 @@
         </h1>
         <div class="flex mb-4">
           <span class="flex items-center">
-            <Star />
+            <Rating id="example-1" total={5} size={50} rating={1.4} />
             <span class="text-gray-600 ml-3">4 Reviews</span>
           </span>
         </div>

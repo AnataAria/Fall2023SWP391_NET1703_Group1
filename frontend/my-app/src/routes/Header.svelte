@@ -55,20 +55,11 @@
 </script>
 
 <!-- ======= Header ======= -->
-<Navbar class="px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 left-0 border-b">
+<Navbar class="px-2 sm:px-4 py-2.5 fixed  z-20 top-0 left-0 border-b md:flex md:justify-start">
   <NavBrand href="/">
     <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
   </NavBrand>
-  <div class="flex md:order-2">
-    <Button
-      color="blue"
-      data-collapse-toggle="mobile-menu-3"
-      aria-controls="mobile-menu-3"
-      aria-expanded="false"
-      class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-1"
-    >
-      <SearchOutline class="w-5 h-5" />
-    </Button>
+  <div class="flex">
     <div class="hidden relative md:block">
       <div
         class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
@@ -78,56 +69,60 @@
       <form on:submit={handleSearch}>
         <Input
           id="search-navbar"
-          class="pl-10"
+          class="pl-10 border-spacing-1 rounded-3xl h-12"
+          style="width: 650px"
           placeholder="Let's search..."
           bind:value={input}
         />
       </form>
     </div>
-    <div class="ml-20 w-1">
-      {#if status === true}
-        <Avatar id="user-drop" src="" class="cursor-pointer" />
-        <Dropdown triggeredBy="#user-drop">
-          <DropdownHeader>
-            <span class="block text-sm">Bonnie Green</span>
-            <span class="block truncate text-sm font-medium"
-              >name@flowbite.com</span
-            >
-          </DropdownHeader>
-          <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
-          <DropdownDivider />
-          <DropdownItem on:click={()=>{
-            window.location.href = "/profile";
-          }}>Profile</DropdownItem>
-          <DropdownItem>Settings</DropdownItem>
-          <DropdownItem>Earnings</DropdownItem>
-          <DropdownItem on:click={()=>{
-            window.location.href = "/cart";
-          }}>Cart</DropdownItem>
-          <DropdownItem>My Learning</DropdownItem>
-          <DropdownDivider />
-          <DropdownItem on:click={()=>{
-            Logout();
-            window.location.reload();
-          }}>Sign out</DropdownItem>
-        </Dropdown>
-      {:else}
-        <div class="flex justify-center">
-          <Button color="red" on:click={()=>{
-            loginStatus=true;
-          }}>Login</Button>
-          <Button color="alternative">Sign Up</Button>
-        </div>
-      {/if}
-    </div>
     <NavHamburger />
   </div>
   <NavUl>
-    <NavLi href="/">Home</NavLi>
-    <NavLi href="/about">About</NavLi>
-    <NavLi href="/docs/components/navbar">Navbar</NavLi>
-    <NavLi href="/contact">Contact</NavLi>
+    <NavLi href="/docs/components/navbar">Assign Instructor</NavLi>
+    <NavLi href="/contact">My Learning</NavLi>
+    <NavLi>
+      Your Cart
+    </NavLi>
   </NavUl>
+  <div class="ml-20 w-20">
+    {#if status === true}
+      <Avatar id="user-drop" src="" class="cursor-pointer" />
+      <Dropdown triggeredBy="#user-drop">
+        <DropdownHeader>
+          <span class="block text-sm">Bonnie Green</span>
+          <span class="block truncate text-sm font-medium"
+            >name@flowbite.com</span
+          >
+        </DropdownHeader>
+        <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
+        <DropdownDivider />
+        <DropdownItem on:click={()=>{
+          window.location.href = "/profile";
+        }}>Profile</DropdownItem>
+        <DropdownItem>Settings</DropdownItem>
+        <DropdownItem>Earnings</DropdownItem>
+        <DropdownItem on:click={()=>{
+          window.location.href = "/cart";
+        }}>Cart</DropdownItem>
+        <DropdownItem>My Learning</DropdownItem>
+        <DropdownDivider />
+        <DropdownItem on:click={()=>{
+          Logout();
+          window.location.reload();
+        }}>Sign out</DropdownItem>
+      </Dropdown>
+    {:else}
+      <div class="flex justify-center space-x-10 w-full">
+        <Button color="red" class="w-20" on:click={()=>{
+          loginLogoutHandler();
+        }}>Login</Button>
+        <Button color="alternative" on:click={()=>{
+          window.location.href="/register";
+        }}>Sign Up</Button>
+      </div>
+    {/if}
+  </div>
 </Navbar>
 <!-- <LoginModal formModal={loginStatus}></LoginModal> -->
 <!-- End Header -->
