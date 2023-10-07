@@ -140,7 +140,7 @@
 </script>
 
 <!-- <link href="/src/theme/style.sass" rel="stylesheet" /> -->
-<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-5">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
@@ -191,8 +191,8 @@
               </div>
 
               <div>
-                  <button type="submit"
-                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <button type="submit" color="red"
+                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent  text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
                       Sign in
                   </button>
               </div>
