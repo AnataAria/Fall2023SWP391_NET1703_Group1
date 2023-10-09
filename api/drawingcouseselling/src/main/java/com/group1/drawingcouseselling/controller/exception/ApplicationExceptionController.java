@@ -39,4 +39,9 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> userNotFoundException(UserNotFoundException exception){
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }
+    @ExceptionHandler(CourseIsHaveInCartException.class)
+    @ResponseStatus(HttpStatus.NOT_EXTENDED)
+    public ResponseEntity<?> courseIsHaveInCartException(CourseIsHaveInCartException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
 }
