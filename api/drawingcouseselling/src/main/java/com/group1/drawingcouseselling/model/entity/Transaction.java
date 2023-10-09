@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 @Entity(name = "transaction")
 public class Transaction implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "bigint")
     private BigDecimal id;
     @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
