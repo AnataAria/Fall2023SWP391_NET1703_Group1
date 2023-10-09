@@ -2,6 +2,7 @@ package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
 import com.group1.drawingcouseselling.model.dto.ChangePasswordDto;
+import com.group1.drawingcouseselling.model.dto.InstructorDto;
 import com.group1.drawingcouseselling.model.dto.RegisterRequest;
 import com.group1.drawingcouseselling.service.AuthenticationService;
 import com.group1.drawingcouseselling.service.OTPService;
@@ -31,6 +32,12 @@ public class AuthenticationController {
         cookie.setPath("/");
         response.addCookie(cookie);
         return ResponseEntity.ok(cookie);
+    }
+
+    @PostMapping("/instructor/register")
+    public ResponseEntity<?> registerInstructor(@RequestBody InstructorDto instructorDto){
+        System.out.println(instructorDto);
+        return new ResponseEntity<>(authenticationService.registerInstructor(instructorDto), HttpStatus.OK);
     }
 
     @PostMapping("/authentication")
