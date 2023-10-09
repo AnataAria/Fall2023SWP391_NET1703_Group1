@@ -32,7 +32,7 @@
   };
 </script>
 
-<div class="flex flex-col justify-center mt-32 px-36">
+<div class="flex flex-col justify-center px-36">
   <div class="">
   <Carousel {images} let:Controls duration="3000">
     <Controls />
