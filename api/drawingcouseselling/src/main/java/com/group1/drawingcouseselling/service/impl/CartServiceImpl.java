@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.CourseIsHaveInCartException;
 import com.group1.drawingcouseselling.exception.CourseMissMatchException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CartDto;
@@ -39,7 +40,7 @@ public class CartServiceImpl implements CartService {
         String cartCookie = cartRepository.searchCartByAccountEmail(email);
         if(cartCookie != null) {
             Collection<BigDecimal> cartList = Arrays.stream(cartCookie.split(",")).map(a -> BigDecimal.valueOf(Long.parseLong(a))).collect(Collectors.toSet());
-            if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseMissMatchException("This course with ID:"+ courseID +" has already been added");
+            if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseIsHaveInCartException("This course with ID:"+ courseID +" has already been added");
             cartCookie = String.join(",", cartList.stream().map(BigDecimal::toString).toList());
             cartRepository.updateCart(email, cartCookie);
         }else{
@@ -111,5 +112,21 @@ public class CartServiceImpl implements CartService {
             }
         }
         return totalPrice;
+    }
+
+    public List<Course> getAllCartForPayment(String email){
+        Collection<BigDecimal> cartList = convertStringToArray(email);
+        if(!cartList.isEmpty()){
+            var course = courseRepository.searchCourseByIdList(cartList);
+            if(course != null){return course;}
+        }
+        return null;
+    }
+    @Override
+    public void refreshCart(String email){
+        Collection<BigDecimal> cartList = convertStringToArray(email);
+        if(!cartList.isEmpty()) {
+            cartRepository.updateCart(email, "");
+        }
     }
 }

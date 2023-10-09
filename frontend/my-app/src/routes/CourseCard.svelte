@@ -37,12 +37,13 @@
             if(response.status === 200){
               alert("Add cart successfully")
             }
-            else{
+            if(response.status === 405){
               alert("Already in cart");
             }
          });
       }catch(error){
         console.log(error);
+        alert("Already in cart");
       }
     }
     async function handleGetCourse() {
