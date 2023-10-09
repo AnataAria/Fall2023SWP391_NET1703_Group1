@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 public class Instructor implements Serializable {
     @Id
     @Column(name = "id", columnDefinition = "bigint")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigDecimal id;
     @Column(name = "fullname", nullable = false)
     private String fullName;
