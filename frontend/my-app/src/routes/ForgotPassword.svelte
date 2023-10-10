@@ -59,9 +59,9 @@
       } 
 
       function showMessage(){
-      let open = true;
-      let counter = 6;
-      timeout();
+        open = true;
+        counter = 6;
+        timeout();
     }
   
       function disableSubmitButton() {
@@ -100,7 +100,7 @@
         </div>
     </form>
   </div>
-  {#if errorMsg != ""}
+  {#if errorMsg !== ""}
    <div>
     <Toast color="red" dismissable={false} bind:open transition={slide}>
       <svelte:fragment slot="icon">
@@ -111,7 +111,7 @@
     </Toast>
   </div>
   {/if}
-  {#if message != ""}
+  {#if message !== ""}
   <div>
     <Toast color="green" transition={slide} params={{ delay: 250, duration: 300, easing: quintOut }} dismissable={false} bind:open>
       <svelte:fragment slot="icon">
