@@ -54,9 +54,9 @@ public class AccountServiceImpl implements AccountService {
         Account acc = new Account().covertDtoToEntity(account);
         acc.setStatus(true);
         acc.setCreateDate(Date.valueOf(LocalDate.now()));
-        try{
+        try {
             return accountRepository.save(acc);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new EmailIsMatchedException("Account already exists");
         }
     }
@@ -77,7 +77,7 @@ public class AccountServiceImpl implements AccountService {
     public Account checkAccountByEmail(String email) {
         Account account;
         account = accountRepository.checkAccountByEmail(email);
-        if(account == null) throw new UserNotFoundException("Could not find account with email:" + email);
+        if (account == null) throw new UserNotFoundException("Could not find account with email:" + email);
 
 //        try {
 //            account = accountRepository.checkAccountByEmail(email);
@@ -90,11 +90,23 @@ public class AccountServiceImpl implements AccountService {
         return account;
     }
 
-    public Account changePasswordAccount(String email, String password){
+    public Account changePasswordAccount(String email, String password) {
         var account = accountRepository.checkAccountByEmail(email);
-        if(account == null) throw new UserNotFoundException("Could not find account with email:" + email);
+        if (account == null) throw new UserNotFoundException("Could not find account with email:" + email);
         account.setEncodePassword(password);
         accountRepository.save(account);
         return account;
+    }
+
+    @Override
+    public Account registerInstructorAccount(AccountDto account) {
+        Account acc = new Account().covertDtoToEntity(account);
+        acc.setCreateDate(Date.valueOf(LocalDate.now()));
+        acc.setStatus(true);
+        try {
+           return accountRepository.save(acc);
+        } catch (Exception e) {
+            throw new EmailIsMatchedException("Email existed!");
+        }
     }
 }

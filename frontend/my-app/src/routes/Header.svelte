@@ -107,7 +107,7 @@
     <NavHamburger />
   </div>
   <NavUl>
-    <NavLi href="/docs/components/navbar">Assign Instructor</NavLi>
+    <NavLi href="/teaching">Assign Instructor</NavLi>
     <NavLi href="/contact">My Learning</NavLi>
     <NavLi>
       Your Cart

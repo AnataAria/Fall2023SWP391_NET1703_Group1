@@ -23,4 +23,6 @@ public interface AccountService {
     public Account checkAccountByEmail(String email);
 
     public Account changePasswordAccount(String email, String password);
+
+    Account registerInstructorAccount(AccountDto accountDto);
 }
