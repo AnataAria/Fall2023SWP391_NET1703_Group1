@@ -139,3 +139,14 @@ export function IsLogin(){
   }
   return false;
 }
+
+export function DisableSubmitButton() {
+  (document.getElementById('submitButton') as HTMLButtonElement).hidden = true;
+  (document.getElementById('loader') as HTMLElement).hidden = false;
+
+}
+export function EnableSubmitButton(){
+  (document.getElementById('submitButton') as HTMLButtonElement).hidden = false;
+  (document.getElementById('loader') as HTMLElement).hidden = true;
+  
+}
