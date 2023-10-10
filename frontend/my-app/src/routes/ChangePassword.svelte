@@ -72,8 +72,8 @@
     }
     
     function showMessage(){
-      let open = true;
-      let counter = 6;
+      open = true;
+      counter = 6;
       timeout();
     }
 
