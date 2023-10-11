@@ -1,6 +1,8 @@
 package com.group1.drawingcouseselling.service;
 
+import com.group1.drawingcouseselling.exception.EmailIsMatchedException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
+import com.group1.drawingcouseselling.exception.ValueIsInvalidException;
 import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.model.entity.Customer;
@@ -13,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
     private final TokenService tokenService;
     private final InstructorService instructorService;
-
+    @Transactional(rollbackFor = {EmailIsMatchedException.class, ValueIsInvalidException.class})
     public AuthenticationResponse register(RegisterRequest request) {
         AccountDto account = AccountDto.builder()
                 .email(request.email())
@@ -40,11 +43,7 @@ public class AuthenticationService {
         customer.setGender(request.gender());
         customer.setPath("");
         customer.setAccount(a);
-        try {
-            customerService.addCustomer(customer);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        customerService.addCustomer(customer);
 
         var jwtToken = jwtService.generateToken(a);
         tokenService.revokeAllUserTokens(a);
@@ -53,7 +52,7 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
-
+    @Transactional(rollbackFor = {EmailIsMatchedException.class, ValueIsInvalidException.class})
     public AuthenticationResponse registerInstructor(InstructorDto instructorDto) {
         AccountDto account = AccountDto.builder()
                 .email(instructorDto.email())
@@ -73,12 +72,8 @@ public class AuthenticationService {
 //        customer.setGender(request.gender());
 //        customer.setPath("");
 //        customer.setAccount(a);
-        try {
-//            customerService.addCustomer(customer);
-            instructorService.addInstructor(instructor);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        instructorService.addInstructor(instructor);
+
 
         var jwtToken = jwtService.generateToken(a);
         tokenService.revokeAllUserTokens(a);
