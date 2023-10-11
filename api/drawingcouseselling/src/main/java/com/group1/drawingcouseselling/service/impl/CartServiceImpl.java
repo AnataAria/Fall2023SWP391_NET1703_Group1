@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.CourseAlreadyBoughtException;
 import com.group1.drawingcouseselling.exception.CourseIsHaveInCartException;
 import com.group1.drawingcouseselling.exception.CourseMissMatchException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
@@ -12,7 +13,9 @@ import com.group1.drawingcouseselling.repository.CartRepository;
 import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.service.CartService;
 import com.group1.drawingcouseselling.service.CustomerService;
+import com.group1.drawingcouseselling.service.MyLearningService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,21 +31,28 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CourseRepository courseRepository;
     private final CustomerService customerService;
+    private final MyLearningService myLearningService;
 
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository, CourseRepository courseRepository, CustomerService customerService) {
+    public CartServiceImpl(CartRepository cartRepository, CourseRepository courseRepository, CustomerService customerService,@Lazy MyLearningService myLearningService) {
         this.cartRepository = cartRepository;
         this.courseRepository = courseRepository;
         this.customerService = customerService;
+        this.myLearningService = myLearningService;
     }
     @Override
     public CartDto addCart(String email, Integer courseID){
+        if(myLearningService.hasCourse(email,BigDecimal.valueOf(courseID.longValue()))) throw new CourseAlreadyBoughtException("Course with ID " + courseID + " has already been bought");
         String cartCookie = cartRepository.searchCartByAccountEmail(email);
         if(cartCookie != null) {
-            Collection<BigDecimal> cartList = Arrays.stream(cartCookie.split(",")).map(a -> BigDecimal.valueOf(Long.parseLong(a))).collect(Collectors.toSet());
-            if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseIsHaveInCartException("This course with ID:"+ courseID +" has already been added");
-            cartCookie = String.join(",", cartList.stream().map(BigDecimal::toString).toList());
-            cartRepository.updateCart(email, cartCookie);
+            if(cartCookie.isEmpty()){
+                cartRepository.updateCart(email, courseID.toString());
+            }else{
+                Collection<BigDecimal> cartList = Arrays.stream(cartCookie.split(",")).map(a -> BigDecimal.valueOf(Long.parseLong(a))).collect(Collectors.toSet());
+                if(!cartList.add(BigDecimal.valueOf(courseID))) throw new CourseIsHaveInCartException("This course with ID:"+ courseID +" has already been added");
+                cartCookie = String.join(",", cartList.stream().map(BigDecimal::toString).toList());
+                cartRepository.updateCart(email, cartCookie);
+            }
         }else{
             Cart temp = new Cart();
             Optional<Customer> customer = customerService.searchCustomerByEmail(email);
@@ -128,5 +138,18 @@ public class CartServiceImpl implements CartService {
         if(!cartList.isEmpty()) {
             cartRepository.updateCart(email, "");
         }
+    }
+
+    public CourseDto removeCartItem(String email, BigDecimal id){
+        Collection<BigDecimal> cartList = convertStringToArray(email);
+        CourseDto result;
+        if(!cartList.isEmpty() && cartList.remove(id)) {
+            String cartCookie = convertSetToString(cartList);
+            cartRepository.updateCart(email, cartCookie);
+            var course = courseRepository.findById(id);
+            result = new Course().convertEntityToDto(course.get());
+            return result;
+        }
+        return CourseDto.builder().build();
     }
 }
