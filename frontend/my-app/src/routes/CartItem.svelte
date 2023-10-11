@@ -1,17 +1,38 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {AuthenticatePage, CurrencyHandler} from "../service";
+  import {AuthenticatePage, CurrencyHandler, GetCookie, apiBaseUrl} from "../service";
+  import axios from "axios";
   export let id:number;
   export let prouduct_name: string;
   export let product_description: string;
   export let product_price : number;
+  let jwt:string|null = "";
+  async function removeItemCart(){
+    try{
+        await axios.delete(apiBaseUrl + 'cart?courseID=' + id, {
+            headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }).then((response) => {
+            if(response.status === 200){
+                window.location.reload();
+            }
+        })
+    }catch(err){
+
+    }
+  }
+
+  onMount(()=> {
+    jwt = GetCookie("USER");
+  })
 </script>
 <div class="bg-white rounded-lg shadow-md p-6 mb-4">
     <table class="w-full">
         <thead>
             <tr>
                 <th class="text-left font-semibold">Product</th>
-                <th class="text-left font-semibold des">Descripe</th>
+                <th class="text-left font-semibold des">Description</th>
                 <th class="text-left font-semibold ">Price</th>
                 
                 <th class="text-left font-semibold rig"></th>
@@ -29,8 +50,7 @@
                 <td class="py-4 ">{CurrencyHandler(product_price)}</td>
                 <td class="py-4">
                     <div class="flex items-center ">
-                        <a href="/" class="px-16 text-cyan-500">Remove</a>
-                    
+                        <button on:click={removeItemCart} class="px-16 text-cyan-500">Remove</button>
                     </div>
                 </td>
                 
