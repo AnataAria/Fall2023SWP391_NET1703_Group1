@@ -1,14 +1,13 @@
 package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.CartDto;
+import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.service.CartService;
 import com.group1.drawingcouseselling.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -38,5 +37,11 @@ public class CartController {
     public ResponseEntity<BigDecimal> getCartTotal(@RequestHeader(value = "Authorization", defaultValue = "") String token) {
         String email = jwtService.extractUserEmail(token.substring(7));
         return ResponseEntity.ok(cartService.calculateBaseTotalCart(email));
+    }
+
+    @DeleteMapping("/cart")
+    public ResponseEntity<CourseDto> removeCartItem(@RequestHeader(value = "Authorization", defaultValue = "") String token, @Validated @RequestParam(value = "courseID") BigDecimal courseID){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(cartService.removeCartItem(email, courseID));
     }
 }
