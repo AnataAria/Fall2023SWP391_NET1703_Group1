@@ -18,7 +18,7 @@
         intent: string
         description: string
     }
-    
+    let jwt:string|null;
     let order = {
         price: "",
         currency: "",
@@ -26,10 +26,19 @@
         intent: "SALE",
         description: ""
     }
+
+    onMount(()=>{
+        jwt = GetCookie("USER");
+    })
     async function PaypalCheckout() {
         let res;
         console.log(order)
-        res = await axios.post(apiBaseUrl +"pay", order)
+        console.log(jwt);
+        res = await axios.post(apiBaseUrl +"pay", order, {
+            headers: {
+                    Authorization: `Bearer ${GetCookie("USER")}`,
+            },
+        })
         .then ((response: AxiosResponse) => {
             console.log(response.data)
             window.location.href = response.data

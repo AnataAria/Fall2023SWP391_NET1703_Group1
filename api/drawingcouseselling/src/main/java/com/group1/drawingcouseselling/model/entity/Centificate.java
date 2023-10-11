@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-@Entity
+@Entity(name = "certification")
 public class Centificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

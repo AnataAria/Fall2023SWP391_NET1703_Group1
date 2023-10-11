@@ -7,6 +7,7 @@
   import axios from "axios";
   import { Button, Dropdown, DropdownItem } from "flowbite-svelte";
   import { ChevronDownOutline, ChevronDownSolid } from "flowbite-svelte-icons";
+  import { apiBaseUrl } from "../../../service";
   interface CourseTemplate {
     id: number;
     name: string;
@@ -35,7 +36,7 @@
     try {
       await axios
         .get<CourseTemplate[]>(
-          `http://localhost:9090/api/v1/courses?name=${searchValue}&maxPage=10`
+          apiBaseUrl+`courses?name=${searchValue}&maxPage=10`
         )
         .then((response) => {
           console.log(response.data);
@@ -51,10 +52,10 @@
   <div>
     <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div
-        class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24"
+        class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-5"
       >
         <h1 class="text-4xl font-bold tracking-tight text-gray-900">
-          Searching for 'Paint'
+          Searching for '{searchValue}'
         </h1>
 
         <div class="flex items-center">

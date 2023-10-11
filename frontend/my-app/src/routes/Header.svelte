@@ -18,7 +18,7 @@
     DropdownDivider,
   } from "flowbite-svelte";
   import { SearchOutline } from "flowbite-svelte-icons";
-  import { IsLogin } from "../service";
+  import { IsLogin, apiBaseUrl } from "../service";
   import { GetCookie, Logout } from "../service";
   import headerImage from "$lib/assets/Header.jpg";
   let jwts;
@@ -39,6 +39,7 @@
   }
   let input = "";
   import { ShowMessage } from "../service";
+  import axios from "axios";
   // import LoginModal from "./LoginModal.svelte";
   function handleSearch() {
     if (!input) {
@@ -51,7 +52,34 @@
     if (IsLogin()) {
       status = true;
     }
+    UserInfo();
   });
+  let jwtData = {
+    email: "",
+    roles: "",
+    createDate:"",
+    isActive:false
+  }
+
+  async function UserInfo(){
+    const token = GetCookie("USER");
+  if(token!= null){
+    let header = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+    await axios.get(apiBaseUrl + 'account', {
+      headers: header
+    })
+    .then((res) => {
+      if(res.status === 200){
+        jwtData = res.data;
+        console.log(jwtData);
+      }
+    });
+  }
+}
 </script>
 
 <!-- ======= Header ======= -->
@@ -79,7 +107,7 @@
     <NavHamburger />
   </div>
   <NavUl>
-    <NavLi href="/docs/components/navbar">Assign Instructor</NavLi>
+    <NavLi href="/teaching">Assign Instructor</NavLi>
     <NavLi href="/contact">My Learning</NavLi>
     <NavLi>
       Your Cart
@@ -87,12 +115,12 @@
   </NavUl>
   <div class="ml-20 w-20">
     {#if status === true}
-      <Avatar id="user-drop" src="" class="cursor-pointer" />
+      <Avatar id="user-drop" src="" class="cursor-pointer"/>
       <Dropdown triggeredBy="#user-drop">
         <DropdownHeader>
-          <span class="block text-sm">Bonnie Green</span>
+          <span class="block text-sm">User</span>
           <span class="block truncate text-sm font-medium"
-            >name@flowbite.com</span
+            >{jwtData.email}</span
           >
         </DropdownHeader>
         <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
@@ -105,7 +133,9 @@
         <DropdownItem on:click={()=>{
           window.location.href = "/cart";
         }}>Cart</DropdownItem>
-        <DropdownItem>My Learning</DropdownItem>
+        <DropdownItem on:click={()=>{
+          window.location.href="/mylearning";
+        }}>My Learning</DropdownItem>
         <DropdownDivider />
         <DropdownItem on:click={()=>{
           Logout();
