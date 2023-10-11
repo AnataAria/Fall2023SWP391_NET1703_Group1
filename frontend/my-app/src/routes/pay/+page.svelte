@@ -164,7 +164,7 @@
         <div class="mb-3">
             <label for="total" class="font-bold text-sm mb-2 ml-1">Total</label>
             <div>
-                <input bind:value={order.price} class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="number"/>
+                <input bind:value={order.price} class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" type="number" readonly/>
             </div>
         </div>
         <div class="mb-3">
