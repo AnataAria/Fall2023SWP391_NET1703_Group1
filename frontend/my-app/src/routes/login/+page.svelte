@@ -12,7 +12,6 @@
     birthDate: "",
     gender: ""
   };
-
   let loginForm = {
     email: "",
     password: "",
@@ -49,7 +48,6 @@
         console.log(err);
       }
     }
-
     Toastify({
       text: errorMsg,
       duration: 3000,
@@ -65,7 +63,6 @@
       onClick: function () {}, // Callback after click
     }).showToast();
   }
-
   async function handleLogin() {
     let status = true;
     if (!loginForm.email || !loginForm.password) {
@@ -83,7 +80,6 @@
           });
       } catch (err) {}
     }
-
     Toastify({
       text: errorMsg,
       duration: 3000,
@@ -113,7 +109,6 @@
       text: `Others`,
     },
   ];
-
   // function showMessage(message:string){
   //   document.getElementById(message)?.textContent = "";
   // }
@@ -130,7 +125,6 @@
     }
     return null; // Cookie not found
   }
-
   onMount(() => {
     kickBackToLandingPage();
   });
@@ -140,13 +134,12 @@
 </script>
 
 <!-- <link href="/src/theme/style.sass" rel="stylesheet" /> -->
-<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8 mt-5">
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
       <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
       </h2>
   </div>
-
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form class="space-y-6" on:submit={handleLogin}>
@@ -161,7 +154,6 @@
                           bind:value={loginForm.email}>
                   </div>
               </div>
-
               <div>
                   <label for="password" class="block text-sm font-medium text-gray-700">
                       Password
@@ -173,7 +165,6 @@
                           bind:value={loginForm.password}>
                   </div>
               </div>
-
               <div class="flex items-center justify-between">
                   <div class="flex items-center">
                       <input id="remember_me" name="remember_me" type="checkbox"
@@ -182,7 +173,6 @@
                           Remember me
                       </label>
                   </div>
-
                   <div class="text-sm">
                       <a href="/forgotpassword" class="font-medium text-blue-600 hover:text-blue-500">
                           Forgot your password?
@@ -191,8 +181,8 @@
               </div>
 
               <div>
-                  <button type="submit" color="red"
-                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent  text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ">
+                  <button type="submit"
+                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Sign in
                   </button>
               </div>
@@ -208,7 +198,6 @@
                       </span>
                   </div>
               </div>
-
               <div class="mt-6 grid grid-cols">
                   <div>
                       <a href="#"
