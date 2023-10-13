@@ -55,7 +55,13 @@ public class PaypalController {
     }
 
     @GetMapping(value = CANCEL_URL)
-    public String cancelPay() {
+    public String cancelPay(HttpServletResponse response) {
+
+        try{
+            response.sendRedirect(FRONTEND_URL + "pay/status?status=failed");
+        }catch(Exception e){
+
+        }
         return "cancel";
     }
 
@@ -67,7 +73,7 @@ public class PaypalController {
             if (payment.getState().equals("approved")) {
                 paymentService.orderPayment(paymentId);
                 try{
-                    response.sendRedirect(FRONTEND_URL + "pay/success?paymentID=" + paymentId);
+                    response.sendRedirect(FRONTEND_URL + "pay/status?paymentID=" + paymentId + "&status=success");
                 }catch(Exception e){
 
                 }
