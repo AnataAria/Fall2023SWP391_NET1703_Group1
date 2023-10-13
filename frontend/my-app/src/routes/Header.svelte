@@ -108,7 +108,7 @@
   </div>
   <NavUl>
     <NavLi href="/teaching">Assign Instructor</NavLi>
-    <NavLi href="/contact">My Learning</NavLi>
+    <NavLi href="/mylearning">My Learning</NavLi>
     <NavLi>
       Your Cart
     </NavLi>
