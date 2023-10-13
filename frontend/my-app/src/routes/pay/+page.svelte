@@ -168,7 +168,7 @@
             </div>
         </div>
         <div class="mb-3">
-            <div>
+            <div>o
                 <Label class="font-bold text-sm mb-2 ml-1" for="currency">
                     Currency
                     <Select class="mt-2" items={countries} bind:value={order.currency} />
