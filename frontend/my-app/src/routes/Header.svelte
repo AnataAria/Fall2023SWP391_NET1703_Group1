@@ -109,7 +109,7 @@
   <NavUl>
     <NavLi href="/teaching">Assign Instructor</NavLi>
     <NavLi href="/mylearning">My Learning</NavLi>
-    <NavLi href="/cart">
+    <NavLi>
       Your Cart
     </NavLi>
   </NavUl>
