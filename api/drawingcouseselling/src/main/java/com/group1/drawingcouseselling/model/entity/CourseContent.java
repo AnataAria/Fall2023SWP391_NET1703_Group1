@@ -12,9 +12,6 @@ public class CourseContent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
     private BigDecimal id;
-    @ManyToOne(targetEntity = Course.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id", nullable = false, updatable = false)
-    private Course course;
     @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name ="section_id", nullable = false, updatable = true)
     private Section section;
@@ -40,14 +37,6 @@ public class CourseContent {
 
     public void setId(BigDecimal id) {
         this.id = id;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public Section getSection() {
