@@ -12,7 +12,6 @@
     birthDate: "",
     gender: ""
   };
-
   let loginForm = {
     email: "",
     password: "",
@@ -49,7 +48,6 @@
         console.log(err);
       }
     }
-
     Toastify({
       text: errorMsg,
       duration: 3000,
@@ -65,7 +63,6 @@
       onClick: function () {}, // Callback after click
     }).showToast();
   }
-
   async function handleLogin() {
     let status = true;
     if (!loginForm.email || !loginForm.password) {
@@ -83,7 +80,6 @@
           });
       } catch (err) {}
     }
-
     Toastify({
       text: errorMsg,
       duration: 3000,
@@ -113,7 +109,6 @@
       text: `Others`,
     },
   ];
-
   // function showMessage(message:string){
   //   document.getElementById(message)?.textContent = "";
   // }
@@ -130,7 +125,6 @@
     }
     return null; // Cookie not found
   }
-
   onMount(() => {
     kickBackToLandingPage();
   });
@@ -146,7 +140,6 @@
           Sign in to your account
       </h2>
   </div>
-
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form class="space-y-6" on:submit={handleLogin}>
@@ -161,7 +154,6 @@
                           bind:value={loginForm.email}>
                   </div>
               </div>
-
               <div>
                   <label for="password" class="block text-sm font-medium text-gray-700">
                       Password
@@ -173,7 +165,6 @@
                           bind:value={loginForm.password}>
                   </div>
               </div>
-
               <div class="flex items-center justify-between">
                   <div class="flex items-center">
                       <input id="remember_me" name="remember_me" type="checkbox"
@@ -182,7 +173,6 @@
                           Remember me
                       </label>
                   </div>
-
                   <div class="text-sm">
                       <a href="/forgotpassword" class="font-medium text-blue-600 hover:text-blue-500">
                           Forgot your password?
@@ -208,7 +198,6 @@
                       </span>
                   </div>
               </div>
-
               <div class="mt-6 grid grid-cols">
                   <div>
                       <a href="#"
