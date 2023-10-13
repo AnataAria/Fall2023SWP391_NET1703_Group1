@@ -44,4 +44,15 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> courseIsHaveInCartException(CourseIsHaveInCartException exception){
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }
+
+    @ExceptionHandler(ValueIsInvalidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> valueIsInvalidException(ValueIsInvalidException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
+    @ExceptionHandler(CourseAlreadyBoughtException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> courseAlreadyBoughtException(CourseAlreadyBoughtException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
 }
