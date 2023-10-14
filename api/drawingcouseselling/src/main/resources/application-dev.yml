@@ -14,7 +14,7 @@ spring:
   datasource:
 #    url: jdbc:mariadb://anataarisa.hopto.org:3306/ademy
     #    url: jdbc:mariadb://database:3306/ademy
-    url: jdbc:mariadb://${DB_HOST:anataarisa.hopto.org:3306}/ademy
+    url: jdbc:mariadb://${DB_HOST:anataarisa.hopto.org}:${DB_PORT:3306}/ademy
     username: ${DB_USERNAME:pim}
     password: ${DB_PASSWORD:Vinh12345.}
     driver-class-name: org.mariadb.jdbc.Driver
