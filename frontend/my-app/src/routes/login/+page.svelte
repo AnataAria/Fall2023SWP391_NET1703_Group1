@@ -5,6 +5,7 @@
   axios.defaults.withCredentials = true;
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
+  import { apiBaseUrl } from "../../service";
   let registerForm = {
     email: "",
     fullname: "",
@@ -37,7 +38,7 @@
     if (status) {
       try {
         res = await axios
-          .post("http://localhost:9090/api/v1/auth/register", registerForm)
+          .post(apiBaseUrl + "auth/register", registerForm)
           .then((response) => {
             if (response.status === 200) {
               errorMsg = "Login successful";
