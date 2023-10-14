@@ -17,7 +17,12 @@ pipeline {
 		}
 		stage('Clean Docker Enviroments'){
 			steps{
-				sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} +  ' down --rmi all -v'
+				try{
+					sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} +  ' down --rmi all -v'
+				}
+				catch(except) {
+					echo "docker-compose haven't exited yet"
+				}
 			}
 		}
 		// stage('Source Testing'){
