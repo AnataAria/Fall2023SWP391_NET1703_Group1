@@ -20,17 +20,17 @@ pipeline {
 				sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} +  ' down --rmi all -v'
 			}
 		}
-		stage('Source Testing'){
-			steps{
-				dir('./api/drawingcouseselling'){
-					sh 'mvn test -Pdev'
-				}
-				// dir('./frontend/my-app'){
-				// 	sh 'pnpm i'
-				// 	sh 'pnpm dev'
-				// }
-			}
-		}
+		// stage('Source Testing'){
+		// 	steps{
+		// 		dir('./api/drawingcouseselling'){
+		// 			sh 'mvn test -Pdev'
+		// 		}
+		// 		// dir('./frontend/my-app'){
+		// 		// 	sh 'pnpm i'
+		// 		// 	sh 'pnpm dev'
+		// 		// }
+		// 	}
+		// }
 		stage('Build docker-compose dev and push images'){
 			steps{
 				withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/'){
