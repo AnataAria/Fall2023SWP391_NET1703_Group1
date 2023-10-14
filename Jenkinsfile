@@ -11,31 +11,31 @@ pipeline {
 	stages {
 		stage('Check System Infomation'){
 			steps{
-				sh 'sudo apt update'
-				sh 'sudo apt upgrade'
+				sh 'mvn --version'
+				sh 'java --version'
 			}
 		}
 		stage('Clean Docker Enviroments'){
 			steps{
-				sh 'sudo docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} +  ' down --rmi all -v'
+				sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} +  ' down --rmi all -v'
 			}
 		}
 		stage('Source Testing'){
 			steps{
 				dir('./api/drawingcouseselling'){
-					sh 'sudo mvn test -Pdev'
+					sh 'mvn test -Pdev'
 				}
-				dir('./frontend/my-app'){
-					sh 'sudo pnpm i'
-					sh 'sudo pnpm dev'
-				}
+				// dir('./frontend/my-app'){
+				// 	sh 'pnpm i'
+				// 	sh 'pnpm dev'
+				// }
 			}
 		}
 		stage('Build docker-compose dev and push images'){
 			steps{
 				withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/'){
-					sh 'sudo docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} + ' build'
-					sh 'sudo docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} + ' up'
+					sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} + ' build'
+					sh 'docker-compose -f ' + ${DOCKER_COMPOSE_DEV_FILE} + ' -p ' + ${DOCKER_COMPOSE_NAME} + ' up'
 				}
 			}
 		}
