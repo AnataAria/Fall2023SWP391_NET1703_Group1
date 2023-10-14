@@ -13,6 +13,7 @@ pipeline {
 			steps{
 				sh 'mvn --version'
 				sh 'java --version'
+                sh 'docker compose version'
 			}
 		}
 	}
