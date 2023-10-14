@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  database:
+    container_name: database
+    image: "mariadb:latest"
+    volumes:
+      - ./resources/ademydev.sql:/docker-entrypoint-initdb.d/ademydev.sql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Vinh12345.
+      MYSQL_DATABASE: ademy
+      MYSQL_USER: pim
+      MYSQL_PASSWORD: Vinh12345.
+    healthcheck:
+      test: healthcheck.sh --su-mysql --connect --innodb_initialized
+      timeout: 20s
+      retries: 3
+  api-backend:
+    container_name: api-backend-server
+    build:
+      context: "./api/drawingcouseselling/"
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    environment:
+      DB_HOST: database
+      DB_USERNAME: pim
+      DB_PASSWORD: Vinh12345.
+    restart: always
+    depends_on:
+      database:
+        condition: service_healthy
+    links:
+      - database
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/api/v1/courses"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  front-end:
+    container_name: svelte-frontend-server
+    build:
+      context: "./frontend/my-app/"
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    links:
+      - api-backend
+    restart: always
+    depends_on:
+      api-backend:
+        condition: service_healthy
