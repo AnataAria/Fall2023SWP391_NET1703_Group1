@@ -3,6 +3,7 @@
   import CourseCard from "./CourseCard.svelte";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
+  import { apiBaseUrl } from "../service";
 
   interface CourseTemplate {
     id: number;
@@ -22,7 +23,7 @@
     try {
       await axios
         .get<CourseTemplate[]>(
-          `http://localhost:9090/api/v1/courses?maxPage=20`
+          apiBaseUrl + `courses?maxPage=20`
         )
         .then((response) => {
           console.log(response.data);

@@ -73,7 +73,7 @@
     if (status) {
       try {
         await axios
-          .post("http://localhost:9090/api/v1/auth/authentication", loginForm)
+          .post(apiBaseUrl + "auth/authentication", loginForm)
           .then((response) => {
             if (response.status === 200) {
               window.location.href = "/";
