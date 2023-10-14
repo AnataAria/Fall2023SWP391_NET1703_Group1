@@ -34,8 +34,8 @@ pipeline {
 		stage('Build docker-compose dev and push images'){
 			steps{
 				withDockerRegistry(credentialsId: 'Arisa Docker Hub Account', url: 'https://index.docker.io/v1/'){
-					sh 'docker-compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' build'
-					sh 'docker-compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up'
+					sh 'docker compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' build'
+					sh 'docker compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up'
 				}
 			}
 		}
