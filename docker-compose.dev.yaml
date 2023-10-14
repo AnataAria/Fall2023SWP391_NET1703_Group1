@@ -6,7 +6,7 @@ services:
     volumes:
       - ./resources/ademydev.sql:/docker-entrypoint-initdb.d/ademydev.sql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Vinh12345.
@@ -25,7 +25,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      DB_HOST: database
+      DB_HOST: database:3307
       DB_USERNAME: pim
       DB_PASSWORD: Vinh12345.
     restart: always
