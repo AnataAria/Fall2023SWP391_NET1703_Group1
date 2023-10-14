@@ -17,7 +17,7 @@ pipeline {
 		}
 		stage('Clean Docker Enviroments'){
 			steps{
-				sh 'docker-compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME +  ' down --rmi all -v'
+				sh 'docker compose -f ' + DOCKER_COMPOSE_DEV_FILE + ' -p ' + DOCKER_COMPOSE_NAME +  ' down --rmi all -v'
 			}
 		}
 		// stage('Source Testing'){
