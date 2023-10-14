@@ -1,0 +1,26 @@
+pipeline {
+	agent any
+	environment {
+		DOCKER_IMAGE = 'anataarisa/ademy'
+		DOCKER_COMPOSE_NAME = 'ademy-dev-application'
+		DOCKER_COMPOSE_DEV_FILE = 'docker-compose.dev.yaml'
+	}
+	tools {
+		maven 'Arisa CI/CD Maven'
+	}
+	stages {
+		stage('Check System Infomation'){
+			steps{
+				sh 'mvn --version'
+				sh 'java --version'
+			}
+		}
+	}
+
+	post {
+		always {
+			cleanWs()
+		}
+	}
+
+}
