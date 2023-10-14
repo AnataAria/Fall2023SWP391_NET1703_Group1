@@ -6,7 +6,7 @@ pipeline {
 		DOCKER_COMPOSE_DEV_FILE = 'docker-compose.dev.yaml'
 	}
 	tools {
-		maven 'arisa-maven'
+		maven 'Arisa CI/CD Maven'
 	}
 	stages {
 		stage('Check System Infomation'){
