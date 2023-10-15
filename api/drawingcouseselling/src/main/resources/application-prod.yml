@@ -22,17 +22,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        generate_statistics: true
-        format_sql: true
-    open-in-view: true
+    show-sql: false
   sql:
     init:
       encoding: utf-8
-  #  session:
-  #    store-type=jdbc:
   mail:
     host: smtp.gmail.com
     port: 587
@@ -51,11 +44,10 @@ spring:
           google:
             client-id: 509336143279-ng2g9fdpg8pkt1j3jlj24au6l96hk0qn.apps.googleusercontent.com
             client-secret: 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
-
 server:
   servlet:
     context-path: /api/v1
-  port: 9090
+  port: ${API_PORT}
   error:
     include-message: always
 
@@ -79,13 +71,15 @@ paypal:
     app: AWbOtZPREQ6DxSCza2yGZT82kQTW9T17r8xezCuKARBoBM5jli0FdOPrdRVkytKLdeaaFaiM6k-tHlr6
   mode: sandbox
 
+jwt-key:
+  secret-key: ${JWT_KEY:49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038}
 
 frontend:
   url: http://localhost:3000/
 
 api:
   base:
-    url: http://localhost:9090/api/v1/
+    url: http://localhost:${API_PORT}/api/v1/
 
 security:
   secret-key: 49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038

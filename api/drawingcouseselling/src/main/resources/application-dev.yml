@@ -70,7 +70,8 @@ logging:
           jdbc:
             bind: trace
 
-
+jwt-key:
+  secret-key: ${JWT_KEY:49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038}
 
 paypal:
   client:
@@ -85,9 +86,6 @@ frontend:
 api:
   base:
     url: http://localhost:9090/api/v1/
-
-security:
-  secret-key: 49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038
 
 #auththentication:
 #  facebook-url: /oauth2/authorization/facebook
