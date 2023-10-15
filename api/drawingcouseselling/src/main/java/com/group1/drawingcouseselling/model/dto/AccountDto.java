@@ -16,12 +16,4 @@ public record AccountDto(@NonNull String email, @JsonIgnore String password, ERo
         this.createDate = createDate;
         this.isActive = isActive;
     }
-
-//    public AccountDto(Account account){
-//        this.email = account.getEmail();
-//        this.password = account.getPassword();
-//        this.role = account.getRole();
-//        this.createDate = account.getCreateDate();
-//        this.isActive = account.getActive();
-//    }
 }

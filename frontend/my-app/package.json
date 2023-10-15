@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "vite dev --port  3000",
+    "dev": "vite dev --port 3000 --host",
     "build": "vite build",
+    "prod": "vite prod --host",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
@@ -41,7 +42,6 @@
     "framework7-svelte": "^8.3.0",
     "i": "^0.3.7",
     "js-cookie": "^3.0.5",
-    "jsonwebtoken": "^9.0.2",
     "save-dev": "^0.0.1-security",
     "svelte-routing": "^2.4.0",
     "swiper": "^10.3.0",

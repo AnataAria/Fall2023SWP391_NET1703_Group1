@@ -1,11 +1,13 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.ValueIsInvalidException;
 import com.group1.drawingcouseselling.model.dto.CustomerDto;
 import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.repository.CustomerRepository;
 import com.group1.drawingcouseselling.service.AccountService;
 import com.group1.drawingcouseselling.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,7 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Optional<Customer> addCustomer(Customer customer) {
-        return Optional.of(customerRepository.save(customer));
+        Customer result = null;
+        try{
+            result = customerRepository.save(customer);
+        }catch(IllegalArgumentException | DataIntegrityViolationException e){
+            throw new ValueIsInvalidException(e.getMessage());
+        }
+        return Optional.of(result);
     }
 
     @Override

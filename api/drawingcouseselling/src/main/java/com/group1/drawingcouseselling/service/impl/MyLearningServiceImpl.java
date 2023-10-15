@@ -9,7 +9,10 @@ import com.group1.drawingcouseselling.service.MyLearningService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +40,11 @@ public class MyLearningServiceImpl implements MyLearningService {
             return customer.getCourseList().stream().map(c -> new Course().convertEntityToDto(c)).collect(Collectors.toList());
         }
         return List.of();
+    }
+
+    @Override
+    public boolean hasCourse(String email, BigDecimal courseID) {
+        Map<BigDecimal,Course> userCourse = customerRepository.searchCustomerByAccountEmail(email).getCourseList().stream().collect(Collectors.toMap(Course::getId, Function.identity()));
+        return userCourse.isEmpty() || userCourse.containsKey(courseID);
     }
 }

@@ -2,6 +2,7 @@
     import { page } from "$app/stores";
   import axios from "axios";
   import { onMount } from "svelte";
+  import { apiBaseUrl } from "../../../service";
   let course = $page.params.id;
   export let id;
   let courseForm = {
@@ -16,7 +17,7 @@
   async function handleGetCourse() {
     try {
       let res = await axios
-        .get(`http://localhost:9090/api/v1/course?id=${course}`)
+        .get(apiBaseUrl + `course?id=${course}`)
         .then((response) => {
           console.log(response.data);
           courseForm = response.data;
