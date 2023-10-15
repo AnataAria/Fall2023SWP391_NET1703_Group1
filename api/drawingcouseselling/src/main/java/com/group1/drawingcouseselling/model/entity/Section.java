@@ -1,11 +1,13 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.dto.SectionDto;
+import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity(name = "section")
-public class Section {
+public class Section implements ObjectMapper<Section, SectionDto> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
@@ -48,5 +50,23 @@ public class Section {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public Section covertDtoToEntity(SectionDto data) {
+        Section sec = new Section();
+        sec.setId(data.id());
+        sec.setSectionOrder(data.sectionOrder());
+        sec.setTitle(data.title());
+        return sec;
+    }
+
+    @Override
+    public SectionDto convertEntityToDto(Section data) {
+        return SectionDto.builder()
+                .id(data.getId())
+                .sectionOrder(data.getSectionOrder())
+                .title(data.getTitle())
+                .build();
     }
 }
