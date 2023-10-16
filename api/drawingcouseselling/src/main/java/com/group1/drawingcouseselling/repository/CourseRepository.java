@@ -28,4 +28,16 @@ public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
     @Query(value = "SELECT u FROM course u WHERE u.name LIKE %:searchName%",
             countQuery = "SELECT count(*) FROM course u WHERE u.name LIKE %:searchName%")
     public Page<Course> searchCourseByNameRandom(@Param(value = "searchName") String searchName, Pageable pageable);
+
+    @Query(value = "SELECT c FROM course c " +
+            "INNER JOIN instructor i ON c.instuctor.id = i.id " +
+            "INNER JOIN account a ON i.account.id = a.id " +
+            "WHERE a.email = :email")
+    public List<Course> getCoursesByInstructorEmail(@Param(value = "email")String email);
+
+    @Query(value = "SELECT c FROM course c " +
+            "INNER JOIN instructor i ON c.instuctor.id = i.id " +
+            "INNER JOIN account a ON i.account.id = a.id " +
+            "WHERE a.email = :email AND c.id = :id")
+    public Course findCourseByEmailAndId (@Param(value = "email") String email, @Param(value="id") BigDecimal id);
 }
