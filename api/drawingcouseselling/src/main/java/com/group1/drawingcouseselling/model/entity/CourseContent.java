@@ -1,5 +1,7 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.dto.CourseContentDto;
+import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -7,7 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity(name = "course_content")
-public class CourseContent {
+public class CourseContent implements ObjectMapper<CourseContent, CourseContentDto> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
@@ -85,5 +87,27 @@ public class CourseContent {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public CourseContent covertDtoToEntity(CourseContentDto data) {
+        CourseContent lesson  = new CourseContent();
+        lesson.setId(data.id());
+        lesson.setTitle(data.title());
+        lesson.setDescription(data.description());
+        lesson.setVideoLink(data.videoLink());
+        lesson.setCreateDate(data.createDate());
+        return lesson;
+    }
+
+    @Override
+    public CourseContentDto convertEntityToDto(CourseContent data) {
+        return CourseContentDto.builder()
+                .id(data.getId())
+                .title(data.getTitle())
+                .description(data.getDescription())
+                .videoLink(data.getVideoLink())
+                .createDate(data.getCreateDate())
+                .build();
     }
 }

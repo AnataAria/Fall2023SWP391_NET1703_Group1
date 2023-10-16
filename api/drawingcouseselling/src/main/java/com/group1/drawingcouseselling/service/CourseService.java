@@ -1,6 +1,7 @@
 package com.group1.drawingcouseselling.service;
 
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
+import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 
 import java.math.BigDecimal;
@@ -13,4 +14,6 @@ public interface CourseService {
     public CourseDto addCourse(CourseDto course);
 
     public List<CourseDto> searchCourseByNameAndFilter(String name, Integer page, Integer maxPage);
+    public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail);
+    public List<CourseDto> searchCourseByNameAndFilterRandom(String name, Integer page, Integer maxPage);
 }

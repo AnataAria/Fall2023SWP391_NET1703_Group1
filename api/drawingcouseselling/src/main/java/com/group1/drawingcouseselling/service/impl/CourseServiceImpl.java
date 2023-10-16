@@ -2,20 +2,21 @@ package com.group1.drawingcouseselling.service.impl;
 
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
 import com.group1.drawingcouseselling.exception.InstructorNotFoundException;
+import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Instructor;
 import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.CourseService;
+import com.group1.drawingcouseselling.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +25,12 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
+    private final InstructorService instructorService;
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
+        this.instructorService = instructorService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
@@ -71,4 +74,19 @@ public class CourseServiceImpl implements CourseService {
                 .collect(Collectors.toList());
     }
 
+    public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail){
+        Course courseNew = new Course();
+        CourseDto courseDto = null;
+        courseNew.setName(course.name());
+        courseNew.setDescription(course.description());
+        courseNew.setPrice(course.price());
+        courseNew.setDuration(course.durations());
+        courseNew.setInstuctor(instructorService.findInstructorByInstructorEmail(instructorEmail));
+        try{
+            courseDto = new Course().convertEntityToDto(courseRepository.save(courseNew));
+        }catch(IllegalArgumentException | DataIntegrityViolationException e){
+
+        }
+        return courseDto;
+    }
 }

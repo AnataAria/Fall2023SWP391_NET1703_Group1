@@ -1,10 +1,15 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
+import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.service.CourseService;
+import com.group1.drawingcouseselling.service.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -13,9 +18,11 @@ import java.util.List;
 @RestController
 public class CourseController {
     private final CourseService courseService;
+    private final JwtService jwtService;
     @Autowired
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, JwtService jwtService) {
         this.courseService = courseService;
+        this.jwtService = jwtService;
     }
     @GetMapping(value = "/courses")
     public ResponseEntity<List<CourseDto>> getAllCourse(@RequestParam(required = false, value = "name") String name,
@@ -33,6 +40,24 @@ public class CourseController {
     public ResponseEntity<CourseDto> getCourseByID(@RequestParam(value = "id")BigDecimal id){
         return new ResponseEntity<>(courseService.searchCourseById(id), HttpStatus.OK);
     }
-    
+    @GetMapping(value = "/course/all")
+    public ResponseEntity<CourseAllInfoDto> getAllInfoCourse(BigDecimal id,  @RequestHeader(value = "Authorization") String jwt){
+        return null;
+    }
+    @PostMapping(value = "/course")
+    public ResponseEntity<CourseDto> createCourse(@RequestBody @Valid CourseCreateDto courseData, @RequestHeader(value = "Authorization") String jwt){
+        String email = jwtService.extractUserEmail(jwt.substring(7));
+        return ResponseEntity.ok(courseService.createCourseUsingJwt(courseData, email));
+    }
 
+
+    @PutMapping(value = "/course")
+    public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseData,  @RequestHeader(value = "Authorization") String jwt){
+        return null;
+    }
+
+    @DeleteMapping(value = "/course")
+    public ResponseEntity<CourseDto> deleteCourse(@RequestParam(value = "id") BigDecimal id, @RequestHeader(value = "Authorization") String jwt){
+        return null;
+    }
 }
