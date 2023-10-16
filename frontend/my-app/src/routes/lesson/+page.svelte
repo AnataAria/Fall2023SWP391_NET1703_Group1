@@ -2,31 +2,12 @@
     import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper, SidebarDropdownItem, SidebarDropdownWrapper } from 'flowbite-svelte';
     import { ChartPieSolid, ShoppingCartSolid, ChevronDoubleUpOutline, ChevronDoubleDownOutline } from 'flowbite-svelte-icons';
     let spanClass = 'flex-1 ml-3 whitespace-nowrap';
-    let Articles = [		
-        { color: 'red'},
-		{ color: 'green' },
-		{ color: 'blue' }];
+
 </script>
 
 <div class="flex justify-center mt-32 ">
   <div class="">
     <iframe width="1000" height="500" src="https://www.youtube.com/embed/oSIrsMzu590" title="[Hoshi Arino]  EP29 Khi bạn cố gắng giết chết tinh thần thể thao điện tử của tôi, bạn đã đánh mất" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </div>
-  <div class="px-10">
-    <Sidebar>
-      <SidebarWrapper>
-        <SidebarGroup>
-          <SidebarDropdownWrapper label="Lesson">
-            {#each Articles as {color}}
-						<SidebarItem
-							label={color}
-                            href={`/lesson`}
-						/>
-					{/each}
-          </SidebarDropdownWrapper>
-        </SidebarGroup>
-      </SidebarWrapper>
-    </Sidebar>
   </div>
 </div>
 <section class="bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased">
