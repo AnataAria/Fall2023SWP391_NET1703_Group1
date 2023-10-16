@@ -31,3 +31,11 @@ export type CourseAllInfo = {
     courseInfo:Course;
     sections:SectionDetail;
 }
+
+export type CourseCreate ={
+    id:number;
+    name:string;
+    description:string;
+    durations:string;
+    price:number;
+}

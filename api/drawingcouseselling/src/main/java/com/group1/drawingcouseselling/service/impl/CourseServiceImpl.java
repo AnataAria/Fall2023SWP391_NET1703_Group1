@@ -89,4 +89,13 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDto;
     }
+
+    public boolean isCourseCreateByRightEmail(String inputEmail, BigDecimal id){
+        return courseRepository.findCourseByEmailAndId(inputEmail, id) != null;
+    }
+
+    @Override
+    public Course searchCourseEntityById(BigDecimal id) {
+        return courseRepository.findById(id).orElseThrow();
+    }
 }

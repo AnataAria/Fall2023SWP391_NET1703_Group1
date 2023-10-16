@@ -3,10 +3,10 @@ package com.group1.drawingcouseselling.controller.exception;
 import com.group1.drawingcouseselling.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 @RestControllerAdvice
 public class ApplicationExceptionController {
     @ExceptionHandler(CourseMissMatchException.class)
@@ -55,4 +55,14 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> courseAlreadyBoughtException(CourseAlreadyBoughtException exception){
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String bindException(BindException exception){
+        String errorMessage = "Bad request exception";
+        if (exception.getBindingResult().hasErrors())
+            exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        return errorMessage;
+    }
+
+
 }
