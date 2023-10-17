@@ -1,9 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
-import com.group1.drawingcouseselling.model.dto.AuthenticationRequest;
-import com.group1.drawingcouseselling.model.dto.ChangePasswordDto;
-import com.group1.drawingcouseselling.model.dto.InstructorDto;
-import com.group1.drawingcouseselling.model.dto.RegisterRequest;
+import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.service.AuthenticationService;
 import com.group1.drawingcouseselling.service.OTPService;
 import jakarta.servlet.http.Cookie;
@@ -35,12 +32,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/instructor/register")
-    public ResponseEntity<?> registerInstructor(@RequestBody InstructorDto instructorDto, HttpServletResponse response) {
+    public ResponseEntity<?> registerInstructor(@RequestBody InstructorRegisterDto instructorDto, HttpServletResponse response) {
         Cookie cookie = new Cookie("USER", authenticationService.registerInstructor(instructorDto).getToken());
         cookie.setMaxAge(24 * 64 * 64);
         return ResponseEntity.ok(cookie);
     }
-
     @PostMapping("/authentication")
     public ResponseEntity<Cookie> authentication(@RequestBody AuthenticationRequest request, HttpServletResponse response) {
         Cookie cookie = new Cookie("USER", authenticationService.authenticate(request).getToken());
