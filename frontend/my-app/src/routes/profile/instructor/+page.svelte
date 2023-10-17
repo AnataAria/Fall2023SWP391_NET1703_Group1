@@ -1,10 +1,8 @@
 <script lang="ts">
   import axios from "axios";
-  import {
-    GetCookie,
-    apiBaseUrl,
-  } from "d:/SWP391-Project/Fall2023SWP391_NET1703_Group1/frontend/my-app/src/service";
+
   import { onMount } from "svelte";
+    import { GetCookie, apiBaseUrl } from "../../../service";
 
   interface Instructorinterface {
     email: string;
