@@ -53,7 +53,7 @@ public class AuthenticationService {
                 .build();
     }
     @Transactional(rollbackFor = {EmailIsMatchedException.class, ValueIsInvalidException.class})
-    public AuthenticationResponse registerInstructor(InstructorDto instructorDto) {
+    public AuthenticationResponse registerInstructor(InstructorRegisterDto instructorDto) {
         AccountDto account = AccountDto.builder()
                 .email(instructorDto.email())
                 .password(passwordEncoder.encode(instructorDto.password()))
@@ -66,6 +66,7 @@ public class AuthenticationService {
         instructor.setSpecialization(instructorDto.specialization());
         instructor.setPhone(instructorDto.phone());
         instructor.setAccount(a);
+        instructor.setAvatar(instructor.getAvatar());
 //        Customer customer = new Customer();
 //        customer.setFullName(request.fullname());
 //        customer.setBirthDate(request.birthDate());
