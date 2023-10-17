@@ -30,4 +30,5 @@ public class SectionController {
     public ResponseEntity<List<SectionDto>> getSections(@RequestHeader("Authorization") String token,@RequestParam("id") BigDecimal id){
         return ResponseEntity.ok(sectionService.getAllSectionByCourseID(id));
     }
+
 }
