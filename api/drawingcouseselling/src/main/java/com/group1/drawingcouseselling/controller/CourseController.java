@@ -50,6 +50,10 @@ public class CourseController {
     public ResponseEntity<CourseAllInfoDto> getAllInfoCourse(BigDecimal id,  @RequestHeader(value = "Authorization") String jwt){
         return null;
     }
+    @GetMapping(value = "/course/info")
+    public ResponseEntity<CourseAllInfoDto> getCourseDefaultInfo(){
+        return null;
+    }
     @PostMapping(value = "/course")
     public ResponseEntity<CourseDto> createCourse(@RequestBody @Valid CourseCreateDto courseData, @RequestHeader(value = "Authorization") String jwt){
         String email = jwtService.extractUserEmail(jwt.substring(7));
