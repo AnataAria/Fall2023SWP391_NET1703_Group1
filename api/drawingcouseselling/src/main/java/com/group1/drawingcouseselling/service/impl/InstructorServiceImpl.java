@@ -33,5 +33,9 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor findInstructorByInstructorEmail(String instructorEmail){
         return instructorRepository.findInstructorByEmail(instructorEmail).orElseThrow(() -> new UserNotFoundException(""));
     }
+    @Override
+    public InstructorDto findInstructorDtoByInstructorEmail(String instructorEmail){
+        return instructorRepository.findInstructorByEmail(instructorEmail).map(c -> new Instructor().convertEntityToDto(c)).orElseThrow() ;
+    }
 
 }
