@@ -1,9 +1,10 @@
 <script lang="ts">
   import axios from "axios";
-  import { GetCookie, apiBaseUrl } from "../../../service";
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
  
+  import { GetCookie, apiBaseUrl } from "../../../service";
+
   interface Instructorinterface {
     email: string;
     password: string;

@@ -2,6 +2,7 @@ export type Section = {
     id:number;
     sectionOrder:number;
     title:string;
+    courseID:number;
 }
 
 export type CourseContent = {
@@ -33,7 +34,6 @@ export type CourseAllInfo = {
 }
 
 export type CourseCreate ={
-    id:number;
     name:string;
     description:string;
     durations:string;
