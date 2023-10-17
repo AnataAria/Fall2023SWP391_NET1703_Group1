@@ -1,13 +1,15 @@
 package com.group1.drawingcouseselling.model.entity;
 
 
+import com.group1.drawingcouseselling.model.dto.InstructorDto;
+import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity(name = "instructor")
-public class Instructor implements Serializable {
+public class Instructor implements ObjectMapper<Instructor, InstructorDto> {
     @Id
     @Column(name = "id", columnDefinition = "bigint")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,8 @@ public class Instructor implements Serializable {
     @OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "account_id")
     private Account account;
+    @Column(name = "avatar_url")
+    private String avatar;
 
     public BigDecimal getId() {
         return id;
@@ -60,5 +64,29 @@ public class Instructor implements Serializable {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public Instructor covertDtoToEntity(InstructorDto data) {
+        return null;
+    }
+
+    @Override
+    public InstructorDto convertEntityToDto(Instructor data) {
+        return InstructorDto.builder()
+                .id(data.getId())
+                .fullName(data.getFullName())
+                .specialization(data.getSpecialization())
+                .phone(data.getPhone())
+                .avatar(data.getAvatar())
+                .build();
     }
 }

@@ -1,21 +1,41 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.model.dto.CourseContentCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseContentDto;
 import com.group1.drawingcouseselling.model.entity.CourseContent;
+import com.group1.drawingcouseselling.model.entity.Section;
+import com.group1.drawingcouseselling.repository.CourseContentRepository;
+import com.group1.drawingcouseselling.repository.CourseSectionCompletionRepository;
 import com.group1.drawingcouseselling.service.CourseContentService;
 import com.group1.drawingcouseselling.service.SectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CourseContentServiceImpl implements CourseContentService {
     private final SectionService sectionService;
-    public CourseContentDto createCourseContentDto(CourseContentDto content, BigDecimal sectionId){
-        CourseContent courseContent = new CourseContent().covertDtoToEntity(content);
-        courseContent.setSection(sectionService.getSectionEntityBySectionID(sectionId));
+    private final CourseContentRepository courseContentRepository;
+
+    @Override
+    public CourseContentDto createCourseContent(CourseContentCreateDto data) {
+        BigDecimal id = data.sectionID();
+        CourseContentDto ccd = data.courseContent();
+        Section sec = sectionService.getSectionEntityBySectionID(id);
+        CourseContent course  = new CourseContent().covertDtoToEntity(ccd);
+        course.setSection(sec);
+        courseContentRepository.save(course);
+        return new CourseContent().convertEntityToDto(course);
+    }
+    @Override
+    public CourseContentDto updateCourseContent(CourseContentDto data) {
         return null;
+    }
+    @Override
+    public List<CourseContentDto> getCourseContentDtoOfSection(BigDecimal sectionID){
+        return courseContentRepository.getCourseContentBySectionId(sectionID).stream().map(c -> new CourseContent().convertEntityToDto(c)).toList();
     }
 }

@@ -3,7 +3,7 @@
   import {
     GetCookie,
     apiBaseUrl,
-  } from "d:/SWP391-Project/Fall2023SWP391_NET1703_Group1/frontend/my-app/src/service";
+  } from "../../../service";
   import { onMount } from "svelte";
 
   interface Instructorinterface {
@@ -12,12 +12,13 @@
     fullName: string;
     specialization: string;
     phone: string;
+    avatar: string;
   }
   let InstructorInfo: Instructorinterface = [];
   async function getInstructorInfo() {
     try {
       await axios
-        .get(apiBaseUrl + "customer", {
+        .get(apiBaseUrl + "instructor", {
           headers: {
             Authorization: `Bearer ${GetCookie("USER")}`,
           },
