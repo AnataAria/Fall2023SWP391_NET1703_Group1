@@ -1,11 +1,7 @@
 <script lang="ts">
   import axios from "axios";
-  import {
-    GetCookie,
-    apiBaseUrl,
-  } from "../../../service";
   import { onMount } from "svelte";
-    import { GetCookie, apiBaseUrl } from "../../../service";
+  import { GetCookie, apiBaseUrl } from "../../../service";
 
   interface Instructorinterface {
     email: string;
@@ -59,12 +55,12 @@
             <br />
             <div class="text-center">
               <h1 class="text-2xl font-bold mb-4">Contact</h1>
-              
+
               <div class="text-lg text-gray-500 p-0.5">
                 <i class="fa fa-envelope" />Email address
               </div>
               <div class="font-medium p-0.5">{InstructorInfo.email}</div>
-              
+
               <div class="text-lg text-gray-500 p-0.5">
                 <i class="fa fa-phone" />Phone number
               </div>
@@ -72,8 +68,6 @@
             </div>
           </div>
           <hr class="my-6 border-t border-gray-300" />
-
-          
         </div>
       </div>
       <!--Right-->
