@@ -73,7 +73,7 @@ public class CourseServiceImpl implements CourseService {
                 .map(course -> new Course().convertEntityToDto(course))
                 .collect(Collectors.toList());
     }
-
+    @Override
     public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail){
         Course courseNew = new Course();
         CourseDto courseDto = null;
@@ -89,7 +89,7 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseDto;
     }
-
+    @Override
     public boolean isCourseCreateByRightEmail(String inputEmail, BigDecimal id){
         return courseRepository.findCourseByEmailAndId(inputEmail, id) != null;
     }
@@ -98,4 +98,9 @@ public class CourseServiceImpl implements CourseService {
     public Course searchCourseEntityById(BigDecimal id) {
         return courseRepository.findById(id).orElseThrow();
     }
+    @Override
+    public List<CourseDto> getCoursesByInstructorEmail(String email) {
+        return courseRepository.getCoursesByInstructorEmail(email).stream().map(c -> new Course().convertEntityToDto(c)).toList();
+    }
+
 }

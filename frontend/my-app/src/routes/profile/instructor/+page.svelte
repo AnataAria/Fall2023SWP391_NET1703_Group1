@@ -1,6 +1,9 @@
 <script lang="ts">
   import axios from "axios";
-
+  import {
+    GetCookie,
+    apiBaseUrl,
+  } from "../../../service";
   import { onMount } from "svelte";
     import { GetCookie, apiBaseUrl } from "../../../service";
 
@@ -10,12 +13,13 @@
     fullName: string;
     specialization: string;
     phone: string;
+    avatar: string;
   }
   let InstructorInfo: Instructorinterface = [];
   async function getInstructorInfo() {
     try {
       await axios
-        .get(apiBaseUrl + "customer", {
+        .get(apiBaseUrl + "instructor", {
           headers: {
             Authorization: `Bearer ${GetCookie("USER")}`,
           },

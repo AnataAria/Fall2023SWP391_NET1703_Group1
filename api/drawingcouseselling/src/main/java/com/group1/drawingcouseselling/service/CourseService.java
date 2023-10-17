@@ -19,4 +19,5 @@ public interface CourseService {
     public List<CourseDto> searchCourseByNameAndFilterRandom(String name, Integer page, Integer maxPage);
     public boolean isCourseCreateByRightEmail(String inputEmail, BigDecimal id);
     public Course searchCourseEntityById(BigDecimal id);
+    public List<CourseDto> getCoursesByInstructorEmail(String email);
 }
