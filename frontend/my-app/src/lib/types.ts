@@ -33,7 +33,6 @@ export type CourseAllInfo = {
 }
 
 export type CourseCreate ={
-    id:number;
     name:string;
     description:string;
     durations:string;
