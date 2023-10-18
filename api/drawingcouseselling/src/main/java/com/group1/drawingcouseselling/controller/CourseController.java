@@ -37,7 +37,7 @@ public class CourseController {
         }
         return new ResponseEntity<>(courseService.getAllCourseByPaging(page, maxSize), HttpStatus.OK);
     }
-    @GetMapping("courses/instructor")
+    @GetMapping("/courses/instructor")
     public ResponseEntity<List<CourseDto>> getInstructorCourseList(@RequestHeader(value = "Authorization") String jwt){
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.getCoursesByInstructorEmail(email));
@@ -48,7 +48,7 @@ public class CourseController {
     }
     @GetMapping(value = "/course/all")
     public ResponseEntity<CourseAllInfoDto> getAllInfoCourse(BigDecimal id,  @RequestHeader(value = "Authorization") String jwt){
-        return null;
+        return ResponseEntity.ok(courseService.getAllInfoOfCourse(id));
     }
     @GetMapping(value = "/course/info")
     public ResponseEntity<CourseAllInfoDto> getCourseDefaultInfo(){
@@ -59,11 +59,10 @@ public class CourseController {
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.createCourseUsingJwt(courseData, email));
     }
-
-
     @PutMapping(value = "/course")
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseData,  @RequestHeader(value = "Authorization") String jwt){
-        return null;
+        String email = jwtService.extractUserEmail(jwt.substring(7));
+        return ResponseEntity.ok(courseService.updateCourse(courseData, email));
     }
 
     @DeleteMapping(value = "/course")
