@@ -1,7 +1,7 @@
 package com.group1.drawingcouseselling.service.impl;
 
-import com.group1.drawingcouseselling.exception.CourseNotFoundException;
-import com.group1.drawingcouseselling.exception.InstructorNotFoundException;
+import com.group1.drawingcouseselling.exception.*;
+import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
 import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.entity.Course;
@@ -10,40 +10,42 @@ import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.CourseService;
 import com.group1.drawingcouseselling.service.InstructorService;
+import com.group1.drawingcouseselling.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final InstructorRepository instructorRepository;
     private final InstructorService instructorService;
+    private final SectionService sectionService;
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService) {
+    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.instructorService = instructorService;
+        this.sectionService = sectionService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
         return courseRepository.getCourseOnPaging(PageRequest.of(paging-1,maxPage))
                 .stream()
                 .map(course
-                        -> new Course().convertEntityToDto(course))
-                .collect(Collectors.toList());
+                        -> new Course().convertEntityToDto(course)).toList();
     }
 
     @Override
     public CourseDto searchCourseById(BigDecimal id) throws CourseNotFoundException {
-        Course temp  = courseRepository.findById(id).orElseThrow(() ->new CourseNotFoundException("Not found Course with ID: " + id.toString()));
+        Course temp  = courseRepository.findById(id).orElseThrow(() ->new CourseNotFoundException("Not found Course with ID: " + id));
         return new Course().convertEntityToDto(temp);
     }
     @Override
@@ -59,24 +61,21 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseDto> searchCourseByNameAndFilter(String name, Integer page, Integer maxPage){
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Page<?> a = courseRepository.searchCourseByNameAndFilter(name,PageRequest.of(page-1,maxPage));
         return courseRepository.searchCourseByNameAndFilter(name,PageRequest.of(page-1,maxPage, sort))
               .stream()
-              .map(course -> new Course().convertEntityToDto(course))
-              .collect(Collectors.toList());
+              .map(course -> new Course().convertEntityToDto(course)).toList();
     }
 
     public List<CourseDto> searchCourseByNameAndFilterRandom(String name, Integer page, Integer maxPage){
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         return courseRepository.searchCourseByNameAndFilter(name,PageRequest.of(page-1,maxPage, sort))
                 .stream()
-                .map(course -> new Course().convertEntityToDto(course))
-                .collect(Collectors.toList());
+                .map(course -> new Course().convertEntityToDto(course)).toList();
     }
     @Override
     public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail){
         Course courseNew = new Course();
-        CourseDto courseDto = null;
+        CourseDto courseDto;
         courseNew.setName(course.name());
         courseNew.setDescription(course.description());
         courseNew.setPrice(course.price());
@@ -85,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
         try{
             courseDto = new Course().convertEntityToDto(courseRepository.save(courseNew));
         }catch(IllegalArgumentException | DataIntegrityViolationException e){
-
+            throw new ValueIsInvalidException("Course value isn't valid");
         }
         return courseDto;
     }
@@ -101,6 +100,24 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseDto> getCoursesByInstructorEmail(String email) {
         return courseRepository.getCoursesByInstructorEmail(email).stream().map(c -> new Course().convertEntityToDto(c)).toList();
+    }
+    @Override
+    public CourseDto updateCourse(CourseDto courseData, String email)
+    {
+        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()-> new CourseNotFoundException("Course ID isn't found"));
+        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()-> new UserNotFoundException("Can not edit because this user is not in database"));
+        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
+        Course course = new Course().covertDtoToEntity(courseData);
+        return new Course().convertEntityToDto(courseRepository.save(course));
+    }
+    @Override
+    public CourseAllInfoDto getAllInfoOfCourse(BigDecimal id){
+        var course = searchCourseById(id);
+        var sections = sectionService.getListSectionDetailByCourseID(id);
+        return CourseAllInfoDto.builder()
+                .courseInfo(course)
+                .sections(sections)
+                .build();
     }
 
 }

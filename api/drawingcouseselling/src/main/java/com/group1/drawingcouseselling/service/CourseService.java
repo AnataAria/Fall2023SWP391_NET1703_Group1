@@ -1,6 +1,7 @@
 package com.group1.drawingcouseselling.service;
 
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
+import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
 import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.entity.Course;
@@ -20,4 +21,6 @@ public interface CourseService {
     public boolean isCourseCreateByRightEmail(String inputEmail, BigDecimal id);
     public Course searchCourseEntityById(BigDecimal id);
     public List<CourseDto> getCoursesByInstructorEmail(String email);
+    public CourseDto updateCourse(CourseDto courseData, String email);
+    public CourseAllInfoDto getAllInfoOfCourse(BigDecimal id);
 }
