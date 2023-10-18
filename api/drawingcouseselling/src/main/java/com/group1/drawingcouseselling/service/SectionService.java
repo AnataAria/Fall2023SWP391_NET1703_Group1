@@ -14,5 +14,7 @@ public interface SectionService {
     public SectionDto getSectionById(BigDecimal sectionID);
     public List<SectionDto> getAllSectionByCourseID(BigDecimal courseID);
     public Section getSectionEntityBySectionID(BigDecimal sectionID);
-    public List<SectionDetailDto> getAllSectionByCourseID();
+    public List<SectionDetailDto> getListSectionDetailByCourseID(BigDecimal id);
+    public SectionDto updateSection(SectionDto section, String email);
+    public SectionDto removeSection(BigDecimal id, String email);
 }
