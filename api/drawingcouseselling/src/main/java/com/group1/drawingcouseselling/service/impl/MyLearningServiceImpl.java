@@ -37,7 +37,7 @@ public class MyLearningServiceImpl implements MyLearningService {
     public List<CourseDto> getLearningCourseList(String email){
         Customer customer = customerRepository.searchCustomerByAccountEmail(email);
         if(customer != null){
-            return customer.getCourseList().stream().map(c -> new Course().convertEntityToDto(c)).collect(Collectors.toList());
+            return customer.getCourseList().stream().map(c -> new Course().convertEntityToDto(c)).toList();
         }
         return List.of();
     }
