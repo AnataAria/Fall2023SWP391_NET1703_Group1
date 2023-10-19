@@ -39,3 +39,13 @@ export type CourseCreate ={
     durations:string;
     price:number;
 }
+
+export type SectionMinDetail = {
+    sectionName:string;
+    courseContentNames:string[];
+}
+
+export type CourseMinDetail = {
+    courseInfo:Course;
+    sectionList:SectionMinDetail[];
+}
