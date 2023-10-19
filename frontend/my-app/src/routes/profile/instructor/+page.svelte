@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
   import type { Course } from "$lib/types";
+    import CreateCourseSection from "../../CreateCourseSection.svelte";
  
   interface Instructorinterface {
     email: string;
@@ -234,8 +235,9 @@
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.description}</td>
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white ">{course.durations}</td>
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{CurrencyHandler(course.price)}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap pr-16">
-                              <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                          <td class="py-4 px-6 text-sm font-medium text-left whitespace-nowrap pr-16">
+                            <CreateCourseSection id={course.id}/> 
+                            <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                           </td>
                       </tr>
                       {/each}
