@@ -1,10 +1,10 @@
 <script lang="ts">
   import axios from "axios";
+  import { CurrencyHandler, GetCookie, apiBaseUrl } from "../../../service";
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
+  import type { Course } from "$lib/types";
  
-  import { GetCookie, apiBaseUrl } from "../../../service";
-
   interface Instructorinterface {
     email: string;
     password: string;
@@ -16,7 +16,7 @@
   async function getInstructorInfo() {
     try {
       await axios
-        .get(apiBaseUrl + "customer", {
+        .get(apiBaseUrl + "instructor", {
           headers: {
             Authorization: `Bearer ${GetCookie("USER")}`,
           },
@@ -29,8 +29,24 @@
         });
     } catch (e) {}
   }
+  let instructorCourseList:Course[] = [];
+  async function getInstructorCourseList(){
+    try {
+      await axios.get(apiBaseUrl + "courses/instructor",{
+        headers: {
+            Authorization: `Bearer ${GetCookie("USER")}`,
+          },
+      }
+      ).then((response) => {
+        if(response.status === 200){
+          instructorCourseList = response.data;
+        }
+      })
+    }catch (e) {}
+  }
   onMount(() => {
     getInstructorInfo();
+    getInstructorCourseList();
   });
 </script>
 
@@ -182,7 +198,6 @@
             <br>
             <!-- This is an example component -->
 <div class=" mx-auto">
-
 	<div class="flex flex-col pr-8">
     <div class="overflow-x-auto shadow-md sm:rounded-lg">
         <div class="inline-block min-w-full align-middle">
@@ -211,17 +226,20 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                      {#each instructorCourseList as course}
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                           
-                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">Apple Imac 27xxxxxxxxxxxxxxxxxxxx"</td>
-                            <td class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">Desktop PC</td>
-                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">$1999</td>
-                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white ">$1999</td>
-                            <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">$1999</td>
-                            <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap pr-16">
-                                <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td>
-                        </tr>
+                            
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.id}</td>
+                          <td class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.name}</td>
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.description}</td>
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white ">{course.durations}</td>
+                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{CurrencyHandler(course.price)}</td>
+                          <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap pr-16">
+                              <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                          </td>
+                      </tr>
+                      {/each}
+                        
                         
                     </tbody>
                 </table>

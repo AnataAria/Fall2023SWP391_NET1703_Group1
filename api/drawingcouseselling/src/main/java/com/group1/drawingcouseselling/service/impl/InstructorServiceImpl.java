@@ -21,7 +21,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Optional<Instructor> addInstructor(Instructor instructor){
-        Instructor result = null;
+        Instructor result;
         try{
             result = instructorRepository.save(instructor);
         }catch(IllegalArgumentException | DataIntegrityViolationException e ){

@@ -29,13 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Optional<CustomerDto> addCustomer(CustomerDto customer) {
-        Customer customerEntity = new Customer();
         return Optional.empty();
     }
 
     @Override
     public Optional<Customer> addCustomer(Customer customer) {
-        Customer result = null;
+        Customer result;
         try{
             result = customerRepository.save(customer);
         }catch(IllegalArgumentException | DataIntegrityViolationException e){
@@ -62,6 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
                     .joinDate(accountService.checkAccountByEmail(customerEmailDto).getCreateDate())
                     .build();
         }
+        assert customerDto != null;
         return Optional.of(customerDto);
     }
 }

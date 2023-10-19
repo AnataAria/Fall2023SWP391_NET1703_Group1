@@ -4,5 +4,5 @@ import lombok.Builder;
 
 import java.util.List;
 @Builder
-public record CourseDefaultInfo(CourseDto courseInfo, List<SectionDefaultInfo> sectionList) {
+public record SectionDefaultInfo(String sectionName, List<String> courseContentNames) {
 }
