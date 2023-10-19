@@ -5,7 +5,7 @@
   import { apiBaseUrl } from "../../../service";
   import SectionBar from "../../SectionBar.svelte";
   let course = $page.params.id;
-  import type {CourseData} from "../../../lib/types";
+  import type {CourseMinDetail} from "../../../lib/types";
   export let id;
   let courseForm = {
         name: "",
@@ -14,7 +14,7 @@
         durations: "",
         instructorName: ""
     }
-  let datain:CourseData = [];
+  let datain:CourseMinDetail = [];
 
   async function handleGetCourse() {
     try {
