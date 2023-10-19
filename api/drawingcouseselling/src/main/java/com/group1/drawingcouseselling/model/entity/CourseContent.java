@@ -23,14 +23,17 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     private String description;
     @Column(name="video_link", nullable = false, updatable = true)
     private String videoLink;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     private Date createDate;
     @Column(name="updated_date")
     private Date updateDate;
     @PreUpdate
     private void updateCourseContent(){
         this.updateDate = Date.valueOf(LocalDate.now());
+    }
+    @PrePersist
+    private void createCreateDate(){
+        this.createDate = Date.valueOf(LocalDate.now());
     }
 
     public BigDecimal getId() {
