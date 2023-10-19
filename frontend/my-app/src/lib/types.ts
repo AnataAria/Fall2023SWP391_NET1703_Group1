@@ -2,7 +2,6 @@ export type Section = {
     id:number;
     sectionOrder:number;
     title:string;
-    courseID:number;
 }
 
 export type CourseContent = {
@@ -48,4 +47,14 @@ export type SectionMinDetail = {
 export type CourseMinDetail = {
     courseInfo:Course;
     sectionList:SectionMinDetail[];
+}
+
+export type SectionCreate = {
+    courseID:number;
+    sectionInfo:Section;
+}
+
+export type CourseContentCreate = {
+    sectionID:number;
+    courseContent:CourseContent;
 }
