@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -27,8 +28,8 @@ public class CourseContentServiceImpl implements CourseContentService {
         Section sec = sectionService.getSectionEntityBySectionID(id);
         CourseContent course  = new CourseContent().covertDtoToEntity(ccd);
         course.setSection(sec);
-        courseContentRepository.save(course);
-        return new CourseContent().convertEntityToDto(course);
+        course.setCreateDate(null);
+        return new CourseContent().convertEntityToDto(courseContentRepository.save(course));
     }
     @Override
     public CourseContentDto updateCourseContent(CourseContentDto data) {
