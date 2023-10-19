@@ -109,7 +109,7 @@
   <NavUl>
     <NavLi href="/teaching">Assign Instructor</NavLi>
     <NavLi href="/mylearning">My Learning</NavLi>
-    <NavLi>
+    <NavLi href="/cart">
       Your Cart
     </NavLi>
   </NavUl>
@@ -123,8 +123,6 @@
             >{jwtData.email}</span
           >
         </DropdownHeader>
-        <DropdownItem on:click={loginLogoutHandler}>Login</DropdownItem>
-        <DropdownDivider />
         <DropdownItem on:click={()=>{
           window.location.href = "/profile";
         }}>Profile</DropdownItem>
