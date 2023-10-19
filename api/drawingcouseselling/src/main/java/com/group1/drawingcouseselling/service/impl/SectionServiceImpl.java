@@ -3,6 +3,8 @@ package com.group1.drawingcouseselling.service.impl;
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
 import com.group1.drawingcouseselling.exception.InstructorNotPermissonToEditException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
+import com.group1.drawingcouseselling.model.dto.CourseContentDto;
+import com.group1.drawingcouseselling.model.dto.SectionDefaultInfo;
 import com.group1.drawingcouseselling.model.dto.SectionDetailDto;
 import com.group1.drawingcouseselling.model.dto.SectionDto;
 import com.group1.drawingcouseselling.model.entity.Section;
@@ -101,5 +103,21 @@ public class SectionServiceImpl implements SectionService {
         if(!courseContentService.getCourseContentDtoOfSection(deletedSection.getId()).isEmpty()) throw new CourseNotFoundException("");
         sectionRepository.delete(deletedSection);
         return new Section().convertEntityToDto(deletedSection);
+    }
+    @Override
+    public List<SectionDefaultInfo> getSectionDefaultInfoByCourseID(BigDecimal courseID){
+        List<SectionDefaultInfo> list = new ArrayList<>();
+        List<SectionDto> secList = getAllSectionByCourseID(courseID);
+        for(SectionDto secListDto : secList){
+            List<String> courseSectionsNameList = new ArrayList<>();
+            for(CourseContentDto ccd : courseContentService.getCourseContentDtoOfSection(secListDto.id())){
+                courseSectionsNameList.add(ccd.title());
+            }
+            list.add(SectionDefaultInfo.builder()
+                            .sectionName(secListDto.title())
+                            .courseContentNames(courseSectionsNameList)
+                    .build());
+        }
+        return list;
     }
 }

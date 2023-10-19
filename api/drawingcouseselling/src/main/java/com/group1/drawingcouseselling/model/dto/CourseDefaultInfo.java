@@ -1,4 +1,8 @@
 package com.group1.drawingcouseselling.model.dto;
 
-public record CourseDefaultInfo(CourseDto courseInfo) {
+import lombok.Builder;
+
+import java.util.List;
+@Builder
+public record CourseDefaultInfo(CourseDto courseInfo, List<SectionDefaultInfo> sectionList) {
 }

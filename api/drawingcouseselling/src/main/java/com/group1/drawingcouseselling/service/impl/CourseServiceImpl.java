@@ -3,6 +3,7 @@ package com.group1.drawingcouseselling.service.impl;
 import com.group1.drawingcouseselling.exception.*;
 import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
 import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
+import com.group1.drawingcouseselling.model.dto.CourseDefaultInfo;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Instructor;
@@ -117,6 +118,14 @@ public class CourseServiceImpl implements CourseService {
         return CourseAllInfoDto.builder()
                 .courseInfo(course)
                 .sections(sections)
+                .build();
+    }
+    @Override
+    public CourseDefaultInfo getAllCourseDefaultInfo(BigDecimal id){
+        var course = searchCourseById(id);
+        return CourseDefaultInfo.builder()
+                .courseInfo(course)
+                .sectionList(sectionService.getSectionDefaultInfoByCourseID(id))
                 .build();
     }
 
