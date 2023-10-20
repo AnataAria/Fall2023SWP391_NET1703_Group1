@@ -5,7 +5,8 @@
   axios.defaults.withCredentials = true;
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
-  import { apiBaseUrl } from "../../service";
+  import { DisableSubmitButton, EnableSubmitButton, apiBaseUrl } from "../../service";
+    import { Button, Spinner } from "flowbite-svelte";
   let registerForm = {
     email: "",
     fullname: "",
@@ -49,20 +50,6 @@
         console.log(err);
       }
     }
-    Toastify({
-      text: errorMsg,
-      duration: 3000,
-      destination: "https://github.com/apvarun/toastify-js",
-      newWindow: true,
-      close: true,
-      gravity: "bottom", // `top` or `bottom`
-      position: "right", // `left`, `center` or `right`
-      stopOnFocus: true, // Prevents dismissing of toast on hover
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      },
-      onClick: function () {}, // Callback after click
-    }).showToast();
   }
   async function handleLogin() {
     let status = true;
@@ -71,30 +58,20 @@
       status = false;
     }
     if (status) {
+      DisableSubmitButton();
       try {
         await axios
           .post(apiBaseUrl + "auth/authentication", loginForm)
           .then((response) => {
             if (response.status === 200) {
+              EnableSubmitButton();
               window.location.href = "/";
             }
           });
-      } catch (err) {}
+      } catch (err) {
+        EnableSubmitButton();
+      }
     }
-    Toastify({
-      text: errorMsg,
-      duration: 3000,
-      // destination: "https://github.com/apvarun/toastify-js",
-      newWindow: true,
-      close: true,
-      gravity: "bottom", // `top` or `bottom`
-      position: "right", // `left`, `center` or `right`
-      stopOnFocus: true, // Prevents dismissing of toast on hover
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      },
-      onClick: function () {}, // Callback after click
-    }).showToast();
   }
   let questions = [
     {
@@ -181,11 +158,17 @@
                   </div>
               </div>
 
-              <div>
+              <div id="submitButton">
                   <button type="submit"
-                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Sign in
                   </button>
+              </div>
+              <div id="loader" hidden>
+                <Button color="red" class='flex flex-wrap items-center gap-2 w-full'>
+                  <Spinner class="mr-3" size="4" color="white" />
+                  Loading ...
+                </Button>
               </div>
           </form>
           <div class="mt-6">
