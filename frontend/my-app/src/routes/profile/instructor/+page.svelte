@@ -4,6 +4,8 @@
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
   import type { Course } from "$lib/types";
+    import CreateCourseSection from "../../CreateCourseSection.svelte";
+  import CreateCourse from "../../CreateCourse.svelte";
  
   interface Instructorinterface {
     email: string;
@@ -142,12 +144,13 @@
               <div />
               <div />
               <div class="pt-3 pl-10">
-                <a
+                <CreateCourse></CreateCourse>
+                <!-- <a
                   href="#"
                   class="inline-flex items-center px-8 w-36 h-12 text-sm text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Add Course</a
-                >
+                > -->
               </div>
             </div>
           </div>
@@ -234,8 +237,9 @@
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.description}</td>
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white ">{course.durations}</td>
                           <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{CurrencyHandler(course.price)}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap pr-16">
-                              <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                          <td class="py-4 px-6 text-sm font-medium text-left whitespace-nowrap pr-16">
+                            <CreateCourseSection id={course.id}/> 
+                            <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                           </td>
                       </tr>
                       {/each}
