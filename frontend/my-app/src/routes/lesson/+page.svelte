@@ -93,28 +93,14 @@
 </script>
 <style>
 	.left{
-		border-right:solid ;
+		border-left:solid ;
 	}
 </style>
 
 <div class="grid grid-cols-5 gap-4">
-	<div class="left ">
-		<div class="flex flex-col w-full font-medium">
-            {#each posts as post, index }
-				<Sidebar asideClass="w-full" >
-					<SidebarGroup >
-						<SidebarItem label={post.title} on:click={() => (postIndex = index)} >
-					  	</SidebarItem>
-					</SidebarGroup>  
-				</Sidebar>
-			{/each}
-			<!-- menu item -->
 
-        </div>
-            
-	</div>
 	<div class="col-span-4">
-		<div class="">
+		<div class="mx-32">
 			<div>
 				<iframe width="1220" height="686" src={posts[postIndex].videoLink} title="Chosen&#39;s Modded Adventure LIVE 15.5 - HÔM NAY LÀM GÌ ĐÂY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 			</div>
@@ -347,6 +333,21 @@
 				</div>
 			  </section>
 		</div>
+	</div>
+    <div class="left ">
+		<div class=" w-full font-medium">
+            {#each posts as post, index }
+				<Sidebar asideClass="w-full" >
+					<SidebarGroup >
+						<SidebarItem label={post.title} on:click={() => (postIndex = index)} >
+					  	</SidebarItem>
+					</SidebarGroup>  
+				</Sidebar>
+			{/each}
+			<!-- menu item -->
+
+        </div>
+            
 	</div>
 
 
