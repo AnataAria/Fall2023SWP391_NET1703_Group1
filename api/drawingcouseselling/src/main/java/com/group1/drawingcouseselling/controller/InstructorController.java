@@ -1,6 +1,9 @@
 package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.InstructorDto;
+import com.group1.drawingcouseselling.service.InstructorService;
+import com.group1.drawingcouseselling.service.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 
 @RestController
+@RequiredArgsConstructor
 public class InstructorController {
-//    @GetMapping("")
-//    public ResponseEntity<InstructorDto> getInstructorInfo(@RequestHeader(required = false) String instructorToken
-//        ,@RequestParam(value = "instructorID", required = false) BigDecimal instructorID
-//    ){
-//    }
+    private final InstructorService instructorService;
+    private final JwtService jwtService;
+    @GetMapping("/instructor")
+    public ResponseEntity<InstructorDto> getInstructorInfo(
+            @RequestHeader(value = "Authorization", defaultValue = "") String instructorToken,
+            @RequestParam(value = "instructorID", required = false) BigDecimal instructorID
+    ){
+        String email = jwtService.extractUserEmail(instructorToken.substring(7));
+        return ResponseEntity.ok(instructorService.findInstructorDtoByInstructorEmail(email));
+    }
 }

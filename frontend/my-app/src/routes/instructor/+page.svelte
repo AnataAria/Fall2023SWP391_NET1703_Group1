@@ -1,12 +1,12 @@
 <script lang="ts">
   import axios from "axios";
-  import { CurrencyHandler, GetCookie, apiBaseUrl } from "../../../service";
+  import { CurrencyHandler, GetCookie, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
   import type { Course } from "$lib/types";
-    import CreateCourseSection from "../../CreateCourseSection.svelte";
-  import CreateCourse from "../../CreateCourse.svelte";
- 
+  import CreateCourseSection from "../CreateCourseSection.svelte";
+  import CreateCourse from "../CreateCourse.svelte";
+
   interface Instructorinterface {
     email: string;
     password: string;
@@ -31,20 +31,21 @@
         });
     } catch (e) {}
   }
-  let instructorCourseList:Course[] = [];
-  async function getInstructorCourseList(){
+  let instructorCourseList: Course[] = [];
+  async function getInstructorCourseList() {
     try {
-      await axios.get(apiBaseUrl + "courses/instructor",{
-        headers: {
+      await axios
+        .get(apiBaseUrl + "courses/instructor", {
+          headers: {
             Authorization: `Bearer ${GetCookie("USER")}`,
           },
-      }
-      ).then((response) => {
-        if(response.status === 200){
-          instructorCourseList = response.data;
-        }
-      })
-    }catch (e) {}
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            instructorCourseList = response.data;
+          }
+        });
+    } catch (e) {}
   }
   onMount(() => {
     getInstructorInfo();
@@ -144,7 +145,7 @@
               <div />
               <div />
               <div class="pt-3 pl-10">
-                <CreateCourse></CreateCourse>
+                <CreateCourse />
                 <!-- <a
                   href="#"
                   class="inline-flex items-center px-8 w-36 h-12 text-sm text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -198,63 +199,99 @@
             </form>
           </div>
           <div>
-            <br>
+            <br />
             <!-- This is an example component -->
-<div class=" mx-auto">
-	<div class="flex flex-col pr-8">
-    <div class="overflow-x-auto shadow-md sm:rounded-lg">
-        <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden ">
-                <table class="w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                    <thead class="bg-gray-100 dark:bg-gray-700">
-                        <tr>
-                          <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                            Course ID
-                        </th>
-                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+            <div class=" mx-auto">
+              <div class="flex flex-col pr-8">
+                <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                  <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-hidden">
+                      <table
+                        class="w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700"
+                      >
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                          <tr>
+                            <th
+                              scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            >
+                              Course ID
+                            </th>
+                            <th
+                              scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            >
                               Course Name
                             </th>
-                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                            <th
+                              scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            >
                               Description
                             </th>
-                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                            <th
+                              scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            >
                               Duration
                             </th>
-                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                            <th
+                              scope="col"
+                              class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                            >
                               Price
-                          </th>
-                            <th scope="col" class="p-4">
-                                <span class="sr-only">Edit</span>
                             </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {#each instructorCourseList as course}
-                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                            
-                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.id}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.name}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ...">{course.description}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white ">{course.durations}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{CurrencyHandler(course.price)}</td>
-                          <td class="py-4 px-6 text-sm font-medium text-left whitespace-nowrap pr-16">
-                            <CreateCourseSection id={course.id}/> 
-                            <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                          </td>
-                      </tr>
-                      {/each}
-                        
-                        
-                    </tbody>
-                </table>
+                            <th scope="col" class="p-4">
+                              <span class="sr-only">Edit</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
+                        >
+                          {#each instructorCourseList as course}
+                            <tr
+                              class="hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
+                                >{course.id}</td
+                              >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
+                                >{course.name}</td
+                              >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
+                                >{course.description}</td
+                              >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                >{course.durations}</td
+                              >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                >{CurrencyHandler(course.price)}</td
+                              >
+                              <td
+                                class="py-4 px-6 text-sm font-medium text-left whitespace-nowrap pr-16"
+                              >
+                                <CreateCourseSection id={course.id} />
+                                <a
+                                  href="#"
+                                  class="text-blue-600 dark:text-blue-500 hover:underline"
+                                  >Edit</a
+                                >
+                              </td>
+                            </tr>
+                          {/each}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
-</div>
-
-	
-</div>
-
           </div>
         </div>
 
@@ -263,5 +300,3 @@
     </div>
   </div>
 </div>
-
-

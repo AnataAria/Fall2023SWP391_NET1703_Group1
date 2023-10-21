@@ -117,7 +117,7 @@
                     EnableSubmitButton();
                     if (response.status === 200) {
                         showMessage("Login Successs!");
-                        window.location.href = "/";
+                        window.location.href = "/profile/instructor";
                     }
                 })
                 .catch((error: AxiosError) => {

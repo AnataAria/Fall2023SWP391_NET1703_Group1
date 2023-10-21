@@ -33,9 +33,28 @@ export type CourseAllInfo = {
 }
 
 export type CourseCreate ={
-    id:number;
     name:string;
     description:string;
     durations:string;
     price:number;
+}
+
+export type SectionMinDetail = {
+    sectionName:string;
+    courseContentNames:string[];
+}
+
+export type CourseMinDetail = {
+    courseInfo:Course;
+    sectionList:SectionMinDetail[];
+}
+
+export type SectionCreate = {
+    courseID:number;
+    sectionInfo:Section;
+}
+
+export type CourseContentCreate = {
+    sectionID:number;
+    courseContent:CourseContent;
 }

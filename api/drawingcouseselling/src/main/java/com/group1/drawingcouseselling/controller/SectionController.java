@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.dto.SectionCreateDto;
 import com.group1.drawingcouseselling.model.dto.SectionDto;
 import com.group1.drawingcouseselling.service.JwtService;
 import com.group1.drawingcouseselling.service.SectionService;
@@ -16,9 +17,9 @@ public class SectionController {
     private final SectionService sectionService;
     private final JwtService jwtService;
     @PostMapping("/section")
-    public ResponseEntity<SectionDto> createSection(@RequestBody SectionDto sectionDto, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<SectionDto> createSection(@RequestBody SectionCreateDto sectionDto, @RequestHeader("Authorization") String token) {
         String email = jwtService.extractUserEmail(token.substring(7));
-        return ResponseEntity.ok(sectionService.createSection(sectionDto, sectionDto.courseID(), email));
+        return ResponseEntity.ok(sectionService.createSection(sectionDto.sectionInfo(), sectionDto.courseID(), email));
     }
 
     @GetMapping("/section")
@@ -30,4 +31,5 @@ public class SectionController {
     public ResponseEntity<List<SectionDto>> getSections(@RequestHeader("Authorization") String token,@RequestParam("id") BigDecimal id){
         return ResponseEntity.ok(sectionService.getAllSectionByCourseID(id));
     }
+
 }

@@ -14,7 +14,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
     private BigDecimal id;
-    @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name ="section_id", nullable = false, updatable = true)
     private Section section;
     @Column(name="title", nullable = false, updatable = true)
@@ -23,14 +23,17 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     private String description;
     @Column(name="video_link", nullable = false, updatable = true)
     private String videoLink;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     private Date createDate;
     @Column(name="updated_date")
     private Date updateDate;
     @PreUpdate
     private void updateCourseContent(){
         this.updateDate = Date.valueOf(LocalDate.now());
+    }
+    @PrePersist
+    private void createCreateDate(){
+        this.createDate = Date.valueOf(LocalDate.now());
     }
 
     public BigDecimal getId() {
@@ -92,7 +95,6 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     @Override
     public CourseContent covertDtoToEntity(CourseContentDto data) {
         CourseContent lesson  = new CourseContent();
-        lesson.setId(data.id());
         lesson.setTitle(data.title());
         lesson.setDescription(data.description());
         lesson.setVideoLink(data.videoLink());

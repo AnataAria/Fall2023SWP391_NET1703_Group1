@@ -15,6 +15,7 @@
     TwitterSolid,
   } from "flowbite-svelte-icons";
   // import Dribble from "../../utils/icons/Dribble.svelte";
+  import headerImage from "$lib/assets/Header.jpg";
 </script>
 
 <footer>
@@ -23,7 +24,7 @@
       <div class="mb-6 md:mb-0">
         <FooterBrand
           href="/"
-          src="/src/lib/assets/Header.jpg"
+          src={headerImage}
           alt="Ademy"
           imgClass="mr-3 h-6 lg:h-20"
         />

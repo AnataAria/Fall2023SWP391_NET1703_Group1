@@ -21,7 +21,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Optional<Instructor> addInstructor(Instructor instructor){
-        Instructor result = null;
+        Instructor result;
         try{
             result = instructorRepository.save(instructor);
         }catch(IllegalArgumentException | DataIntegrityViolationException e ){
@@ -32,6 +32,10 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public Instructor findInstructorByInstructorEmail(String instructorEmail){
         return instructorRepository.findInstructorByEmail(instructorEmail).orElseThrow(() -> new UserNotFoundException(""));
+    }
+    @Override
+    public InstructorDto findInstructorDtoByInstructorEmail(String instructorEmail){
+        return instructorRepository.findInstructorByEmail(instructorEmail).map(c -> new Instructor().convertEntityToDto(c)).orElseThrow() ;
     }
 
 }

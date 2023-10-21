@@ -3,7 +3,9 @@
   import axios from "axios";
   import { onMount } from "svelte";
   import { apiBaseUrl } from "../../../service";
+  import SectionBar from "../../SectionBar.svelte";
   let course = $page.params.id;
+  import type {CourseMinDetail} from "../../../lib/types";
   export let id;
   let courseForm = {
         name: "",
@@ -12,264 +14,107 @@
         durations: "",
         instructorName: ""
     }
-  
+  let datain:CourseMinDetail = [];
 
   async function handleGetCourse() {
     try {
       let res = await axios
-        .get(apiBaseUrl + `course?id=${course}`)
+        .get(apiBaseUrl + `course/info?id=${course}`)
         .then((response) => {
           console.log(response.data);
-          courseForm = response.data;
+          
+          datain = response.data;
+          console.log(datain);
         });
     } catch (error) {
       console.log(error);
     }
   }
+  let status = false;
+  function On(){
+    status = true;
+  }
   onMount(() => {
     handleGetCourse();
+    setTimeout(()=>{
+        On();
+    },1000)
   });
 </script>
-<div class = "card-wrapper">
-    <div class = "card">
-      <!-- card left -->
-      <div class = "product-imgs">
-        <div class = "img-display">
-          <div class = "img-showcase">
-            <img src = "https://cdn.anime-pictures.net/previews/e89/e89f28a1d1c22783de367f21a8761058_bp.png.webp" alt = "shoe image">
+{#if status}
+<section class="text-gray-700 body-font overflow-hidden bg-white">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="lg:w-4/5 mx-auto flex flex-wrap">
+        <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg">
+        <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <h2 class="text-sm title-font text-gray-500 tracking-widest">COURSE NAME</h2>
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{datain.courseInfo.name}</h1>
+          <span class="text-gray-600 ml-3">By {datain.courseInfo.instructorName}</span>
+          <div class="flex mb-4">
+            <span class="flex items-center">
+              <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              <span class="text-gray-600 ml-3">4 Reviews</span>
+            </span>
+            <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
+              <a class="text-gray-500">
+                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                </svg>
+              </a>
+              <a class="ml-2 text-gray-500">
+                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                </svg>
+              </a>
+              <a class="ml-2 text-gray-500">
+                <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
+                </svg>
+              </a>
+            </span>
           </div>
-        </div>
-        <div class = "img-select">
-         
-        </div>
-      </div>
-      <!-- card right -->
-      <div class = "product-content">
-        <h2 class = "product-title">{courseForm.name}</h2>
-        <a href = "#" class = "product-link">@{courseForm.instructorName}</a>
-        <br/>
-        <div class = "product-price">
-          <p class = "last-price">Price: <span>{courseForm.price} VND</span></p>
-          
-        </div>
-  
-        <div class = "product-detail">
-          <h2>about this item: </h2>
-          <p>{courseForm.description}</p>
-        </div>
-  
-        <div class = "purchase-info">
-          
-          <button type = "button" class = "btn" style="width: 150px;    ">
-            Add to Cart <i class = "fa fa-shopping-cart"></i>
-          </button>
-          <button type = "button" class = "btn">Wishlist</button>
+          <p class="leading-relaxed">{datain.courseInfo.description}</p>
+          <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+            
+            <div class="flex ml-6 items-center">
+              <div class="relative">
+                <span class="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex pb-5">
+            <span class="title-font font-medium text-2xl text-gray-900">$58.00</span>
+            <button class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Add To Cart</button>
+            <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+              <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="block pt-5 border-t-2 w-full">
+            <span class="text-gray-600 ml-3"></span>
+            <SectionBar instructorCourseList={datain.sectionList}></SectionBar>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
-
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Open Sans', sans-serif;
-}
-body{
-    line-height: 1.5;
-}
-.card-wrapper{
-    max-width: 1100px;
-    margin: 0 auto;
-}
-img{
-    width: 100%;
-    display: block;
-}
-.img-display{
-    overflow: hidden;
-}
-.img-showcase{
-    display: flex;
-    width: 100%;
-    transition: all 0.5s ease;
-}
-.img-showcase img{
-    min-width: 100%;
-}
-.img-select{
-    display: flex;
-}
-.img-item{
-    margin: 0.3rem;
-}
-.img-item:nth-child(1),
-.img-item:nth-child(2),
-.img-item:nth-child(3){
-    margin-right: 0;
-}
-.img-item:hover{
-    opacity: 0.8;
-}
-.product-content{
-    padding: 2rem 1rem;
-}
-.product-title{
-    font-size: 3rem;
-    text-transform: capitalize;
-    font-weight: 700;
-    position: relative;
-    color: #12263a;
-    margin: 1rem 0;
-}
-.product-title::after{
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 4px;
-    width: 80px;
-    background: #12263a;
-}
-.product-link{
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 0.9rem;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    background: #256eff;
-    color: #fff;
-    padding: 0 0.3rem;
-    transition: all 0.5s ease;
-}
-.product-link:hover{
-    opacity: 0.9;
-}
-.product-rating{
-    color: #ffc107;
-}
-.product-rating span{
-    font-weight: 600;
-    color: #252525;
-}
-.product-price{
-    margin: 1rem 0;
-    font-size: 1rem;
-    font-weight: 700;
-}
-.product-price span{
-    font-weight: 400;
-}
-.last-price span{
-    color: #f64749;
-   
-}
-.new-price span{
-    color: #256eff;
-}
-.product-detail h2{
-    text-transform: capitalize;
-    color: #12263a;
-    padding-bottom: 0.6rem;
-}
-.product-detail p{
-    font-size: 0.9rem;
-    padding: 0.3rem;
-    opacity: 0.8;
-}
-.product-detail ul{
-    margin: 1rem 0;
-    font-size: 0.9rem;
-}
-.product-detail ul li{
-    margin: 0;
-    list-style: none;
-    background: url(https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png) left center no-repeat;
-    background-size: 18px;
-    padding-left: 1.7rem;
-    margin: 0.4rem 0;
-    font-weight: 600;
-    opacity: 0.9;
-}
-.product-detail ul li span{
-    font-weight: 400;
-}
-.purchase-info{
-    margin: 1.5rem 0;
-}
-.purchase-info input,
-.purchase-info .btn{
-    border: 1.5px solid #ddd;
-    border-radius: 25px;
-    text-align: center;
-    padding: 0.45rem 0.8rem;
-    outline: 0;
-    margin-right: 0.2rem;
-    margin-bottom: 1rem;
-}
-.purchase-info input{
-    width: 60px;
-}
-.purchase-info .btn{
-    cursor: pointer;
-    color: #fff;
-}
-.purchase-info .btn:first-of-type{
-    background: #256eff;
-}
-.purchase-info .btn:last-of-type{
-    background: #f64749;
-}
-.purchase-info .btn:hover{
-    opacity: 0.9;
-}
-.social-links{
-    display: flex;
-    align-items: center;
-}
-.social-links a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: #000;
-    border: 1px solid #000;
-    margin: 0 0.2rem;
-    border-radius: 50%;
-    text-decoration: none;
-    font-size: 0.8rem;
-    transition: all 0.5s ease;
-}
-.social-links a:hover{
-    background: #000;
-    border-color: transparent;
-    color: #fff;
-}
-
-@media screen and (min-width: 992px){
-    .card{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 1.5rem;
-    }
-    .card-wrapper{
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .product-imgs{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .product-content{
-        padding-top: 0;
-    }
-}
-  </style>
+  </section>
+{/if}
