@@ -112,7 +112,7 @@
 				{/if}
 
 			{/each} -->
-
+            <div class="text-2xl font-bold my-8">{posts[postIndex].title}</div>
 			
 		</div>
 		<div class="">
