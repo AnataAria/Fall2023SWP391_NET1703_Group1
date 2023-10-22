@@ -50,11 +50,11 @@
         if (order.currency === ""){
             showErrMessage("Please choose currency")
         } else {
-            CurrencyExchange(order.price).then((result) => {
-                order.price = result;
-                console.log(order.price);
-                PaypalCheckout();
-            });
+            // CurrencyExchange(order.price).then((result) => {
+            //     order.price = result;
+            //     console.log(order.price);
+            // });
+            PaypalCheckout();
             console.log(rate);
         }
     }
@@ -62,10 +62,10 @@
         let res;
         console.log(order);
         console.log(jwt);
-        CurrencyExchange(order.price).then((result) => {
-            order.price = result;
-            console.log(order.price);
-        });
+        // CurrencyExchange(order.price).then((result) => {
+        //     order.price = result;
+        //     console.log(order.price);
+        // });
         console.log(rate);
         res = await axios
             .post(apiBaseUrl + "pay", order, {
