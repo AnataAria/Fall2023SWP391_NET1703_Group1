@@ -25,4 +25,5 @@ public interface CourseService {
     public CourseDto updateCourse(CourseDto courseData, String email);
     public CourseAllInfoDto getAllInfoOfCourse(BigDecimal id);
     public CourseDefaultInfo getAllCourseDefaultInfo(BigDecimal id);
+    public Course getCourseByCourseContentID(BigDecimal courseContentID);
 }

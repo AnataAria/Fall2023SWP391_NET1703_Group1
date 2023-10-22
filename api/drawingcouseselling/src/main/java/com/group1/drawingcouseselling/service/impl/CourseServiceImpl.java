@@ -128,5 +128,9 @@ public class CourseServiceImpl implements CourseService {
                 .sectionList(sectionService.getSectionDefaultInfoByCourseID(id))
                 .build();
     }
+    @Override
+    public Course getCourseByCourseContentID(BigDecimal courseContentID){
+        return courseRepository.searchCourseByCourseContentID(courseContentID);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.CourseNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CourseContentCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseContentDto;
 import com.group1.drawingcouseselling.model.entity.CourseContent;
@@ -38,5 +39,10 @@ public class CourseContentServiceImpl implements CourseContentService {
     @Override
     public List<CourseContentDto> getCourseContentDtoOfSection(BigDecimal sectionID){
         return courseContentRepository.getCourseContentBySectionId(sectionID).stream().map(c -> new CourseContent().convertEntityToDto(c)).toList();
+    }
+
+    @Override
+    public CourseContent getCourseContentById(BigDecimal id) {
+        return courseContentRepository.findById(id).orElseThrow(() -> new CourseNotFoundException(""));
     }
 }

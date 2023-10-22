@@ -60,4 +60,12 @@ public class CourseContentCompletion {
     public void setDone(Boolean done) {
         isDone = done;
     }
+
+    public CourseContent getCourseContent() {
+        return courseContent;
+    }
+
+    public void setCourseContent(CourseContent courseContent) {
+        this.courseContent = courseContent;
+    }
 }
