@@ -2,14 +2,12 @@ package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.CourseContentCreateDto;
 import com.group1.drawingcouseselling.model.dto.CourseContentDto;
+import com.group1.drawingcouseselling.model.dto.CourseContentEditDto;
 import com.group1.drawingcouseselling.service.CourseContentService;
 import com.group1.drawingcouseselling.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,5 +18,10 @@ public class CourseContentController {
     public ResponseEntity<CourseContentDto> createCourseContent(@RequestBody CourseContentCreateDto courseContentCreateDto, @RequestHeader("Authorization") String token){
         String email = jwtService.extractUserEmail(token.substring(7));
         return ResponseEntity.ok(courseContentService.createCourseContent(courseContentCreateDto));
+    }
+    @PutMapping("/course-content/edit")
+    public ResponseEntity<CourseContentDto> updateCourseContent(@RequestBody CourseContentEditDto data,  @RequestHeader("Authorization") String token){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(courseContentService.updateCourseContent(data,email));
     }
 }
