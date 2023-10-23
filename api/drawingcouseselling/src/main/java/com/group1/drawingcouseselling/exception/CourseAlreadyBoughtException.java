@@ -9,7 +9,7 @@ public class CourseAlreadyBoughtException extends BaseException{
     public CourseAlreadyBoughtException(String message) {
         super(message);
         this.errorMessage = ErrorMessage.builder()
-                .status(HttpStatus.BAD_REQUEST)
+                .status(HttpStatus.CONFLICT)
                 .errorList(List.of(message.split(",")))
                 .build();
     }
