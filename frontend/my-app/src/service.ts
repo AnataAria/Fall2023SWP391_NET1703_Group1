@@ -66,8 +66,9 @@ export function RemoveUserCookies(name: string) {
   document.cookie = `${name}=; expires=${pastDate.toUTCString()}; path=/;`;
 }
 
-export function ShowMessage(message: string, duration: number, notificationType: number) {
+export function ShowMessage(message: string, duration: number, notificationType: number,  gravityCode: number) {
   let styles;
+  let gravies:string;
   switch (notificationType) {
     case 1:
       styles = alarm;
@@ -78,13 +79,21 @@ export function ShowMessage(message: string, duration: number, notificationType:
     default:
       styles = ok;
   }
+  switch(gravityCode){
+    case 1:
+    gravies = "bottom"
+    break;
+    case 2:
+    gravies = "top"
+    break;
+  }
   Toastify({
     text: message,
     duration: duration,
     destination: "https://github.com/apvarun/toastify-js",
     newWindow: true,
     close: true,
-    gravity: "bottom", // `top` or `bottom`
+    gravity: { gravies }, // `top` or `bottom`
     position: "right", // `left`, `center` or `right`
     stopOnFocus: true, // Prevents dismissing of toast on hover
     style: styles,
@@ -101,6 +110,42 @@ export function CurrencyHandler(value: number) {
   return formatter.format(value);
 }
 
+export async function AuthorizationPage(roles:string[], unAuthPath:string, authPath:string){
+  let jwtData = {
+    email: "",
+    roles: "",
+    createDate: "",
+    isActive: false
+  }
+  const token = GetCookie("USER");
+  if(token != null) {
+    let header = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${token}`
+    }
+    try{
+      await axios.get(apiBaseUrl + 'account', {
+        headers:header
+      }).then((response) => {
+        if(response.status === 200){
+          jwtData = response.data;
+          console.log(jwtData);
+          console.log(response.headers);
+        }
+      });
+      roles.forEach(item => {
+        const compare = item.localeCompare(jwtData.roles);
+        if(compare === 0) window.location.href = authPath;
+        
+      })
+      window.location.href = unAuthPath;
+    }catch(e){
+      return false;
+    }
+  }
+}
+
 
 export async function AuthenticatePage(roles: string) {
   let jwtData = {
@@ -109,6 +154,7 @@ export async function AuthenticatePage(roles: string) {
     createDate: "",
     isActive: false
   }
+
 
   const token = GetCookie("USER");
   if (token != null) {
