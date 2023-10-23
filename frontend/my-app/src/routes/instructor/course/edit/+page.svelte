@@ -1,6 +1,37 @@
 <script lang="ts">
   import { page } from "$app/stores";
   const id = $page.url.searchParams.get("courseId");
+  let apiKey = "7gq4en8n7fdu1f8nqawf1uqup1tx0smi6v7dc3v1tf3dnhwa";
+  let conf = {
+    plugins: [
+      "a11ychecker",
+      "advlist",
+      "advcode",
+      "advtable",
+      "autolink",
+      "checklist",
+      "export",
+      "lists",
+      "link",
+      "image",
+      "charmap",
+      "preview",
+      "anchor",
+      "searchreplace",
+      "visualblocks",
+      "powerpaste",
+      "fullscreen",
+      "formatpainter",
+      "insertdatetime",
+      "media",
+      "table",
+      "help",
+      "wordcount",
+    ],
+    toolbar:
+      "undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify | " +
+      "bullist numlist checklist outdent indent | removeformat | code table help",
+  };
   import {
     Button,
     SidebarWrapper,
@@ -88,6 +119,7 @@
         .then((response) => {
           if (response.status === 200) {
             alert("Course updated");
+            ChangeView();
           }
         });
     } catch (e) {}
@@ -104,6 +136,7 @@
         .then((response) => {
           if (response.status === 200) {
             alert("Course Content updated");
+            ChangeView();
           }
         });
     } catch (e) {}
@@ -161,7 +194,7 @@
                 <div class="grid grid-cols-2 gap-4">
                   <div id="viewmode">
                     <div>Course ID</div>
-                    <div class="font-medium">01</div>
+                    <div class="font-medium">{course.id}</div>
                   </div>
                   <div id="editmode" hidden>
                     <Label class="space-y-2">
@@ -171,7 +204,7 @@
                   </div>
                   <div id="viewmode">
                     <div>Course Name</div>
-                    <div class="font-medium">Loli Course For Beginner</div>
+                    <div class="font-medium">{course.name}</div>
                   </div>
                   <div id="editmode" hidden>
                     <Label class="space-y-2">
@@ -191,22 +224,22 @@
                   </div>
                   <div>
                     <div>Duration</div>
-                    <input
+                    <div class="font-medium">{course.durations}</div>
+                    <!-- <input
                       disabled
                       id="editinput"
                       type="text"
                       bind:value={course.durations}
                       class="font-medium border-none pl-0 ml-0"
-                    />
+                    /> -->
                   </div>
                 </div>
                 <div>
                   <div>Description</div>
                   <Editor
-                    apiKey="7gq4en8n7fdu1f8nqawf1uqup1tx0smi6v7dc3v1tf3dnhwa"
-                    channel="5-dev"
-                    modelEvents="input change undo redo"
-                    text="readonly-text-output"
+                    {apiKey}
+                    channel="5"
+                    {conf}
                     bind:value={course.description}
                     disabled
                   />
@@ -286,10 +319,9 @@
                 <div>
                   <div>Description</div>
                   <Editor
-                    apiKey="7gq4en8n7fdu1f8nqawf1uqup1tx0smi6v7dc3v1tf3dnhwa"
-                    channel="5-dev"
-                    modelEvents="input change undo redo"
-                    text="readonly-text-output"
+                    {apiKey}
+                    channel="5"
+                    {conf}
                     bind:value={course.description}
                   />
                   <!-- <textarea
@@ -357,13 +389,19 @@
           <div class="relative z-0 w-full mb-6 group">
             <div>
               <div>Description</div>
-              <textarea
+              <Editor
+                {apiKey}
+                channel="5"
+                {conf}
+                bind:value={courseContent.description}
+              />
+              <!-- <textarea
                 bind:value={courseContent.description}
                 id="editinput"
                 rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Write your thoughts here..."
-              />
+              /> -->
             </div>
           </div>
           <div class="relative z-0 w-full mb-6 group">
@@ -464,11 +502,5 @@
   </SpeedDialButton>
   <SpeedDialButton name="Add Course Content">
     <PrintSolid class="w-5 h-5" />
-  </SpeedDialButton>
-  <SpeedDialButton name="Download">
-    <DownloadSolid class="w-5 h-5" />
-  </SpeedDialButton>
-  <SpeedDialButton name="Copy">
-    <FileCopySolid class="w-5 h-5" />
   </SpeedDialButton>
 </SpeedDial>
