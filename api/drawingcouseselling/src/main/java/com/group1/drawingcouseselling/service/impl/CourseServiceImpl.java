@@ -115,7 +115,7 @@ public class CourseServiceImpl implements CourseService {
         if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
         courseInDatabase.setName(courseData.name());
         courseInDatabase.setPrice(courseData.price());
-        courseInDatabase.setDuration(courseData.duration());
+        courseInDatabase.setDuration(courseData.durations());
         courseInDatabase.setDescription(courseData.description());
         return new Course().convertEntityToDto(courseRepository.save(courseInDatabase));
     }
