@@ -1,10 +1,7 @@
 package com.group1.drawingcouseselling.service;
 
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
-import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
-import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
-import com.group1.drawingcouseselling.model.dto.CourseDefaultInfo;
-import com.group1.drawingcouseselling.model.dto.CourseDto;
+import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.model.entity.Course;
 
 import java.math.BigDecimal;
@@ -23,6 +20,19 @@ public interface CourseService {
     public Course searchCourseEntityById(BigDecimal id);
     public List<CourseDto> getCoursesByInstructorEmail(String email);
     public CourseDto updateCourse(CourseDto courseData, String email);
+
+    //    @Override
+    //    public CourseDto updateCourse(CourseDto courseData, String email)
+    //    {
+    //        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()-> new CourseNotFoundException("Course ID isn't found"));
+    //        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()-> new UserNotFoundException("Can not edit because this user is not in database"));
+    //        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
+    //        Course course = new Course().covertDtoToEntity(courseData);
+    //        return new Course().convertEntityToDto(courseRepository.save(course));
+    //    }
+    CourseDto updateCourse(CourseEditDto courseData, String email);
+
     public CourseAllInfoDto getAllInfoOfCourse(BigDecimal id);
     public CourseDefaultInfo getAllCourseDefaultInfo(BigDecimal id);
+    public Course getCourseByCourseContentID(BigDecimal courseContentID);
 }

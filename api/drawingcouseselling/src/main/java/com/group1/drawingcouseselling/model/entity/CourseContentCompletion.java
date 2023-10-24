@@ -23,6 +23,7 @@ public class CourseContentCompletion {
     @Column(name = "done")
     private Boolean isDone;
     @PreUpdate
+    @PrePersist
     private void courseCompleted(){
         if(isDone){
             finishDate = Date.valueOf(LocalDate.now());
@@ -59,5 +60,13 @@ public class CourseContentCompletion {
 
     public void setDone(Boolean done) {
         isDone = done;
+    }
+
+    public CourseContent getCourseContent() {
+        return courseContent;
+    }
+
+    public void setCourseContent(CourseContent courseContent) {
+        this.courseContent = courseContent;
     }
 }

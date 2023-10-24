@@ -46,7 +46,7 @@ export type Course = {
 
 export type CourseAllInfo = {
     courseInfo:Course;
-    sections:SectionDetail;
+    sections:SectionDetail[];
 }
 
 export type CourseCreate ={

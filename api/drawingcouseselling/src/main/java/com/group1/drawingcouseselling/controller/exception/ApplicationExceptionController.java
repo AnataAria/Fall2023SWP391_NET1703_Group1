@@ -51,7 +51,7 @@ public class ApplicationExceptionController {
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }
     @ExceptionHandler(CourseAlreadyBoughtException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<?> courseAlreadyBoughtException(CourseAlreadyBoughtException exception){
         return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
     }

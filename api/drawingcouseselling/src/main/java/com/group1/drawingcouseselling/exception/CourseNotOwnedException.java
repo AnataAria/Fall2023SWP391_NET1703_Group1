@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class CourseAlreadyBoughtException extends BaseException{
-    public CourseAlreadyBoughtException(String message) {
+public class CourseNotOwnedException extends BaseException {
+    public CourseNotOwnedException(String message) {
         super(message);
         this.errorMessage = ErrorMessage.builder()
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.NOT_ACCEPTABLE)
                 .errorList(List.of(message.split(",")))
                 .build();
     }
