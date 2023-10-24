@@ -1,5 +1,10 @@
 <script lang="ts">
-    import type { CourseContent, CourseContentCreate, Section, SectionCreate } from "$lib/types";
+    import type {
+        CourseContent,
+        CourseContentCreate,
+        Section,
+        SectionCreate,
+    } from "$lib/types";
     import {
         Button,
         Input,
@@ -8,35 +13,40 @@
         Select,
         Spinner,
     } from "flowbite-svelte";
-    import { DisableSubmitButton, EnableSubmitButton, GetCookie, apiBaseUrl } from "../service";
+    import {
+        DisableSubmitButton,
+        EnableSubmitButton,
+        GetCookie,
+        apiBaseUrl,
+    } from "../service";
     import axios, { AxiosError, type AxiosResponse } from "axios";
-  import { onMount } from "svelte";
+    import { onMount } from "svelte";
     let formModal = false;
     let open = true;
     let counter = 6;
     let message = "";
     let errorMsg = "";
-    export let id:number;
-    let sectionList:Section[] = [];
-    
-    let modeSelect:string;
+    export let id: number;
+    let sectionList: Section[] = [];
+
+    let modeSelect: string;
     let content: CourseContentCreate = {
-        sectionID:1,
-        courseContent:{
+        sectionID: 1,
+        courseContent: {
             id: 1,
             description: "",
             createDate: new Date("2023-10-19"),
             title: "",
             videoLink: "",
-        }  
+        },
     };
     let section: SectionCreate = {
         courseID: id,
-        sectionInfo:{
+        sectionInfo: {
             id: 1,
             sectionOrder: 1,
-            title: ""
-        }
+            title: "",
+        },
     };
     function CheckInput() {
         if (section.sectionInfo.title === "") {
@@ -47,8 +57,8 @@
         }
     }
     async function CreateSection() {
-        console.log(content)
-        console.log(section)
+        console.log(content);
+        console.log(section);
         DisableSubmitButton();
         let res;
         res = await axios
@@ -121,7 +131,7 @@
         if (--counter > 0) return setTimeout(timeout, 1000);
         open = false;
     }
-    async function getSectionList(){
+    async function getSectionList() {
         await axios
             .get(apiBaseUrl + `sections?id=${id}`, {
                 headers: {
@@ -139,77 +149,99 @@
                 console.log(error);
             });
     }
-    onMount(() =>{
+    onMount(() => {
         setTimeout(() => {
             getSectionList();
-        },500);
+        }, 500);
     });
-    function modeCreateHandle(){
-        if(modeSelect == "1"){
+    function modeCreateHandle() {
+        if (modeSelect == "1") {
             CreateSection();
-        }else if(modeSelect == "2"){
+        } else if (modeSelect == "2") {
             CreateCourseContent();
         }
     }
 
-    function fetchValue(){
-        if(sectionChoice){
+    function fetchValue() {
+        if (sectionChoice) {
             content.sectionID = sectionChoice;
-            selectionTitle = sectionList.find((item) => {
-                return item.id === sectionChoice;
-            })?.title || "";
+            selectionTitle =
+                sectionList.find((item) => {
+                    return item.id === sectionChoice;
+                })?.title || "";
         }
     }
-    let sectionChoice:number;
-    let selectionTitle:string;
+    let sectionChoice: number;
+    let selectionTitle: string;
 </script>
 
-<Button color="light" size="xs" on:click={() => (formModal = true)}>Add</Button>
+<Button
+    class="border-none"
+    color="light"
+    size="xs"
+    on:click={() => (formModal = true)}
+    ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="1.5em"
+        viewBox="0 0 448 512"
+        ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+        <style>
+            svg {
+                fill: #ce5927;
+            }
+        </style><path
+            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+        /></svg
+    ></Button
+>
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
     <form class="flex flex-col space-y-6" on:submit={modeCreateHandle}>
-        <Select defaultClass="mb-4 text-xl font-bold text-gray-900 bg-none border-0" size="lg" bind:value={modeSelect}>
+        <Select
+            defaultClass="mb-4 text-xl font-bold text-gray-900 bg-none border-0 w-96"
+            size="lg"
+            bind:value={modeSelect}
+        >
             <option selected value="1">Create New Section</option>
             <option value="2">Create New Content</option>
         </Select>
         {#if modeSelect != "1"}
-        <Label class="space-y-2">
-            <span>Choice Section</span>
-            <Select on:change={fetchValue} bind:value={sectionChoice}>
-                {#each sectionList as sectionItem}
-                    <option value={sectionItem.id}>{sectionItem.title}</option>
-                {/each}
-            </Select>
             <Label class="space-y-2">
-                <span>Section ID</span>
-                <Input
-                    type="number"
-                    name="section_order"
-                    required
-                    readonly
-                    bind:value={sectionChoice}
-                />
+                <span>Choice Section</span>
+                <Select on:change={fetchValue} bind:value={sectionChoice}>
+                    {#each sectionList as sectionItem}
+                        <option value={sectionItem.id}
+                            >{sectionItem.title}</option
+                        >
+                    {/each}
+                </Select>
+                <Label class="space-y-2">
+                    <span>Section ID</span>
+                    <Input
+                        type="number"
+                        name="section_order"
+                        required
+                        readonly
+                        bind:value={sectionChoice}
+                    />
+                </Label>
+                <Label class="space-y-2">
+                    <span>Title</span>
+                    <Input
+                        bind:value={selectionTitle}
+                        type="text"
+                        name="title"
+                        required
+                        readonly
+                    />
+                </Label>
             </Label>
-            <Label class="space-y-2">
-                <span>Title</span>
-                <Input
-                    bind:value={selectionTitle}
-                    type="text"
-                    name="title"
-                    required
-                    readonly
-                />
-            </Label>
-        </Label>
         {:else}
-            <Label class="space-y-2">
+            <Label class="space-y-2  w-96">
                 <span>Section Order</span>
-                <Input
-                    type="number"
-                    name="section_order"
-                    required
-                />
+                <Input type="number" name="section_order" required />
             </Label>
-            <Label class="space-y-2">
+            <Label class="space-y-2  w-96">
                 <span>Title</span>
                 <Input
                     bind:value={section.sectionInfo.title}
@@ -219,43 +251,43 @@
                 />
             </Label>
         {/if}
-        
+
         {#if modeSelect != "1"}
-        <hr class="my-6 border-t border-gray-300" />
-        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-            Content
-        </h3>
-        <Label class="space-y-2">
-            <span> Description </span>
-            <textarea
-                id="description"
-                rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Give some description..."
-                bind:value={content.courseContent.description}
-            />
-        </Label>
-        <Label class="space-y-2">
-            <span> Title of content</span>
-            <Input
-                bind:value={content.courseContent.title}
-                type="text"
-                name="title"
-                required
-            />
-        </Label>
-        <Label class="space-y-2">
-            <span> Video link</span>
-            <Input
-                bind:value={content.courseContent.videoLink}
-                type="url"
-                name="video_url"
-                required
-            />
-        </Label>
+            <hr class="my-6 border-t border-gray-300" />
+            <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                Content
+            </h3>
+            <Label class="space-y-2">
+                <span> Description </span>
+                <textarea
+                    id="description"
+                    rows="4"
+                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Give some description..."
+                    bind:value={content.courseContent.description}
+                />
+            </Label>
+            <Label class="space-y-2">
+                <span> Title of content</span>
+                <Input
+                    bind:value={content.courseContent.title}
+                    type="text"
+                    name="title"
+                    required
+                />
+            </Label>
+            <Label class="space-y-2">
+                <span> Video link</span>
+                <Input
+                    bind:value={content.courseContent.videoLink}
+                    type="url"
+                    name="video_url"
+                    required
+                />
+            </Label>
         {/if}
         <div id="submitButton">
-            <Button type="submit" class="w-full" color="red">Create</Button>
+            <Button type="submit" class="w-96" color="red">Create</Button>
         </div>
         <div id="loader" hidden>
             <Button
