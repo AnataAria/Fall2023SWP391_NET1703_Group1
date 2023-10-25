@@ -62,8 +62,9 @@ public class CourseController {
         return ResponseEntity.ok(courseService.updateCourse(courseData, email));
     }
 
-    @DeleteMapping(value = "/course")
+    @DeleteMapping(value = "/course/delete")
     public ResponseEntity<CourseDto> deleteCourse(@RequestParam(value = "id") BigDecimal id, @RequestHeader(value = "Authorization") String jwt){
-        return null;
+        String email = jwtService.extractUserEmail(jwt.substring(7));
+        return ResponseEntity.ok(courseService.removeCourseUsingCourseID(id, email));
     }
 }
