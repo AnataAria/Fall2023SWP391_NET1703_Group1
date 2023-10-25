@@ -9,4 +9,5 @@ public interface CourseContentCompletionService {
     public CourseContentCompletionDto markCourseContentCompletion(BigDecimal courseContentID, String customerEmail);
     public List<CourseContentCompletionDto> getCustomerCourseContentCompletionList(BigDecimal courseID, String email);
     public BigDecimal getQuantityCustomerAccessCourseContent(BigDecimal courseContentID);
+    public Integer getTotalCourseContentLearnedOnCourse(BigDecimal customerID, BigDecimal courseID);
 }

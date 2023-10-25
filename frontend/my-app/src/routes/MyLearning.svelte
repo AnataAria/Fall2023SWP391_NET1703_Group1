@@ -14,6 +14,10 @@
   let instructor = "Thang";
   percent = 90;
   let jwt: string | null = "";
+  type CourseLearning = {
+    courseInfo: CourseTemplate;
+    finishCoursePercent: number;
+  };
   interface CourseTemplate {
     id: number;
     name: string;
@@ -24,13 +28,13 @@
     instructorName: string;
   }
   let searchValue: string;
-  let myCourse: CourseTemplate[] = [];
+  let myCourse: CourseLearning[] = [];
   async function GetLearningCourse() {
     try {
       await axios
         .get(apiBaseUrl + "mylearning", {
           headers: {
-            Authorization: `Bearer ${jwt}`
+            Authorization: `Bearer ${jwt}`,
           },
         })
         .then((response) => {
@@ -65,7 +69,7 @@
 {#each myCourse as course}
   <div class="p-10 ml-20 mr-auto px-48 w-11/12">
     <a
-      href="https://www.youtube.com/watch?v=v1POP-m76ac"
+      href="/lesson?courseID={course.courseInfo.id}"
       class="bg-white rounded-lg shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     >
       <div class=" w-full lg:max-w lg:flex">
@@ -79,17 +83,26 @@
         >
           <div class="mb-8">
             <div class="text-gray-900 font-bold text-xl mb-2">
-              {course.name}
+              {course.courseInfo.name}
             </div>
-            <p class="text-gray-700 text-base">{course.description}</p>
+            <p class="text-gray-700 text-base">
+              {@html course.courseInfo.description}
+            </p>
           </div>
           <div class="text-sm">
-            <p class="text-gray-900 leading-none">{course.instructorName}</p>
+            <p class="text-gray-900 leading-none">
+              {course.courseInfo.instructorName}
+            </p>
           </div>
           <Rating {rating} size={24} class="mt-2.5 mb-5">
             <Badge slot="text" class="ml-3">{rating}</Badge>
           </Rating>
-          <Progressbar progress={percent} size="h-4" color="red" labelInside />
+          <Progressbar
+            progress={course.finishCoursePercent}
+            size="h-4"
+            color="red"
+            labelInside
+          />
         </div>
       </div>
     </a>

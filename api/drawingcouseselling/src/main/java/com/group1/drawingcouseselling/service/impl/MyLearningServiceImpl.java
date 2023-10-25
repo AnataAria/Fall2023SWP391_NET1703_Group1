@@ -2,12 +2,17 @@ package com.group1.drawingcouseselling.service.impl;
 
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
+import com.group1.drawingcouseselling.model.dto.CourseLearningDto;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.repository.CustomerRepository;
 import com.group1.drawingcouseselling.service.CartService;
+import com.group1.drawingcouseselling.service.CourseContentService;
+import com.group1.drawingcouseselling.service.CourseService;
 import com.group1.drawingcouseselling.service.MyLearningService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,11 +22,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class MyLearningServiceImpl implements MyLearningService {
 
     private final CartService cartService;
     private final CustomerRepository customerRepository;
+    private final CourseService courseService;
+    @Autowired
+    public MyLearningServiceImpl(CartService cartService, CustomerRepository customerRepository, @Lazy CourseService courseService) {
+        this.cartService = cartService;
+        this.customerRepository = customerRepository;
+        this.courseService = courseService;
+    }
+
     @Override
     public void orderCourse(String email) {
         Customer customer = customerRepository.searchCustomerByAccountEmail(email);
@@ -35,14 +47,16 @@ public class MyLearningServiceImpl implements MyLearningService {
         }
     }
 
-    public List<CourseDto> getLearningCourseList(String email){
+    public List<CourseLearningDto> getLearningCourseList(String email){
         Customer customer = customerRepository.searchCustomerByAccountEmail(email);
         if(customer == null) throw new UserNotFoundException("This customer does not exist in system");
-
-        if(customer != null){
-            return customer.getCourseList().stream().map(c -> new Course().convertEntityToDto(c)).toList();
-        }
-        return List.of();
+        return customer.getCourseList().stream().map(c -> {
+                    return CourseLearningDto.builder()
+                            .courseInfo(new Course().convertEntityToDto(c))
+                            .finishCoursePercent(courseService.getPercentOfCourseCompleted(c.getId(),customer.getId()))
+                            .build();
+                }
+        ).toList();
     }
 
     @Override
