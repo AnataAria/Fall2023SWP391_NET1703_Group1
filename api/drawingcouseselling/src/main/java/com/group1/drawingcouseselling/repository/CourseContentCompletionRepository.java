@@ -21,4 +21,7 @@ public interface CourseContentCompletionRepository extends JpaRepository<CourseC
             " INNER JOIN course c ON c.id = s.course.id " +
             " WHERE c.id = :courseID AND c3.customer.id = :customerID")
     public Collection<CourseContentCompletion> getCourseContentCompletionByCustomerID(@Param(value = "customerID") BigDecimal customerID, @Param(value = "courseID") BigDecimal courseID);
+
+    @Query("SELECT COUNT(c3) FROM course_content_completion  c3 WHERE c3.courseContent.id = :courseSectionID")
+    public BigDecimal countCustomerLearningCourseSection(@Param("courseSectionID") BigDecimal courseSectionID);
 }

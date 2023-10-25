@@ -64,4 +64,8 @@ public class CourseContentCompletionServiceImpl implements CourseContentCompleti
                     .build();
         }).toList();
     }
+    @Override
+    public BigDecimal getQuantityCustomerAccessCourseContent(BigDecimal courseContentID){
+        return courseContentCompletionRepository.countCustomerLearningCourseSection(courseContentID);
+    }
 }
