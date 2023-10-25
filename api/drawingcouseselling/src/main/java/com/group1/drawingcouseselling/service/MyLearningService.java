@@ -10,4 +10,5 @@ public interface MyLearningService {
     public List<CourseDto> getLearningCourseList(String email);
 
     public boolean hasCourse(String email, BigDecimal courseID);
+    public Boolean checkSomeoneLearningCourse(BigDecimal courseID);
 }
