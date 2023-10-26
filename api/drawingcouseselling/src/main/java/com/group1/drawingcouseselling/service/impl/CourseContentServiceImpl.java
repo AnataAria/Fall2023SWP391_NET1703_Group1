@@ -72,6 +72,11 @@ public class CourseContentServiceImpl implements CourseContentService {
         var currentCourseContent = courseContentRepository.findById(id).orElseThrow(()-> new CourseNotFoundException("This course content does not exist"));
         if(currentCourseContent.getSection().getCourse().getInstuctor().getId() != instructor.getId()) throw new InstructorNotPermissonToEditException("This course content only edited by the one created");
         if(!courseContentCompletionService.getQuantityCustomerAccessCourseContent(id).equals(BigDecimal.ZERO)) throw new UserNotFoundException("");
-        return new CourseContent().convertEntityToDto(courseContentRepository.save(currentCourseContent));
+        try{
+            courseContentRepository.deleteById(currentCourseContent.getId());
+        }catch(Exception e){
+
+        }
+        return new CourseContent().convertEntityToDto(currentCourseContent);
     }
 }
