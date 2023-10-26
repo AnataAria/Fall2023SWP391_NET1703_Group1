@@ -98,6 +98,7 @@ public class AuthenticationService {
 
         var user = accountService.searchAccountByMail(request.getEmail()).orElseThrow(() -> new UserNotFoundException("User not found"));
         var jwtToken = jwtService.generateToken(user);
+        tokenService.revokeAllUserTokens(user);
         tokenService.saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
