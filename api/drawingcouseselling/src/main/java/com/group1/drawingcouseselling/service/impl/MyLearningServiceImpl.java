@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Customer;
@@ -36,6 +37,8 @@ public class MyLearningServiceImpl implements MyLearningService {
 
     public List<CourseDto> getLearningCourseList(String email){
         Customer customer = customerRepository.searchCustomerByAccountEmail(email);
+        if(customer == null) throw new UserNotFoundException("This customer does not exist in system");
+
         if(customer != null){
             return customer.getCourseList().stream().map(c -> new Course().convertEntityToDto(c)).toList();
         }
@@ -44,7 +47,14 @@ public class MyLearningServiceImpl implements MyLearningService {
 
     @Override
     public boolean hasCourse(String email, BigDecimal courseID) {
-        Map<BigDecimal,Course> userCourse = customerRepository.searchCustomerByAccountEmail(email).getCourseList().stream().collect(Collectors.toMap(Course::getId, Function.identity()));
+        Map<BigDecimal,Course> userCourse = customerRepository.
+                searchCustomerByAccountEmail(email).getCourseList()
+                .stream().parallel().collect(Collectors.toMap(Course::getId, Function.identity()));
         return userCourse.isEmpty() || userCourse.containsKey(courseID);
+    }
+    @Override
+    public Boolean checkSomeoneLearningCourse(BigDecimal courseID){
+        var count = customerRepository.countAllCustomerHasLearnedCourseUsingCourseID(courseID);
+        return !count.equals(BigDecimal.ZERO);
     }
 }

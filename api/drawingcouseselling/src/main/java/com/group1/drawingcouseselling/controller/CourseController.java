@@ -1,9 +1,6 @@
 package com.group1.drawingcouseselling.controller;
 
-import com.group1.drawingcouseselling.model.dto.CourseAllInfoDto;
-import com.group1.drawingcouseselling.model.dto.CourseCreateDto;
-import com.group1.drawingcouseselling.model.dto.CourseDefaultInfo;
-import com.group1.drawingcouseselling.model.dto.CourseDto;
+import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.service.CourseService;
 import com.group1.drawingcouseselling.service.JwtService;
 import jakarta.validation.Valid;
@@ -59,14 +56,15 @@ public class CourseController {
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.createCourseUsingJwt(courseData, email));
     }
-    @PutMapping(value = "/course")
-    public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseData,  @RequestHeader(value = "Authorization") String jwt){
+    @PutMapping(value = "/course/edit")
+    public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseEditDto courseData, @RequestHeader(value = "Authorization") String jwt){
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.updateCourse(courseData, email));
     }
 
-    @DeleteMapping(value = "/course")
+    @DeleteMapping(value = "/course/delete")
     public ResponseEntity<CourseDto> deleteCourse(@RequestParam(value = "id") BigDecimal id, @RequestHeader(value = "Authorization") String jwt){
-        return null;
+        String email = jwtService.extractUserEmail(jwt.substring(7));
+        return ResponseEntity.ok(courseService.removeCourseUsingCourseID(id, email));
     }
 }

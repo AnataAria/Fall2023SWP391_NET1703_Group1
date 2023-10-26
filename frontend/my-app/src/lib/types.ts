@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export type Section = {
     id:number;
     sectionOrder:number;
@@ -17,6 +19,21 @@ export type SectionDetail = {
     lessons:CourseContent[];
 }
 
+export type EditCourse = {
+    id:number;
+    name: string;
+    price: number;
+    description: string;
+    durations: string;
+}
+
+export type EditCourseContent = {
+    id:number;
+    title:string;
+    description:string;
+    videoLink:string;
+}
+
 export type Course = {
     id:number;
     name: string;
@@ -29,7 +46,7 @@ export type Course = {
 
 export type CourseAllInfo = {
     courseInfo:Course;
-    sections:SectionDetail;
+    sections:SectionDetail[];
 }
 
 export type CourseCreate ={

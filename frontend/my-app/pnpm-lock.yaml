@@ -8,6 +8,9 @@ dependencies:
   '@material/snackbar':
     specifier: ^14.0.0
     version: 14.0.0
+  '@tinymce/tinymce-svelte':
+    specifier: ^1.0.1
+    version: 1.0.1
   axios:
     specifier: ^1.5.0
     version: 1.5.1
@@ -630,6 +633,12 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@tinymce/tinymce-svelte@1.0.1:
+    resolution: {integrity: sha512-mjso1Mx9FOPxwou528UmINIcE2hBbUpnC9AEInlvIXutydklfSGSGEeYJ57CBTxzgsMEJGw2LYHGC8R7KoEAeA==}
+    dependencies:
+      rollup-plugin-execute: 1.1.1
+    dev: false
 
   /@types/bcryptjs@2.4.4:
     resolution: {integrity: sha512-9wlJI7k5gRyJEC4yrV7DubzNQFTPiykYxUA6lBtsk5NlOfW9oWLJ1HdIA4YtE+6C3i3mTpDQQEosJ2rVZfBWnw==}
@@ -1525,6 +1534,10 @@ packages:
     dependencies:
       glob: 7.2.3
     dev: true
+
+  /rollup-plugin-execute@1.1.1:
+    resolution: {integrity: sha512-isCNR/VrwlEfWJMwsnmt5TBRod8dW1IjVRxcXCBrxDmVTeA1IXjzeLSS3inFBmRD7KDPlo38KSb2mh5v5BoWgA==}
+    dev: false
 
   /rollup@3.29.4:
     resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}

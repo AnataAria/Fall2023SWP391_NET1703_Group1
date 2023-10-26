@@ -4,6 +4,7 @@ package com.group1.drawingcouseselling.service;
 import com.group1.drawingcouseselling.model.dto.AccountDto;
 import com.group1.drawingcouseselling.model.entity.Account;
 import com.group1.drawingcouseselling.model.enums.ERole;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,4 +26,6 @@ public interface AccountService {
     public Account changePasswordAccount(String email, String password);
 
     Account registerInstructorAccount(AccountDto accountDto);
+    public Page<AccountDto> returnAccountNotStaff(Integer currentPage, Integer maxPage, String sortBy);
+    public AccountDto disableAccount(BigDecimal accountID);
 }

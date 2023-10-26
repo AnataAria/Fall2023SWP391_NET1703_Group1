@@ -40,4 +40,8 @@ public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
             "INNER JOIN account a ON i.account.id = a.id " +
             "WHERE a.email = :email AND c.id = :id")
     public Course findCourseByEmailAndId (@Param(value = "email") String email, @Param(value="id") BigDecimal id);
+
+    @Query("SELECT c FROM course c INNER JOIN section s ON s.course.id = c.id" +
+            " INNER JOIN course_content c2 ON c2.section.id = s.id WHERE c2.id = :courseContentID")
+    public Course searchCourseByCourseContentID(@Param("courseContentID") BigDecimal courseContentID);
 }

@@ -23,6 +23,12 @@ public class Course implements ObjectMapper<Course, CourseDto> {
     private String description;
     @Column(name="duration")
     private String duration;
+    @Column(name="status", nullable = false)
+    private Boolean status;
+    @PrePersist
+    public void updateStatusWhenCreate(){
+        this.status = true;
+    }
 
     public BigDecimal getId() {
         return id;
@@ -70,6 +76,14 @@ public class Course implements ObjectMapper<Course, CourseDto> {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override
