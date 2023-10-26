@@ -32,4 +32,10 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.getAllSectionByCourseID(id));
     }
 
+    @DeleteMapping("/section/delete")
+    public ResponseEntity<SectionDto> deleteSection(@RequestParam("id") BigDecimal id, @RequestHeader("Authorization") String token){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(sectionService.removeSection(id,email));
+    }
+
 }

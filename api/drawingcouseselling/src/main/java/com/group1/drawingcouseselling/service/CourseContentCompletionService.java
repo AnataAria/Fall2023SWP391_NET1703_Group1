@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseContentCompletionService {
     public CourseContentCompletionDto markCourseContentCompletion(BigDecimal courseContentID, String customerEmail);
     public List<CourseContentCompletionDto> getCustomerCourseContentCompletionList(BigDecimal courseID, String email);
+    public BigDecimal getQuantityCustomerAccessCourseContent(BigDecimal courseContentID);
 }

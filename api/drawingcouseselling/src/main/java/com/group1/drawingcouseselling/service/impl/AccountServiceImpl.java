@@ -10,6 +10,7 @@ import com.group1.drawingcouseselling.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -108,5 +109,17 @@ public class AccountServiceImpl implements AccountService {
         } catch (Exception e) {
             throw new EmailIsMatchedException("Email existed!");
         }
+    }
+
+    @Override
+    public Page<AccountDto> returnAccountNotStaff(Integer currentPage, Integer maxPage, String sortBy){
+        return accountRepository.findAllExceptRole(ERole.STAFF, PageRequest.of(currentPage,maxPage)).map(a -> new Account().convertEntityToDto(a));
+    }
+    @Override
+    public AccountDto disableAccount(BigDecimal accountID){
+        var acc = accountRepository.findById(accountID).orElseThrow(() -> new UserNotFoundException("Not found this account!"));
+        acc.setStatus(false);
+        accountRepository.save(acc);
+        return acc.convertEntityToDto(acc);
     }
 }

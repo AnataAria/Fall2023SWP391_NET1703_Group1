@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequiredArgsConstructor
 public class CourseContentController {
@@ -23,5 +25,10 @@ public class CourseContentController {
     public ResponseEntity<CourseContentDto> updateCourseContent(@RequestBody CourseContentEditDto data,  @RequestHeader("Authorization") String token){
         String email = jwtService.extractUserEmail(token.substring(7));
         return ResponseEntity.ok(courseContentService.updateCourseContent(data,email));
+    }
+    @DeleteMapping("/course-content/delete")
+    public ResponseEntity<CourseContentDto> deleteCourseContent(@RequestParam("id") BigDecimal id, @RequestHeader("Authorization") String token){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(courseContentService.removeCourseContent(id,email));
     }
 }

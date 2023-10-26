@@ -27,12 +27,13 @@ public class SectionServiceImpl implements SectionService {
     private final SectionRepository sectionRepository;
     private final CourseService courseService;
     private final CourseContentService courseContentService;
-    private InstructorService instructorService;
+    private final InstructorService instructorService;
     @Autowired
-    public SectionServiceImpl(SectionRepository sectionRepository, CourseService courseService,@Lazy CourseContentService courseContentService) {
+    public SectionServiceImpl(SectionRepository sectionRepository, CourseService courseService,@Lazy CourseContentService courseContentService, InstructorService instructorService) {
         this.sectionRepository = sectionRepository;
         this.courseService = courseService;
         this.courseContentService = courseContentService;
+        this.instructorService = instructorService;
     }
 
     @Override

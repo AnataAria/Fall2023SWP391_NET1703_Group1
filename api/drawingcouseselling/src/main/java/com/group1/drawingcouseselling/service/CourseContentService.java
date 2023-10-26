@@ -13,4 +13,5 @@ public interface CourseContentService {
     public CourseContentDto updateCourseContent(CourseContentEditDto data, String email);
     public List<CourseContentDto> getCourseContentDtoOfSection(BigDecimal sectionID);
     public CourseContent getCourseContentById(BigDecimal id);
+    public CourseContentDto removeCourseContent(BigDecimal id, String email);
 }
