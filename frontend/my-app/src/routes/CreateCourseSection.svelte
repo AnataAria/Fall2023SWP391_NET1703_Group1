@@ -176,7 +176,7 @@
 </script>
 
 <Button
-    class="border-none absolute right-6 bottom-0 w-16 h-16"
+    class="border-none right-6 bottom-0 w-16 h-16"
     color="light"
     size="xs"
     on:click={() => (formModal = true)}
@@ -196,7 +196,7 @@
     </svg>
 </Button>
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-    <div class="flex flex-col space-y-6" on:submit={modeCreateHandle}>
+    <div class="flex flex-col space-y-6">
         <Select
             defaultClass="mb-4 text-xl font-bold text-gray-900 bg-none border-0 w-96"
             size="lg"
@@ -283,7 +283,12 @@
             </Label>
         {/if}
         <div id="submitButton">
-            <Button type="submit" class="w-96" color="red">Create</Button>
+            <Button
+                type="submit"
+                class="w-96"
+                color="red"
+                on:click={modeCreateHandle}>Create</Button
+            >
         </div>
         <div id="loader" hidden>
             <Button
