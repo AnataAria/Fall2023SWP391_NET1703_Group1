@@ -43,6 +43,7 @@
     Label,
     Input,
     Modal,
+    Select,
   } from "flowbite-svelte";
   import SpeedDial from "../../../SpeedDial.svelte";
   import Editor from "@tinymce/tinymce-svelte";
@@ -50,7 +51,7 @@
   import type { LayoutData } from "../../../$types";
   import { ExclamationCircleOutline } from "flowbite-svelte-icons";
   import SectionItem from "./SectionItem.svelte";
-  import axios from "axios";
+  import axios, { AxiosError, type AxiosResponse } from "axios";
   import { GetCookie, apiBaseUrl } from "../../../../service";
   import type {
     Course,
@@ -64,9 +65,17 @@
   import { onMount } from "svelte";
   import CreateCourseSection from "../../../CreateCourseSection.svelte";
   let editCourse = false;
-  let sessionName = "";
-  let deleteSessionModal = false;
+  let deleteSectionModal = false;
   let deleteCourseContentModal = false;
+  let sectionList: SectionDetail[] = [];
+  let section: SectionDetail = {
+    sectionInfo: {
+      id: 0,
+      sectionOrder: 0,
+      title: "",
+    },
+    lessons: [],
+  };
   let courseContent: EditCourseContent = {
     id: 1,
     description: "",
@@ -80,7 +89,7 @@
     name: "Nahida",
     price: 500,
   };
-  let section: Section = {
+  let sections: Section = {
     id: 1,
     sectionOrder: 1,
     title: "",
@@ -108,9 +117,9 @@
     sectionData: Section,
     courseContentIn: CourseContent
   ) {
-    section.sectionOrder = sectionData.sectionOrder;
-    section.id = sectionData.id;
-    section.title = sectionData.title;
+    sections.sectionOrder = sectionData.sectionOrder;
+    sections.id = sectionData.id;
+    sections.title = sectionData.title;
     courseContent.id = courseContentIn.id;
     courseContent.title = courseContentIn.title;
     courseContent.description = courseContentIn.description;
@@ -135,6 +144,8 @@
             courseInfo = response.data;
             fetchCourseInfo(response.data.courseInfo);
             fetchSectionInfo(response.data.sections);
+            sectionList = response.data.sections;
+            console.log(sectionList);
           }
         });
     } catch (e) {}
@@ -188,8 +199,70 @@
         });
     } catch (e) {}
   }
-  async function DeleteSession() {}
-  async function DeleteCourseContent() {}
+  async function DeleteSection() {
+    let res;
+    let id = section.sectionInfo.id;
+    console.log("section id: " + id);
+    res = axios
+      .delete(apiBaseUrl + "section/delete", {
+        headers: {
+          Authorization: `Bearer ${GetCookie("USER")}`,
+        },
+        params: {
+          id,
+        },
+      })
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          window.alert("Delete successfully!");
+        }
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  }
+  async function DeleteCourseContent() {
+    let res;
+    res = axios
+      .delete(apiBaseUrl + "course-content/delete", {
+        data: id,
+      })
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          window.alert("Delete successfully!");
+        }
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  }
+  function fetchValue() {
+    const result = splitString(sectionChoice);
+    if (result !== null) {
+      const [sectionID, sectionName] = result;
+      section.sectionInfo.id = sectionID;
+      sectionChoice = sectionName;
+    }
+    // if (sectionChoice) {
+    //     section.sectionInfo.id = sectionChoice;
+    //     selectionTitle =
+    //         sectionList.find((item) => {
+    //             return item.sectionInfo.id === sectionChoice;
+    //         })?.sectionInfo.title || "";
+    // }
+    console.log(section.sectionInfo.id);
+  }
+  let sectionChoice: string;
+  let selectionTitle: string;
+  function splitString(inputString: string): [number, string] | null {
+    const parts = inputString.split("|");
+
+    if (parts.length === 2) {
+      return [parts[0], parts[1]];
+    } else {
+      return null; // Return null if the input doesn't contain exactly one '|' character
+    }
+  }
   export let data: LayoutData;
   let status = false;
   function On() {
@@ -302,12 +375,12 @@
                       <div>Duration</div>
                       <div class="font-medium">{course.durations}</div>
                       <!-- <input
-                      disabled
-                      id="editinput"
-                      type="text"
-                      bind:value={course.durations}
-                      class="font-medium border-none pl-0 ml-0"
-                    /> -->
+                    disabled
+                    id="editinput"
+                    type="text"
+                    bind:value={course.durations}
+                    class="font-medium border-none pl-0 ml-0"
+                  /> -->
                     </div>
                   </div>
                   <div>
@@ -320,13 +393,13 @@
                       disabled
                     />
                     <!-- <textarea
-                    disabled
-                    bind:value={course.description}
-                    id="editinput"
-                    rows="4"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your thoughts here..."
-                  /> -->
+                  disabled
+                  bind:value={course.description}
+                  id="editinput"
+                  rows="4"
+                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Write your thoughts here..."
+                /> -->
                   </div>
                   <div />
                 </div>
@@ -422,7 +495,7 @@
               <h1 class="text-2xl font-bold mb-4">
                 Session Information <span
                   ><Button
-                    on:click={() => (deleteSessionModal = true)}
+                    on:click={() => (deleteSectionModal = true)}
                     color="red"
                     size="xs"
                     ><svg
@@ -440,7 +513,7 @@
                       />
                     </svg>
                   </Button>
-                  <Modal bind:open={deleteSessionModal} size="xs" autoclose>
+                  <Modal bind:open={deleteSectionModal} size="xs" autoclose>
                     <div class="text-center">
                       <ExclamationCircleOutline
                         class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
@@ -450,7 +523,7 @@
                       >
                         Are you sure you want to delete this session?
                       </h3>
-                      <Button color="red" class="mr-2" on:click={DeleteSession}
+                      <Button color="red" class="mr-2" on:click={DeleteSection}
                         >Yes, I'm sure</Button
                       >
                       <Button color="alternative">No, cancel</Button>
@@ -466,13 +539,21 @@
 
           <div class="w-full max-w-sm">
             <div>Session Name</div>
+            <Select on:change={fetchValue} bind:value={sectionChoice}>
+              {#each sectionList as sectionItem}
+                <option
+                  value="{sectionItem.sectionInfo.id}|{sectionItem.sectionInfo
+                    .title}">{sectionItem.sectionInfo.title}</option
+                >
+              {/each}
+            </Select>
             <div class="flex items-center border-b border-teal-500 py-2">
               <input
                 class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                 type="text"
                 placeholder=" "
                 aria-label="Full name"
-                bind:value={section.title}
+                bind:value={sectionChoice}
               />
               <button
                 class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
@@ -520,7 +601,8 @@
                   <h3
                     class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
                   >
-                    Are you sure you want to delete this course content?
+                    Are you sure you want to delete this course content? (Course
+                    ID: {id})
                   </h3>
                   <Button
                     color="red"
