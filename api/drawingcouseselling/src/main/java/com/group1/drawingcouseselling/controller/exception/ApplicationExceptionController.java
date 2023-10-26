@@ -80,4 +80,9 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> courseNotOwnedException(CourseNotOwnedException exception){
         return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
     }
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> entityNotFoundException(EntityNotFoundException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
+    }
 }
