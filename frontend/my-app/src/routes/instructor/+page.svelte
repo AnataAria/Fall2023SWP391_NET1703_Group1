@@ -157,7 +157,7 @@
           </div>
           <br />
           <div class="pr-7">
-            <div>
+            <form>
               <label
                 for="default-search"
                 class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -196,7 +196,7 @@
                   >Search</button
                 >
               </div>
-            </div>
+            </form>
           </div>
           <div>
             <br />

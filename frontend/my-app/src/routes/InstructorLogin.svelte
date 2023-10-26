@@ -191,7 +191,7 @@
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
     <Tabs style="pill">
         <TabItem login title="Login">
-            <form class="flex flex-col space-y-6" on:submit={handleLogin}>
+            <div class="flex flex-col space-y-6">
                 <h3
                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white"
                 >
@@ -241,7 +241,7 @@
                     </a>
                 </div>
                 <div id="submitButton">
-                    <Button type="submit" class="w-full" color="red"
+                    <Button on:click={handleLogin} type="submit" class="w-full" color="red"
                         >Login to your account</Button
                     >
                 </div>
@@ -265,10 +265,10 @@
                         Create account
                     </a>
                 </div> -->
-            </form>
+            </div>
         </TabItem>
         <TabItem open title="Sign Up">
-            <form class="space-y-4 md:space-y-5" on:submit={handleRegister}>
+            <div class="space-y-4 md:space-y-5">
                 <h3
                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white"
                 >
@@ -396,6 +396,7 @@
                 >
                 <div id="loader" hidden>
                     <Button
+                        on:click={handleRegister}
                         color="red"
                         class="flex flex-wrap items-center gap-2 w-full"
                     >
@@ -406,7 +407,7 @@
                 <!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                     Already have an account? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                 </p> -->
-            </form>
+            </div>
         </TabItem>
     </Tabs>
     {#if errorMsg != ""}

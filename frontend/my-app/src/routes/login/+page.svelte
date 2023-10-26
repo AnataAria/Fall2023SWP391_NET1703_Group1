@@ -120,7 +120,7 @@
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <div class="space-y-6" on:submit={handleLogin}>
+          <div class="space-y-6">
               <div>
                   <label for="email" class="block text-sm font-medium text-gray-700">
                       Email address
@@ -159,7 +159,7 @@
               </div>
 
               <div id="submitButton">
-                  <button type="submit"
+                  <button type="submit" on:click={handleLogin}
                       class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                       Sign in
                   </button>
