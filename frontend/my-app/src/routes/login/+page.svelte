@@ -120,7 +120,7 @@
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form class="space-y-6" on:submit={handleLogin}>
+          <div class="space-y-6" on:submit={handleLogin}>
               <div>
                   <label for="email" class="block text-sm font-medium text-gray-700">
                       Email address
@@ -170,7 +170,7 @@
                   Loading ...
                 </Button>
               </div>
-          </form>
+            </div>
           <div class="mt-6">
               <div class="relative">
                   <div class="absolute inset-0 flex items-center">

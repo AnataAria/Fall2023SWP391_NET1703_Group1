@@ -84,7 +84,7 @@
 
   <div class="flex flex-col items-center justify-center mb-12">
     <div class="w-auto max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mt-28">
-      <form class="space-y-6" autocomplete="off">
+      <div class="space-y-6" autocomplete="off">
           <h5 class="text-xl font-medium text-gray-900 dark:text-white">One Time Password</h5>
           <div>
               <label for="otp" class="peer block mb-2 text-sm font-medium text-gray-900 dark:text-white after:content-['*'] after:ml-0.5 after:text-red-500">OTP</label>
@@ -99,7 +99,7 @@
               Loading ...
             </Button>
           </div>
-      </form>
+        </div>
     </div>
     {#if errorMsg != ""}
      <div>
