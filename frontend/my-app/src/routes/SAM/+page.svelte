@@ -4,7 +4,7 @@
   import { Section } from 'flowbite-svelte-blocks';
   import { PlusSolid, ChevronDownSolid, FilterSolid, ChevronRightOutline, ChevronLeftOutline } from 'flowbite-svelte-icons';
   import { derived, writable } from 'svelte/store';
-  let role = "All" ;
+
   let paginationData  =[
     {"id":1,"Email":"eeee","role":"Staff","Status":true,"Account Status":true,"Last Login":"10/11/2023"},
     {"id":2,"Email":"aaaa","role":"Customer","Status":false,"Account Status":true,"Last Login":"10/11/2023"},
@@ -22,10 +22,7 @@
     {"id":14,"Email":"aaaa","role":"Customer","Status":false,"Account Status":true,"Last Login":"10/11/2023"},
     {"id":15,"Email":"aaaa","role":"Staff","Status":true,"Account Status":false,"Last Login":"10/11/2023"},
   ]
-  let d = () =>{
-    if (role == 'All') return paginationData;
-		return paginationData.filter((x)=>x.role==role)
-  }
+
 
   let divClass='bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden';
   let innerDivClass='flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4';
@@ -43,7 +40,7 @@
   let totalItems = paginationData.length;
   let startPage=0;
   let endPage=0;
-
+  
   const updateDataAndPagination = () => {
     const currentPageItems = paginationData.slice(currentPosition, currentPosition + itemsPerPage);
     renderPagination(currentPageItems.length);
@@ -101,38 +98,58 @@
     <TableSearch placeholder="Search" hoverable={true} bind:inputValue={searchTerm} {divClass} {innerDivClass} {searchClass} {classInput} >
 
       <TableHead>
-        <TableHeadCell padding="px-4 py-3" scope="col">ID</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Email</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Role</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Status</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Acount status</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Last Login</TableHeadCell>
-        <TableHeadCell padding="px-4 py-3" scope="col">Action</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">ID</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Email</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Role</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Status</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Last Login</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Acount status</TableHeadCell>
+        <TableHeadCell padding="px-4 py-3" class="text-lg" scope="col">Action</TableHeadCell>
 
       </TableHead>
       <TableBody  >
         {#if searchTerm !== ''}
           {#each filteredItems as item (item.id)}
-            <TableBodyRow>
-              <TableBodyCell tdClass="px-4 py-3">{item.id}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item.Email}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item.role}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item.Status}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item['Account Status']}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item['Last Login']}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3"><Button color="red" pill>Delete</Button></TableBodyCell>
-            </TableBodyRow>
+          <TableBodyRow>
+            <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.id}</TableBodyCell>
+            <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.Email}</TableBodyCell>
+            <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.role}</TableBodyCell>
+            
+            {#if item.Status==true}
+              <TableBodyCell tdClass="px-4 py-3" class="text-emerald-400 text-lg">Online</TableBodyCell>
+            {:else}
+              <TableBodyCell tdClass="px-4 py-3" class="text-red-600 text-lg">Offline</TableBodyCell>
+            {/if} 
+            <TableBodyCell tdClass="px-4 py-3">{item['Last Login']}</TableBodyCell>
+            {#if item['Account Status']==true}
+            <TableBodyCell tdClass="px-4 py-3" class="text-lg">enable</TableBodyCell>
+            <TableBodyCell tdClass="px-4 py-3"><Button color="red" pill>Delete</Button></TableBodyCell>
+          {:else}
+            <TableBodyCell tdClass="px-4 py-3" class="text-lg">disable</TableBodyCell>
+            <TableBodyCell tdClass="px-4 py-3"><Button color="green" pill>Enable</Button></TableBodyCell>
+          {/if} 
+          </TableBodyRow>
           {/each}
         {:else}
           {#each currentPageItems as item (item.id)}
             <TableBodyRow>
-              <TableBodyCell tdClass="px-4 py-3">{item.Email}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item.role}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item.Status}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item['Account Status']}</TableBodyCell>
+              <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.id}</TableBodyCell>
+              <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.Email}</TableBodyCell>
+              <TableBodyCell tdClass="px-4 py-3" class="text-lg">{item.role}</TableBodyCell>
+              
+              {#if item.Status==true}
+                <TableBodyCell tdClass="px-4 py-3" class="text-emerald-400 text-lg">Online</TableBodyCell>
+              {:else}
+                <TableBodyCell tdClass="px-4 py-3" class="text-red-600 text-lg">Offline</TableBodyCell>
+              {/if} 
               <TableBodyCell tdClass="px-4 py-3">{item['Last Login']}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3">{item['Last Login']}</TableBodyCell>
-              <TableBodyCell tdClass="px-4 py-3" ><Button color="red" pill>Delete</Button></TableBodyCell>
+              {#if item['Account Status']==true}
+              <TableBodyCell tdClass="px-4 py-3" class="text-lg">enable</TableBodyCell>
+              <TableBodyCell tdClass="px-4 py-3"><Button color="red" pill on:click>Delete</Button></TableBodyCell>
+            {:else}
+              <TableBodyCell tdClass="px-4 py-3" class="text-lg">disable</TableBodyCell>
+              <TableBodyCell tdClass="px-4 py-3"><Button color="green" pill on:click>Enable</Button></TableBodyCell>
+            {/if} 
             </TableBodyRow>
           {/each}
         {/if}
