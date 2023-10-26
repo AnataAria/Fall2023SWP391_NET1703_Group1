@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.InstructorNotFoundException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
 import com.group1.drawingcouseselling.exception.ValueIsInvalidException;
 import com.group1.drawingcouseselling.model.dto.InstructorDto;
@@ -35,7 +36,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
     @Override
     public InstructorDto findInstructorDtoByInstructorEmail(String instructorEmail){
-        return instructorRepository.findInstructorByEmail(instructorEmail).map(c -> new Instructor().convertEntityToDto(c)).orElseThrow() ;
+        return instructorRepository.findInstructorByEmail(instructorEmail).map(c -> new Instructor().convertEntityToDto(c)).orElseThrow(()-> new InstructorNotFoundException("Not found instructor with this email")) ;
     }
 
 }

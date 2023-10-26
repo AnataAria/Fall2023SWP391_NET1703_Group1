@@ -40,12 +40,11 @@
     SidebarItem,
     SidebarDropdownWrapper,
     SidebarDropdownItem,
-    SpeedDial,
-    SpeedDialButton,
     Label,
     Input,
     Modal,
   } from "flowbite-svelte";
+  import SpeedDial from "../../../SpeedDial.svelte";
   import Editor from "@tinymce/tinymce-svelte";
 
   import type { LayoutData } from "../../../$types";
@@ -528,11 +527,12 @@
     </div>
   </div>
 </div>
-<SpeedDial defaultClass="absolute right-6 bottom-6">
+<!-- <SpeedDial defaultClass="absolute right-6 bottom-6">
   <SpeedDialButton name="Add Section">
     <ShareNodesSolid class="w-5 h-5" />
   </SpeedDialButton>
   <SpeedDialButton name="Add Course Content">
     <PrintSolid class="w-5 h-5" />
   </SpeedDialButton>
-</SpeedDial>
+</SpeedDial> -->
+<SpeedDial />

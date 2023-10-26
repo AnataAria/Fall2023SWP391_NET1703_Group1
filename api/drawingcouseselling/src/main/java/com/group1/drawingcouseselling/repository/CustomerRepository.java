@@ -12,4 +12,6 @@ import java.math.BigDecimal;
 public interface CustomerRepository extends JpaRepository<Customer, BigDecimal> {
     @Query("SELECT c FROM customer c INNER JOIN account a ON c.account.id = a.id WHERE a.email = :email")
     public Customer searchCustomerByAccountEmail(@Param(value = "email") String email);
+    @Query("SELECT COUNT(c) FROM customer c JOIN c.courseList course WHERE course.id = :courseID")
+    public BigDecimal countAllCustomerHasLearnedCourseUsingCourseID(@Param(value = "courseID") BigDecimal courseID);
 }

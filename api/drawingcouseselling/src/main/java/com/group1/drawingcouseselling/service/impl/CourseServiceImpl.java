@@ -8,6 +8,7 @@ import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.CourseService;
 import com.group1.drawingcouseselling.service.InstructorService;
+import com.group1.drawingcouseselling.service.MyLearningService;
 import com.group1.drawingcouseselling.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -26,12 +27,14 @@ public class CourseServiceImpl implements CourseService {
     private final InstructorRepository instructorRepository;
     private final InstructorService instructorService;
     private final SectionService sectionService;
+    private final MyLearningService myLearningService;
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService) {
+    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService, MyLearningService myLearningService) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.instructorService = instructorService;
         this.sectionService = sectionService;
+        this.myLearningService = myLearningService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
@@ -139,6 +142,15 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourseByCourseContentID(BigDecimal courseContentID){
         return courseRepository.searchCourseByCourseContentID(courseContentID);
+    }
+    @Override
+    public CourseDto removeCourseUsingCourseID(BigDecimal courseID, String email){
+        var course = courseRepository.findById(courseID).orElseThrow(() -> new CourseNotFoundException("Course not found"));
+        if(!course.getInstuctor().getAccount().getEmail().equals(email))
+            throw new InstructorNotPermissonToEditException("Course must be deleted by the one create it");
+        if(myLearningService.checkSomeoneLearningCourse(courseID)) throw new ActionNotAllowException("Course has been bought by user so you can not remove it");
+        course.setStatus(false);
+        return new Course().convertEntityToDto(courseRepository.save(course));
     }
 
 }

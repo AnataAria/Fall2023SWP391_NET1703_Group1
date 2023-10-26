@@ -35,4 +35,5 @@ public interface CourseService {
     public CourseAllInfoDto getAllInfoOfCourse(BigDecimal id);
     public CourseDefaultInfo getAllCourseDefaultInfo(BigDecimal id);
     public Course getCourseByCourseContentID(BigDecimal courseContentID);
+    public CourseDto removeCourseUsingCourseID(BigDecimal courseID, String email);
 }
