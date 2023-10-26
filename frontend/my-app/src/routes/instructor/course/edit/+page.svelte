@@ -48,17 +48,7 @@
   import Editor from "@tinymce/tinymce-svelte";
 
   import type { LayoutData } from "../../../$types";
-  import {
-    ChartPieSolid,
-    ChevronDoubleDownOutline,
-    ChevronDoubleUpOutline,
-    DownloadSolid,
-    ExclamationCircleOutline,
-    FileCopySolid,
-    PrintSolid,
-    ShareNodesSolid,
-    ShoppingCartSolid,
-  } from "flowbite-svelte-icons";
+  import { ExclamationCircleOutline } from "flowbite-svelte-icons";
   import SectionItem from "./SectionItem.svelte";
   import axios from "axios";
   import { GetCookie, apiBaseUrl } from "../../../../service";
@@ -72,6 +62,7 @@
     SectionDetail,
   } from "$lib/types";
   import { onMount } from "svelte";
+  import CreateCourseSection from "../../../CreateCourseSection.svelte";
   let editCourse = false;
   let sessionName = "";
   let deleteSessionModal = false;
@@ -254,6 +245,7 @@
                     Course Information <span
                       ><Button
                         color="alternative"
+                        class="border-none"
                         size="xs"
                         on:click={ChangeMode}
                         ><svg
@@ -267,7 +259,7 @@
                           <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                           />
                         </svg>
                       </Button></span
@@ -350,6 +342,7 @@
                     Course Information <span
                       ><Button
                         color="alternative"
+                        class="border-none"
                         size="xs"
                         on:click={ChangeView}
                         ><svg
@@ -363,7 +356,7 @@
                           <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                           />
                         </svg>
                       </Button></span
@@ -411,13 +404,6 @@
                       {conf}
                       bind:value={course.description}
                     />
-                    <!-- <textarea
-                    bind:value={course.description}
-                    id="editinput"
-                    rows="4"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your thoughts here..."
-                  /> -->
                   </div>
                   <Button pill color="red" on:click={ChangeCourseInfo}
                     >Save</Button
@@ -429,46 +415,55 @@
             {/if}
           </div>
         </div>
+
         <div class="h-screen w-full border-spacing-1 mt-10">
-          <h1 class="text-2xl font-bold mb-4">
-            Session Information <span
-              ><Button
-                on:click={() => (deleteSessionModal = true)}
-                color="red"
-                size="xs"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
+          <div class="grid grid-cols-12">
+            <div class="col-span-11">
+              <h1 class="text-2xl font-bold mb-4">
+                Session Information <span
+                  ><Button
+                    on:click={() => (deleteSessionModal = true)}
+                    color="red"
+                    size="xs"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                      />
+                    </svg>
+                  </Button>
+                  <Modal bind:open={deleteSessionModal} size="xs" autoclose>
+                    <div class="text-center">
+                      <ExclamationCircleOutline
+                        class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                      />
+                      <h3
+                        class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+                      >
+                        Are you sure you want to delete this session?
+                      </h3>
+                      <Button color="red" class="mr-2" on:click={DeleteSession}
+                        >Yes, I'm sure</Button
+                      >
+                      <Button color="alternative">No, cancel</Button>
+                    </div>
+                  </Modal></span
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                  />
-                </svg>
-              </Button>
-              <Modal bind:open={deleteSessionModal} size="xs" autoclose>
-                <div class="text-center">
-                  <ExclamationCircleOutline
-                    class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
-                  />
-                  <h3
-                    class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
-                  >
-                    Are you sure you want to delete this session?
-                  </h3>
-                  <Button color="red" class="mr-2" on:click={DeleteSession}
-                    >Yes, I'm sure</Button
-                  >
-                  <Button color="alternative">No, cancel</Button>
-                </div>
-              </Modal></span
-            >
-          </h1>
+              </h1>
+            </div>
+            <div class="col-span-1">
+              <CreateCourseSection {id} />
+            </div>
+          </div>
+
           <div class="w-full max-w-sm">
             <div>Session Name</div>
             <div class="flex items-center border-b border-teal-500 py-2">
@@ -563,13 +558,6 @@
                   {conf}
                   bind:value={courseContent.description}
                 />
-                <!-- <textarea
-                bind:value={courseContent.description}
-                id="editinput"
-                rows="4"
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Write your thoughts here..."
-              /> -->
               </div>
             </div>
             <div class="relative z-0 w-full mb-6 group">
@@ -588,71 +576,6 @@
                 >Video URL</label
               >
             </div>
-            <!-- <div class="grid md:grid-cols-2 md:gap-6">
-            <div class="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="floating_first_name"
-                id="floating_first_name"
-                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                for="floating_first_name"
-                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >First name</label
-              >
-            </div>
-            <div class="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="floating_last_name"
-                id="floating_last_name"
-                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                for="floating_last_name"
-                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >Last name</label
-              >
-            </div>
-          </div>
-          <div class="grid md:grid-cols-2 md:gap-6">
-            <div class="relative z-0 w-full mb-6 group">
-              <input
-                type="tel"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                name="floating_phone"
-                id="floating_phone"
-                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                for="floating_phone"
-                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >Phone number (123-456-7890)</label
-              >
-            </div>
-            <div class="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="floating_company"
-                id="floating_company"
-                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-                for="floating_company"
-                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >Company (Ex. Google)</label
-              >
-            </div>
-          </div> -->
             <button
               on:click={ChangeCourseDetailsInfo}
               type="submit"
@@ -664,13 +587,4 @@
       </div>
     </div>
   </div>
-  <!-- <SpeedDial defaultClass="absolute right-6 bottom-6">
-  <SpeedDialButton name="Add Section">
-    <ShareNodesSolid class="w-5 h-5" />
-  </SpeedDialButton>
-  <SpeedDialButton name="Add Course Content">
-    <PrintSolid class="w-5 h-5" />
-  </SpeedDialButton>
-</SpeedDial> -->
-  <SpeedDial {id} />
 {/if}

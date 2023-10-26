@@ -176,27 +176,27 @@
 </script>
 
 <Button
-    class="border-none"
+    class="border-none right-6 bottom-0 w-16 h-16"
     color="light"
     size="xs"
     on:click={() => (formModal = true)}
     ><svg
         xmlns="http://www.w3.org/2000/svg"
-        height="1.5em"
-        viewBox="0 0 448 512"
-        ><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-        <style>
-            svg {
-                fill: #ce5927;
-            }
-        </style><path
-            d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-        /></svg
-    ></Button
->
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-16 h-16"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+    </svg>
+</Button>
 <Modal bind:open={formModal} size="xs" autoclose={false} class="w-full">
-    <form class="flex flex-col space-y-6" on:submit={modeCreateHandle}>
+    <div class="flex flex-col space-y-6">
         <Select
             defaultClass="mb-4 text-xl font-bold text-gray-900 bg-none border-0 w-96"
             size="lg"
@@ -237,10 +237,6 @@
                 </Label>
             </Label>
         {:else}
-            <Label class="space-y-2  w-96">
-                <span>Section Order</span>
-                <Input type="number" name="section_order" required />
-            </Label>
             <Label class="space-y-2  w-96">
                 <span>Title</span>
                 <Input
@@ -287,7 +283,12 @@
             </Label>
         {/if}
         <div id="submitButton">
-            <Button type="submit" class="w-96" color="red">Create</Button>
+            <Button
+                type="submit"
+                class="w-96"
+                color="red"
+                on:click={modeCreateHandle}>Create</Button
+            >
         </div>
         <div id="loader" hidden>
             <Button
@@ -298,5 +299,5 @@
                 Loading ...
             </Button>
         </div>
-    </form>
+    </div>
 </Modal>
