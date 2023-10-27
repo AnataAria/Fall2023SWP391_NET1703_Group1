@@ -13,6 +13,7 @@ import com.group1.drawingcouseselling.service.CourseContentCompletionService;
 import com.group1.drawingcouseselling.service.CourseContentService;
 import com.group1.drawingcouseselling.service.InstructorService;
 import com.group1.drawingcouseselling.service.SectionService;
+import com.group1.drawingcouseselling.util.Tool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +28,7 @@ public class CourseContentServiceImpl implements CourseContentService {
     private final CourseContentRepository courseContentRepository;
     private final InstructorService instructorService;
     private final CourseContentCompletionService courseContentCompletionService;
+    private final String BASE_YT_EMBED = "https://www.youtube.com/embed/";
     @Autowired
     public CourseContentServiceImpl(SectionService sectionService, CourseContentRepository courseContentRepository, InstructorService instructorService, @Lazy CourseContentCompletionService courseContentCompletionService) {
         this.sectionService = sectionService;
@@ -43,6 +45,8 @@ public class CourseContentServiceImpl implements CourseContentService {
         CourseContent course  = new CourseContent().covertDtoToEntity(ccd);
         course.setSection(sec);
         course.setCreateDate(null);
+        var idYt = Tool.getYouTubeId(data.courseContent().videoLink());
+        course.setVideoLink(BASE_YT_EMBED + idYt);
         return new CourseContent().convertEntityToDto(courseContentRepository.save(course));
     }
     @Override
