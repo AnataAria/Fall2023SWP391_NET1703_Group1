@@ -92,7 +92,7 @@
                     EnableSubmitButton();
                     if (response.status === 200) {
                         showMessage("Login successful");
-                        window.location.href = "/";
+                        window.location.href = "/instructor";
                     }
                 })
                 .catch((error: AxiosError) => {
@@ -117,7 +117,7 @@
                     EnableSubmitButton();
                     if (response.status === 200) {
                         showMessage("Login Successs!");
-                        window.location.href = "/profile/instructor";
+                        window.location.href = "/instructor";
                     }
                 })
                 .catch((error: AxiosError) => {
