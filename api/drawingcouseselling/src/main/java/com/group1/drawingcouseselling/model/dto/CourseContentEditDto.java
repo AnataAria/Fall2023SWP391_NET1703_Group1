@@ -12,7 +12,6 @@ public record CourseContentEditDto(BigDecimal id,
                                     String title,
                                    @NotBlank(message = "Description can't be empty")
                                    String description,
-                                   @URL(regexp = "https://youtu\\.be/([a-zA-Z0-9_-]+)\\??([a-zA-Z0-9_-]*)", message = "Invalid youtube link")
-                                   @URL(regexp = "https://www\\.youtube\\.com/watch\\?v=([a-zA-Z0-9_-]+)", message = "Invalid youtube link")
+                                   @URL(regexp = "https:\\/\\/(youtu\\.be\\/|www\\.youtube\\.com\\/watch\\?v=)([a-zA-Z0-9_-]+)\\??([a-zA-Z0-9_-]*)\n", message = "Invalid youtube link")
                                    String videoLink) {
 }
