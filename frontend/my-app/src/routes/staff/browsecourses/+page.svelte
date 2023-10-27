@@ -1,12 +1,8 @@
 <script lang="ts">
-    import BrowseCourses from "../../BrowseCourses.svelte";
-    import SideBarAdmin from "../../SideBarAdmin.svelte";
+  import BrowseCourses from "../../BrowseCourses.svelte";
+  import SideBarAdmin from "../../SideBarAdmin.svelte";
+  import { page } from "$app/stores";
+  const courseID: number | null = $page.url.searchParams.get("courseID");
 </script>
-<div class="grid grid-cols-12">
-    <div class="col-span-1">
-        <SideBarAdmin/>
-    </div>
-    <div class="col-span-11">
-        <BrowseCourses/>
-    </div>
-</div>
+
+<BrowseCourses {courseID} />
