@@ -551,7 +551,6 @@
             <div>Section Name</div>
             <Select on:change={fetchValue} bind:value={sectionChoice}>
               <option selected>
-                Select section to edit or delete
               </option>
               {#each sectionList as sectionItem}
                 <option
