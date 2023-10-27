@@ -503,7 +503,7 @@
           <div class="grid grid-cols-12">
             <div class="col-span-11">
               <h1 class="text-2xl font-bold mb-4">
-                Session Information <span
+                Section Information <span
                   ><Button
                     on:click={() => (deleteSectionModal = true)}
                     color="red"
@@ -548,8 +548,11 @@
           </div>
 
           <div class="w-full max-w-sm">
-            <div>Session Name</div>
+            <div>Section Name</div>
             <Select on:change={fetchValue} bind:value={sectionChoice}>
+              <option selected>
+                Select section to edit or delete
+              </option>
               {#each sectionList as sectionItem}
                 <option
                   value="{sectionItem.sectionInfo.id}|{sectionItem.sectionInfo
