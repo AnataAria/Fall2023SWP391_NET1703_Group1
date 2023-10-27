@@ -77,7 +77,7 @@
     lessons: [],
   };
   let courseContent: EditCourseContent = {
-    id: 1,
+    id: 0,
     description: "",
     title: "",
     videoLink: "",
@@ -226,9 +226,15 @@
   }
   async function DeleteCourseContent() {
     let res;
+    let id = courseContent.id
     res = axios
       .delete(apiBaseUrl + "course-content/delete", {
-        data: id,
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${GetCookie("USER")}`,
+        }
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
@@ -606,7 +612,7 @@
                     class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
                   >
                     Are you sure you want to delete this course content? (Course
-                    ID: {id})
+                    ID: {courseContent.id})
                   </h3>
                   <Button
                     color="red"
