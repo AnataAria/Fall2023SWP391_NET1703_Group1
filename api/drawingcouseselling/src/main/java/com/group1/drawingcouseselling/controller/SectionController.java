@@ -38,4 +38,10 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.removeSection(id,email));
     }
 
+    @PutMapping("/section/edit")
+    public ResponseEntity<SectionDto> editSection(@RequestBody SectionDto sectionDto, @RequestHeader("Authorization") String token){
+        String email = jwtService.extractUserEmail(token.substring(7));
+        return ResponseEntity.ok(sectionService.updateSection(sectionDto, email));
+    }
+
 }
