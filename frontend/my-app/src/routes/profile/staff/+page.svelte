@@ -75,7 +75,8 @@
         <!--Right-->
         <div class="col-span-4 sm:col-span-9">
           <div class="bg-white shadow rounded-lg p-6">
-  
+            <h1 class="text-2xl font-bold mb-4">General information</h1>
+            
   
           
             <!--1-->
