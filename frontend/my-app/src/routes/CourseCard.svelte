@@ -1,7 +1,7 @@
 <script lang="ts">
   import axios from "axios";
   import { onMount } from "svelte";
-  import { CurrencyHandler } from "../service";
+  import { CurrencyHandler, apiBaseUrl } from "../service";
   import { GetCookie } from "../service";
   export let id: number;
   export let name: string;
@@ -11,12 +11,7 @@
   export let instructorName: string;
   export let instructorId: number;
   export let isFetchManual: boolean;
-  import { Card, Button, Rating, Badge } from "flowbite-svelte";
-  import { Toast } from "flowbite-svelte";
-  import { CheckCircleSolid, CloseCircleSolid } from "flowbite-svelte-icons";
-  import { quintOut } from "svelte/easing";
-  import { slide } from "svelte/transition";
-  import ToastShowMessage from "../templates/ToastShowMessage.svelte";
+  import { Card, Rating, Badge } from "flowbite-svelte";
   let show = false;
   let open = true;
   let counter = 6;
@@ -59,7 +54,7 @@
     }
     try {
       await axios
-        .get(`http://localhost:9090/api/v1/cart?courseID=${id}`, {
+        .get(apiBaseUrl +`cart?courseID=${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwtToken}`,
@@ -104,18 +99,6 @@
       };
     }
   });
-
-  async function addCart() {
-    try {
-      let res = await axios
-        .post(`http://localhost:9090/api/v1/cart`, course)
-        .then((response) => {
-          console.log(response.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 </script>
 
 <Card padding="none" class="w-64 h-auto">
@@ -148,32 +131,6 @@
       <span class="text-3xl font-bold text-gray-900 dark:text-white"
         >{CurrencyHandler(course.price)}</span
       >
-      <!-- <Button on:click={handleAddCart}>Add Cart</Button> -->
     </div>
   </div>
 </Card>
-
-<!-- {#if errorMsg != ""}
-   <div>
-    <Toast color="red" dismissable={false} bind:open transition={slide}>
-      <svelte:fragment slot="icon">
-        <CloseCircleSolid class="w-5 h-5" />
-        <span class="sr-only">Error icon</span>
-      </svelte:fragment>
-      {errorMsg}
-    </Toast>
-  </div>
-  {/if}
-  {#if message != ""}
-  <div>
-    <Toast color="green" transition={slide} params={{ delay: 250, duration: 300, easing: quintOut }} dismissable={false} bind:open>
-      <svelte:fragment slot="icon">
-        <CheckCircleSolid class="w-5 h-5" />
-        <span class="sr-only">Check icon</span>
-      </svelte:fragment>
-      {message}.
-    </Toast>
-    
-  </div>
-  {/if} -->
-<!-- <ToastShowMessage></ToastShowMessage> -->
