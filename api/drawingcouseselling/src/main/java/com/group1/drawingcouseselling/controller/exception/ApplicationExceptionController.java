@@ -1,12 +1,19 @@
 package com.group1.drawingcouseselling.controller.exception;
 
 import com.group1.drawingcouseselling.exception.*;
+import com.group1.drawingcouseselling.model.dto.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 @RestControllerAdvice
 public class ApplicationExceptionController {
     @ExceptionHandler(CourseMissMatchException.class)
@@ -57,11 +64,18 @@ public class ApplicationExceptionController {
     }
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String bindException(BindException exception){
-        String errorMessage = "Bad request exception";
-        if (exception.getBindingResult().hasErrors())
-            exception.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-        return errorMessage;
+    public ResponseEntity<?> bindException(BindException exception){
+        List<FieldError> fieldErrors = exception.getFieldErrors();
+        List<String> errorMessages = new ArrayList<>();
+
+        for (FieldError fieldError : fieldErrors) {
+            errorMessages.add(fieldError.getDefaultMessage());
+        }
+        return new ResponseEntity<>(ErrorMessage.builder()
+                .currentTimeError(new Date(System.currentTimeMillis()))
+                .errorList(errorMessages)
+                .status(HttpStatus.BAD_REQUEST)
+                .build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ActionNotAllowException.class)
