@@ -77,7 +77,7 @@
     lessons: [],
   };
   let courseContent: EditCourseContent = {
-    id: 1,
+    id: 0,
     description: "",
     title: "",
     videoLink: "",
@@ -143,12 +143,14 @@
           if (response.status === 200) {
             courseInfo = response.data;
             fetchCourseInfo(response.data.courseInfo);
-            fetchSectionInfo(response.data.sections);
             sectionList = response.data.sections;
             console.log(sectionList);
+            fetchSectionInfo(response.data.sections);
           }
         });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async function ChangeCourseInfo() {
     try {
@@ -215,6 +217,7 @@
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           window.alert("Delete successfully!");
+          window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
@@ -223,13 +226,20 @@
   }
   async function DeleteCourseContent() {
     let res;
+    let id = courseContent.id
     res = axios
       .delete(apiBaseUrl + "course-content/delete", {
-        data: id,
+        params: {
+          id
+        },
+        headers: {
+          Authorization: `Bearer ${GetCookie("USER")}`,
+        }
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           window.alert("Delete successfully!");
+          window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
@@ -493,7 +503,7 @@
           <div class="grid grid-cols-12">
             <div class="col-span-11">
               <h1 class="text-2xl font-bold mb-4">
-                Session Information <span
+                Section Information <span
                   ><Button
                     on:click={() => (deleteSectionModal = true)}
                     color="red"
@@ -538,8 +548,10 @@
           </div>
 
           <div class="w-full max-w-sm">
-            <div>Session Name</div>
+            <div>Section Name</div>
             <Select on:change={fetchValue} bind:value={sectionChoice}>
+              <option selected>
+              </option>
               {#each sectionList as sectionItem}
                 <option
                   value="{sectionItem.sectionInfo.id}|{sectionItem.sectionInfo
@@ -602,7 +614,7 @@
                     class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
                   >
                     Are you sure you want to delete this course content? (Course
-                    ID: {id})
+                    ID: {courseContent.id})
                   </h3>
                   <Button
                     color="red"
