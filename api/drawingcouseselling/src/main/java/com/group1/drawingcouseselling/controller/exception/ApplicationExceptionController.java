@@ -64,5 +64,25 @@ public class ApplicationExceptionController {
         return errorMessage;
     }
 
+    @ExceptionHandler(ActionNotAllowException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ResponseEntity<?> actionNotAllowException(ActionNotAllowException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
 
+    @ExceptionHandler(CourseNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> courseNotFoundException(CourseNotFoundException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
+    @ExceptionHandler(CourseNotOwnedException.class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ResponseEntity<?> courseNotOwnedException(CourseNotOwnedException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
+    }
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<?> entityNotFoundException(EntityNotFoundException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
+    }
 }

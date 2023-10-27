@@ -14,7 +14,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
     private BigDecimal id;
-    @ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Section.class, fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name ="section_id", nullable = false, updatable = true)
     private Section section;
     @Column(name="title", nullable = false, updatable = true)

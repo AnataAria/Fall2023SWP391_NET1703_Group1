@@ -276,9 +276,8 @@
                               <td
                                 class="py-4 px-6 text-sm font-medium text-left whitespace-nowrap pr-16"
                               >
-                                <CreateCourseSection id={course.id} />
                                 <a
-                                  href="#"
+                                  href="/instructor/course/edit?courseId={course.id}"
                                   class="text-blue-600 dark:text-blue-500 hover:underline"
                                   >Edit</a
                                 >

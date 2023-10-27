@@ -10,8 +10,10 @@
     Skeleton,
     Fileupload,
     Checkbox,
-    Button
+    Button,
   } from "flowbite-svelte";
+  import { page } from "$app/stores";
+  const courseID = $page.url.searchParams.get("courseID");
   import { GetCookie, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import TextEditor from "../TextEditor.svelte";
@@ -32,7 +34,7 @@
     if (jwt != null) {
       try {
         await axios
-          .get<CourseAllInfo>(apiBaseUrl + `course/all?id=${id}`, {
+          .get<CourseAllInfo>(apiBaseUrl + `course/all?id=${courseID}`, {
             headers: {
               Authorization: `Bearer ${jwt}`,
             },
@@ -58,11 +60,15 @@
     if (jwt != null) {
       try {
         await axios
-          .get(apiBaseUrl + `course-content-completion/completed?id=${currenCourseContent.id}`,{
-            headers: {
-              Authorization: `Bearer ${jwt}`,
-            },
-          })
+          .get(
+            apiBaseUrl +
+              `course-content-completion/completed?id=${currenCourseContent.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${jwt}`,
+              },
+            }
+          )
           .then((response) => {
             if (response.status === 200) {
               setTimeout(() => {
@@ -105,14 +111,20 @@
             <Fileupload />
           </div>
           <div class="col-span-2 flex flex-row-reverse mr-20">
-            <Button outline color="red" on:click={() => {MarkCompleted()}}>Mark As Completed</Button>
+            <Button
+              outline
+              color="red"
+              on:click={() => {
+                MarkCompleted();
+              }}>Mark As Completed</Button
+            >
             <Button outline color="green">Completed</Button>
           </div>
         </div>
         <div class="text-2xl font-bold my-8">{currenCourseContent.title}</div>
         <div class="w-12/12">
-          <div class="w-11/12 h-96 bg-gray-50 border rounded-md">
-            {currenCourseContent.description}
+          <div class="w-11/12 h-96 bg-gray-50 border rounded-md pl-6 pt-5">
+            {@html currenCourseContent.description}
           </div>
         </div>
       </div>
@@ -570,10 +582,10 @@
                         currenCourseContent = content;
                       }}
                     >
-                  <svelte:fragment>
-                    <Checkbox></Checkbox>
-                  </svelte:fragment>
-                  </SidebarItem>
+                      <svelte:fragment>
+                        <Checkbox />
+                      </svelte:fragment>
+                    </SidebarItem>
                   {/each}
                 </SidebarDropdownWrapper>
               </SidebarGroup>

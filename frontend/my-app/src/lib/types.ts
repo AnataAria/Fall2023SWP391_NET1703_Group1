@@ -75,3 +75,41 @@ export type CourseContentCreate = {
     sectionID:number;
     courseContent:CourseContent;
 }
+
+type Pageable = {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      unsorted: boolean;
+      sorted: boolean;
+      empty: boolean;
+    };
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  };
+
+  type Account = {
+    email: string;
+    role: string;
+    createDate: string;
+    isActive: boolean;
+  };
+
+type AccountPagination = {
+    content: Account[];
+    pageable: Pageable;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+    numberOfElements: number;
+    first: boolean;
+    size: number;
+    number: number;
+    sort: {
+      unsorted: boolean;
+      sorted: boolean;
+      empty: boolean;
+    };
+    empty: boolean;
+  };

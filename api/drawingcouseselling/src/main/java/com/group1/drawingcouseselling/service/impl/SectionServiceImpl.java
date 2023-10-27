@@ -102,7 +102,7 @@ public class SectionServiceImpl implements SectionService {
         var deletedSection = sectionRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("This section is not found"));
         if(!Objects.equals(deletedSection.getCourse().getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("Only instructor create that can delete");
         if(!courseContentService.getCourseContentDtoOfSection(deletedSection.getId()).isEmpty()) throw new CourseNotFoundException("");
-        sectionRepository.delete(deletedSection);
+        sectionRepository.deleteById(deletedSection.getId());
         return new Section().convertEntityToDto(deletedSection);
     }
     @Override

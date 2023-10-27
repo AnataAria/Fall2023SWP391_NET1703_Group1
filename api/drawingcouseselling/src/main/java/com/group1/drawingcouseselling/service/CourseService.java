@@ -36,4 +36,5 @@ public interface CourseService {
     public CourseDefaultInfo getAllCourseDefaultInfo(BigDecimal id);
     public Course getCourseByCourseContentID(BigDecimal courseContentID);
     public CourseDto removeCourseUsingCourseID(BigDecimal courseID, String email);
+    public Double getPercentOfCourseCompleted(BigDecimal courseID, BigDecimal customerID);
 }

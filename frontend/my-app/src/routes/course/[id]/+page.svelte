@@ -271,7 +271,7 @@
                 on:click={() => {
                   window.location.href = `/lesson?courseID=${course}`;
                 }}
-                class="flex ml-auto text-white bg-blue-400 border-0 py-2 px-6 focus:outline-none"
+                class="flex ml-auto text-white bg-blue-800 border-0 py-2 px-6 focus:outline-none"
                 >Go To Lesson</Button
               >
             {/if}

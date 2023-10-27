@@ -12,7 +12,7 @@ public class Section implements ObjectMapper<Section, SectionDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", columnDefinition = "bigint")
     private BigDecimal id;
-    @ManyToOne(targetEntity = Course.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Course.class, cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
     @Column(name = "order_pos", columnDefinition = "bigint", nullable = false)

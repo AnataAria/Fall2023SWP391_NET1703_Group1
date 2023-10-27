@@ -1,8 +1,7 @@
 <script>
-
     import InstructorLogin from "../InstructorLogin.svelte";
-
 </script>
+
 <body>
     <section class="bg-gray-100 dark:bg-gray-900">
         <div
@@ -37,7 +36,7 @@
         </div>
     </section>
 
-    <section class="bg-white dark:bg-gray-900">
+    <!-- <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
             <h2
                 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-center text-gray-900 lg:mb-16 dark:text-white md:text-4xl"
@@ -255,7 +254,7 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <section class="bg-gray-50 dark:bg-gray-800">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
@@ -263,7 +262,7 @@
                 <h2
                     class="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white"
                 >
-                    Designed for business teams like yours
+                    So many reasons to start
                 </h2>
                 <p class="text-gray-500 sm:text-xl dark:text-gray-400">
                     Here at Flowbite we focus on markets where technology,
@@ -285,18 +284,19 @@
                             xmlns="http://www.w3.org/2000/svg"
                             ><path
                                 fill-rule="evenodd"
-                                d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
+                                d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
                                 clip-rule="evenodd"
+                            /><path
+                                d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"
                             /></svg
                         >
                     </div>
                     <h3 class="mb-2 text-xl font-bold dark:text-white">
-                        Marketing
+                        Teach your way
                     </h3>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Plan it, create it, launch it. Collaborate seamlessly
-                        with all the organization and hit your marketing goals
-                        every month with our marketing plan.
+                        Publish the course you want, in the way you want, and
+                        always have control of your own content.
                     </p>
                 </div>
                 <div>
@@ -314,12 +314,11 @@
                         >
                     </div>
                     <h3 class="mb-2 text-xl font-bold dark:text-white">
-                        Legal
+                        Inspire learners
                     </h3>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Protect your organization, devices and stay compliant
-                        with our structured workflows and custom permissions
-                        made for you.
+                        Teach what you know and help learners explore their
+                        interests, gain new skills, and advance their careers.
                     </p>
                 </div>
                 <div>
@@ -332,24 +331,23 @@
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                             ><path
-                                fill-rule="evenodd"
-                                d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                                clip-rule="evenodd"
+                                d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"
                             /><path
-                                d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"
+                                fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                                clip-rule="evenodd"
                             /></svg
                         >
                     </div>
                     <h3 class="mb-2 text-xl font-bold dark:text-white">
-                        Business Automation
+                        Get rewarded
                     </h3>
                     <p class="text-gray-500 dark:text-gray-400">
-                        Auto-assign tasks, send Slack messages, and much more.
-                        Now power up with hundreds of new templates to help you
-                        get started.
+                        Expand your professional network, build your expertise,
+                        and earn money on each paid enrollment.
                     </p>
                 </div>
-                <div>
+                <!-- <div>
                     <div
                         class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-primary-100 lg:h-12 lg:w-12 dark:bg-primary-900"
                     >
@@ -422,7 +420,7 @@
                         iterative, and structured workflows built for all
                         efficient teams and individual.
                     </p>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -438,16 +436,15 @@
                     We didn't reinvent the wheel
                 </h2>
                 <p class="mb-4">
-                    We are strategists, designers and developers. Innovators and
-                    problem solvers. Small enough to be simple and quick, but
-                    big enough to deliver the scope you want at the pace you
-                    need. Small enough to be simple and quick, but big enough to
-                    deliver the scope you want at the pace you need.
+                    In developing our new drawing course platform, we didn't
+                    reinvent the wheel; instead, we focused on enhancing the
+                    traditional art education experience with innovative tools
+                    and interactive features.
                 </p>
-                <p>
+                <!-- <p>
                     We are strategists, designers and developers. Innovators and
                     problem solvers. Small enough to be simple and quick.
-                </p>
+                </p> -->
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
                 <img
@@ -477,18 +474,16 @@
                     > companies worldwide
                 </h2>
                 <p class="mb-4 font-light">
-                    Track work across the enterprise through an open,
-                    collaborative platform. Link issues across Jira and ingest
-                    data from other software development tools, so your IT
-                    support and operations teams have richer contextual
-                    information to rapidly respond to requests, incidents, and
-                    changes.
+                    Our drawing course platform has been instrumental in
+                    powering innovation at over 200,000 companies worldwide,
+                    providing creative skills and inspiration to professionals
+                    across diverse industries.
                 </p>
                 <p class="mb-4 font-medium">
-                    Deliver great service experiences fast - without the
-                    complexity of traditional ITSM solutions.Accelerate critical
-                    development work, eliminate toil, and deploy changes with
-                    ease.
+                    Empower artists to create and learn effortlessly, without
+                    the complications of conventional art education systems.
+                    Streamline skill development, reduce hurdles, and foster a
+                    seamless path for artistic growth.
                 </p>
                 <a
                     href="#"

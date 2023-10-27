@@ -1,8 +1,6 @@
 <script lang="ts">
   import Editor from "@tinymce/tinymce-svelte";
   import { Button } from "flowbite-svelte";
-  let e: string;
-  console.log(e);
 </script>
 
 <main>
@@ -11,7 +9,5 @@
     channel="5-dev"
     modelEvents="input change undo redo"
     text="readonly-text-output"
-    bind:value={e}
   />
 </main>
-<Button on:click={console.log(e)} />

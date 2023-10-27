@@ -6,10 +6,7 @@ import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Instructor;
 import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
-import com.group1.drawingcouseselling.service.CourseService;
-import com.group1.drawingcouseselling.service.InstructorService;
-import com.group1.drawingcouseselling.service.MyLearningService;
-import com.group1.drawingcouseselling.service.SectionService;
+import com.group1.drawingcouseselling.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,13 +26,15 @@ public class CourseServiceImpl implements CourseService {
     private final InstructorService instructorService;
     private final SectionService sectionService;
     private final MyLearningService myLearningService;
+    private final CourseContentCompletionService courseContentCompletionService;
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService, MyLearningService myLearningService) {
+    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService, MyLearningService myLearningService, @Lazy CourseContentCompletionService courseContentCompletionService) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.instructorService = instructorService;
         this.sectionService = sectionService;
         this.myLearningService = myLearningService;
+        this.courseContentCompletionService = courseContentCompletionService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
@@ -46,7 +46,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseDto searchCourseById(BigDecimal id) throws CourseNotFoundException {
-        Course temp  = courseRepository.findById(id).orElseThrow(() ->new CourseNotFoundException("Not found Course with ID: " + id));
+        Course temp  = courseRepository.findById(id).orElseThrow(() ->
+                new CourseNotFoundException("Not found Course with ID: " + id));
         return new Course().convertEntityToDto(temp);
     }
     @Override
@@ -105,17 +106,23 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseDto updateCourse(CourseDto courseData, String email)
     {
-        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()-> new CourseNotFoundException("Course ID isn't found"));
-        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()-> new UserNotFoundException("Can not edit because this user is not in database"));
-        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
+        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()->
+                new CourseNotFoundException("Course ID isn't found"));
+        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()->
+                new UserNotFoundException("Can not edit because this user is not in database"));
+        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId()))
+            throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
         Course course = new Course().covertDtoToEntity(courseData);
         return new Course().convertEntityToDto(courseRepository.save(course));
     }
     @Override
     public CourseDto updateCourse(CourseEditDto courseData, String email){
-        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()-> new CourseNotFoundException("Course ID isn't found"));
-        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()-> new UserNotFoundException("Can not edit because this user is not in database"));
-        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
+        Course courseInDatabase = courseRepository.findById(courseData.id()).orElseThrow(()->
+                new CourseNotFoundException("Course ID isn't found"));
+        Instructor instructor = instructorRepository.findInstructorByEmail(email).orElseThrow(()->
+                new UserNotFoundException("Can not edit because this user is not in database"));
+        if(!Objects.equals(courseInDatabase.getInstuctor().getId(), instructor.getId()))
+            throw new InstructorNotPermissonToEditException("The edited instructor is not the create one");
         courseInDatabase.setName(courseData.name());
         courseInDatabase.setPrice(courseData.price());
         courseInDatabase.setDuration(courseData.durations());
@@ -145,12 +152,26 @@ public class CourseServiceImpl implements CourseService {
     }
     @Override
     public CourseDto removeCourseUsingCourseID(BigDecimal courseID, String email){
-        var course = courseRepository.findById(courseID).orElseThrow(() -> new CourseNotFoundException("Course not found"));
+        var course = courseRepository.findById(courseID).orElseThrow(() ->
+                new CourseNotFoundException("Course not found"));
         if(!course.getInstuctor().getAccount().getEmail().equals(email))
             throw new InstructorNotPermissonToEditException("Course must be deleted by the one create it");
-        if(myLearningService.checkSomeoneLearningCourse(courseID)) throw new ActionNotAllowException("Course has been bought by user so you can not remove it");
+        if(myLearningService.checkSomeoneLearningCourse(courseID))
+            throw new ActionNotAllowException("Course has been bought by user so you can not remove it");
         course.setStatus(false);
         return new Course().convertEntityToDto(courseRepository.save(course));
     }
 
+    //Search course data, them get Section List then get course content List and check completion of course
+    @Override
+    public Double getPercentOfCourseCompleted(BigDecimal courseID, BigDecimal customerID){
+        var course = courseRepository.findById(courseID).orElseThrow(() -> new CourseNotFoundException(""));
+        List<CourseContentDto> allCourseContentList = new ArrayList<>();
+        var info = getAllInfoOfCourse(course.getId());
+        for (SectionDetailDto temp : info.sections()) {
+            allCourseContentList.addAll(temp.lessons());
+        }
+        int size = courseContentCompletionService.getTotalCourseContentLearnedOnCourse(customerID,courseID);
+        return allCourseContentList.isEmpty() ? 0.0 : size * 100.00 / allCourseContentList.size();
+    }
 }
