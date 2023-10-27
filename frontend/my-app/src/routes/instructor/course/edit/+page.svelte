@@ -287,7 +287,7 @@
 
 {#if status}
   <div class="grid grid-cols-4 gap-4 mt-10">
-    <div class="col-span-1 bg-pink-500">
+    <div class="col-span-1 bg-gray-400">
       <Sidebar asideClass="w-full list-none h-12">
         <SidebarWrapper>
           {#each courseInfo.sections as section}
