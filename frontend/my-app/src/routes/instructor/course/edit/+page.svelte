@@ -143,12 +143,14 @@
           if (response.status === 200) {
             courseInfo = response.data;
             fetchCourseInfo(response.data.courseInfo);
-            fetchSectionInfo(response.data.sections);
             sectionList = response.data.sections;
             console.log(sectionList);
+            fetchSectionInfo(response.data.sections);
           }
         });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
   async function ChangeCourseInfo() {
     try {
@@ -215,6 +217,7 @@
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           window.alert("Delete successfully!");
+          window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
@@ -230,6 +233,7 @@
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
           window.alert("Delete successfully!");
+          window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
