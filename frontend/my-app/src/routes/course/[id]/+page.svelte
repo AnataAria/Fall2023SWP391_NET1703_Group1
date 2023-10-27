@@ -6,7 +6,7 @@
   import SectionBar from "../../SectionBar.svelte";
   let course = $page.params.id;
   import type { CourseMinDetail } from "../../../lib/types";
-  import { Button } from "flowbite-svelte";
+  import { Button, Rating } from "flowbite-svelte";
   // export let id;
   let isBought: boolean = false;
   async function isCourseBought() {
@@ -37,6 +37,7 @@
     instructorName: "",
   };
   let datain: CourseMinDetail = [];
+  let rating:number = 5;
 
   async function handleGetCourse() {
     try {
@@ -48,6 +49,7 @@
           datain = response.data;
           console.log(datain);
         });
+        await axios.get(apiBaseUrl + `review/rating?courseID=${course}`).then((response) => {if(response.status === 200) rating = response.data})
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +104,7 @@
         <img
           alt="ecommerce"
           class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-          src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"
+          src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c"
         />
         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 class="text-sm title-font text-gray-500 tracking-widest">
@@ -115,7 +117,10 @@
             >By {datain.courseInfo.instructorName}</span
           >
           <div class="flex mb-4">
-            <span class="flex items-center">
+            <Rating rating={rating}>
+              <p slot="text" class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">{ Number(rating.toFixed(1))} out of 5</p>
+            </Rating>
+            <!-- <span class="flex items-center">
               <svg
                 fill="currentColor"
                 stroke="currentColor"
@@ -182,7 +187,7 @@
                 />
               </svg>
               <span class="text-gray-600 ml-3">4 Reviews</span>
-            </span>
+            </span> -->
             <span class="flex ml-3 pl-3 py-2 border-l-2 border-gray-200">
               <a class="text-gray-500">
                 <svg
