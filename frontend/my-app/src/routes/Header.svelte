@@ -43,7 +43,7 @@
   // import LoginModal from "./LoginModal.svelte";
   function handleSearch() {
     if (!input) {
-      ShowMessage("You should enter at least 3 word for search", 3000, 1);
+      ShowMessage("You should enter at least 3 word for search", 3000, 1, 1);
     } else {
       window.location.href = "/search/" + input;
     }
