@@ -16,11 +16,17 @@
   import Carousel from "./Carousel.svelte";
   import CourseCard from "./CourseCard.svelte";
   import CardScrollContainer from "./CardScrollContainer.svelte";
+  import PartnerBanner from "./PartnerBanner.svelte";
+    import CreateCourse from "./CreateCourse.svelte";
+    import CreateCourseSection from "./CreateCourseSection.svelte";
+    import CustomerLandingPage from "./UserLandingPage.svelte";
+    import UserLandingPage from "./UserLandingPage.svelte";
 </script>
 <Carousel/>
 <div class="flex justify-center">
   <div class="w-11/12">
+    <PartnerBanner/>
     <CardScrollContainer></CardScrollContainer>
   </div>
 </div>
-
+<UserLandingPage/>
