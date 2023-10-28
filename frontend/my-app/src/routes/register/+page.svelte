@@ -4,6 +4,7 @@ import { onMount } from "svelte";
 axios.defaults.withCredentials = true;
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+    import { ShowMessage, apiBaseUrl, emailRegex } from "../../service";
 let registerForm = {
   email: "",
   fullname: "",
@@ -19,20 +20,26 @@ async function handleRegister() {
   if (
     !registerForm.email ||
     !registerForm.password ||
-    !registerForm.birthDate
+    !registerForm.birthDate ||
+    !registerForm.gender ||
+    !registerForm.password
   ) {
-    errorMsg = "Full Name or Password, email cannot empty";
+    ShowMessage("Required field cannot be empty", 3000, 1, 1);
     status = false;
   }
   if (registerForm.password !== rePassword) {
-    errorMsg = "Re-enter password must match with password";
+    ShowMessage("Re-enter password must match with password", 3000, 1, 1);
+
     status = false;
+  }
+  if(!emailRegex.test(registerForm.email)){
+    ShowMessage("Email is not in correct format", 3000, 1, 1);
   }
   let res = null;
   if (status) {
     try {
       res = await axios
-        .post("http://localhost:9090/api/v1/auth/register", registerForm)
+        .post(apiBaseUrl + "auth/register", registerForm)
         .then((response) => {
           if (response.status === 200) {
             errorMsg = "Login successful";
@@ -43,20 +50,6 @@ async function handleRegister() {
       console.log(err);
     }
   }
-  Toastify({
-    text: errorMsg,
-    duration: 3000,
-    destination: "https://github.com/apvarun/toastify-js",
-    newWindow: true,
-    close: true,
-    gravity: "bottom", // `top` or `bottom`
-    position: "right", // `left`, `center` or `right`
-    stopOnFocus: true, // Prevents dismissing of toast on hover
-    style: {
-      background: "linear-gradient(to right, #00b09b, #96c93d)",
-    },
-    onClick: function () {}, // Callback after click
-  }).showToast();
 }
 let questions = [
   {

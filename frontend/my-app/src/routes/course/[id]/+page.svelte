@@ -85,6 +85,9 @@
       if (error.response.status === 405) {
         ShowMessage("Cart Already In Cart List", 3000, 1, 1);
       }
+      else{
+        ShowMessage("Internal error, please try again!", 3000, 1, 1);
+      }
       // showErrMessage("Add Cart Failed");
     }
   }

@@ -6,7 +6,7 @@
   
   <script lang="ts">
       import axios, { AxiosError, type AxiosResponse } from "axios";
-      import { BaseUrl, ShowMessage, apiBaseUrl } from "../service";
+      import { BaseUrl, ShowMessage, apiBaseUrl, emailRegex } from "../service";
       import { slide } from 'svelte/transition';
       import { quintOut } from 'svelte/easing';
       import { Spinner, Button, Toast } from 'flowbite-svelte';
@@ -22,6 +22,10 @@
         if (email === ""){
           showMessage();
           errorMsg = "Email cannot be empty"
+        }
+        if(!emailRegex.test(email)){
+            showMessage();
+            errorMsg = "Email is not in correct format"
         }
         else{
           GenerateOTP();
