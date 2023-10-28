@@ -4,9 +4,6 @@ import { onMount } from "svelte";
 axios.defaults.withCredentials = true;
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-    import { ShowMessage, apiBaseUrl } from "../../service";
-    const emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-
 let registerForm = {
   email: "",
   fullname: "",
@@ -24,28 +21,21 @@ async function handleRegister() {
     !registerForm.password ||
     !registerForm.birthDate
   ) {
-    ShowMessage( "Full Name or Password, email cannot empty", 3000, 1, 1);
+    errorMsg = "Full Name or Password, email cannot empty";
     status = false;
   }
   if (registerForm.password !== rePassword) {
-    ShowMessage("Re-enter password must match with password", 3000, 1, 1);
+    errorMsg = "Re-enter password must match with password";
     status = false;
-  }
-  if(!emailRegex.test(registerForm.email)){
-    ShowMessage("Please enter a valid email", 3000, 1, 1);
-    status = false;
-  }
-  if (!registerForm.birthDate || !registerForm.gender || !registerForm.password){
-    ShowMessage("Required field are empty", 3000, 1, 1);
   }
   let res = null;
   if (status) {
     try {
       res = await axios
-        .post(apiBaseUrl + "auth/register", registerForm)
+        .post("http://localhost:9090/api/v1/auth/register", registerForm)
         .then((response) => {
           if (response.status === 200) {
-            ShowMessage("Register successfully!", 3000, 2, 1);
+            errorMsg = "Login successful";
             window.location.href = "/";
           }
         });
@@ -53,6 +43,20 @@ async function handleRegister() {
       console.log(err);
     }
   }
+  Toastify({
+    text: errorMsg,
+    duration: 3000,
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "bottom", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    onClick: function () {}, // Callback after click
+  }).showToast();
 }
 let questions = [
   {

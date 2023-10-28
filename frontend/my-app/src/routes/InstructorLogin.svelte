@@ -24,7 +24,6 @@
         EnableSubmitButton,
         ShowMessage,
         apiBaseUrl,
-        emailRegex
     } from "../service";
     import { Toast } from "flowbite-svelte";
     import { CheckCircleSolid, CloseCircleSolid } from "flowbite-svelte-icons";
@@ -75,19 +74,14 @@
         if (
             !registerForm.email ||
             !registerForm.password ||
-            !registerForm.specialization || 
-            !registerForm.password ||
-            !registerForm.phone
+            !registerForm.specialization
         ) {
-            showErrMessage("Required field cannot empty");
+            showErrMessage("Full Name or Password, email cannot empty");
             status = false;
         }
         if (registerForm.password !== rePassword) {
             showErrMessage("Re-enter password must match with password");
             status = false;
-        }
-        if(!emailRegex.test(registerForm.email)){
-            showErrMessage("Email are not in correct format");
         }
         let res = null;
         if (status) {
