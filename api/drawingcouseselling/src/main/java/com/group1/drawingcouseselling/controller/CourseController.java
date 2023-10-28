@@ -57,7 +57,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.createCourseUsingJwt(courseData, email));
     }
     @PutMapping(value = "/course/edit")
-    public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseEditDto courseData, @RequestHeader(value = "Authorization") String jwt){
+    public ResponseEntity<CourseDto> updateCourse(@RequestBody @Valid CourseEditDto courseData, @RequestHeader(value = "Authorization") String jwt){
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.updateCourse(courseData, email));
     }

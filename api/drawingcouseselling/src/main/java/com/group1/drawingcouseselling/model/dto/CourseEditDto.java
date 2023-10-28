@@ -15,8 +15,10 @@ public record CourseEditDto(BigDecimal id,
                             BigDecimal price,
                             @NotBlank(message = "Description can't be empty")
                             String description,
-                            @Pattern(regexp = "\\d+\\s*(day|week|month|year|days|weeks|months|years)\n",
-                                    message = "Durations must be written like this: 1 day, 2 weeks, 2 days,...")
+                            @Pattern(
+                                    regexp = "\\d+\\s*(min|hour|day|week|month|year|mins|hours|days|weeks|months|years)",
+                                    message = "Durations must be written like this: 1 day, 2 weeks, 2 days, ..."
+                            )
                             @NotBlank(message = "Duration can't be empty")
                             String durations) {
 }
