@@ -4,6 +4,7 @@ export const apiCurrencyExchange: string = "https://api.exchangerate-api.com/v4/
 import axios, { type AxiosResponse } from 'axios';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+export const emailRegex = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
 let headerRequest = {
   "Content-Type": "application/json",
   "Accept": "application/json"
