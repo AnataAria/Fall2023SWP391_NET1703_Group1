@@ -12,7 +12,6 @@
   export let instructorId: number;
   export let isFetchManual: boolean;
   import { Card, Rating, Badge } from "flowbite-svelte";
-  let show = false;
   let open = true;
   let counter = 6;
   let message = "";
@@ -85,7 +84,12 @@
       console.log(error);
     }
   }
+  let rating:number = 0;
+  async function getRating(){
+    await axios.get(apiBaseUrl + `review/rating?courseID=${id}`).then((response) => {if(response.status === 200) rating = response.data})
+  }
   onMount(() => {
+    getRating();
     if (!isFetchManual) {
       handleGetCourse();
     } else {
@@ -124,7 +128,7 @@
         By {course.instructorName}
       </h5>
     </a>
-    <Rating rating={4} size={24} class="mt-2.5 mb-5">
+    <Rating rating={rating} class="mt-2.5 mb-5">
       <Badge slot="text" class="ml-3">4</Badge>
     </Rating>
     <div class="flex justify-between items-center">

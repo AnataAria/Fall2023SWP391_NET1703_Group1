@@ -5,7 +5,7 @@
   import Carousel from "./Carousel.svelte";
   import CardScrollContainer from "./CardScrollContainer.svelte";
   import { GetCookie } from "../service";
-  import TextEditor from "./TextEditor.svelte";
+  import PartnerBanner from "./PartnerBanner.svelte";
   let loginStatus = false;
   function checkLogin() {
     if (GetCookie("USER") != null) loginStatus = true;
@@ -20,10 +20,11 @@
   <Carousel />
   <div class="flex justify-center">
     <div class="w-11/12">
+      <PartnerBanner></PartnerBanner>
       <CardScrollContainer />
     </div>
   </div>
-{:else}
-  <UserLandingPage />
+  {:else}
+  <UserLandingPage></UserLandingPage>
 {/if}
 
