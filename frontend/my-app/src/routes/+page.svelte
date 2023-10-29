@@ -1,26 +1,29 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import "../app.postcss";
-  export const images = [
-    {
-      alt: 'Cosmic timetraveler',
-      src: 'https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c',
-      title: 'cosmic-timetraveler-pYyOZ8q7AII-unsplash.com'
-    },
-    {
-      alt: 'Cristina Gottardi',
-      src: 'https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c',
-      title: 'cristina-gottardi-CSpjU6hYo_0-unsplash.com'
-    }
-  ];
+  import UserLandingPage from "./UserLandingPage.svelte";
   import Carousel from "./Carousel.svelte";
-  import CourseCard from "./CourseCard.svelte";
   import CardScrollContainer from "./CardScrollContainer.svelte";
+  import { GetCookie } from "../service";
+  import TextEditor from "./TextEditor.svelte";
+  let loginStatus = false;
+  function checkLogin() {
+    if (GetCookie("USER") != null) loginStatus = true;
+    else loginStatus = false;
+  }
+  onMount(() => {
+    checkLogin();
+  });
 </script>
-<Carousel/>
-<div class="flex justify-center">
-  <div class="w-11/12">
-    <CardScrollContainer></CardScrollContainer>
+
+{#if loginStatus}
+  <Carousel />
+  <div class="flex justify-center">
+    <div class="w-11/12">
+      <CardScrollContainer />
+    </div>
   </div>
-</div>
+{:else}
+  <UserLandingPage />
+{/if}
 
