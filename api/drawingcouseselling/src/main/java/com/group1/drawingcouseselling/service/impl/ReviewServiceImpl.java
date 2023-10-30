@@ -59,10 +59,10 @@ public class ReviewServiceImpl implements ReviewService {
                 .customer(new Customer().convertEntityToDto(result.getCustomer()))
                 .build();
     }
-
+    @Override
     public Page<ReviewDto> getReviewsInCourse(BigDecimal courseID, Integer page, Integer maxPage){
         return reviewRepository.getReviewsByCourseIDPaging(courseID,
-                PageRequest.of(page, maxPage, Sort.by("id").ascending())).map(review -> ReviewDto.builder()
+                PageRequest.of(page, maxPage, Sort.by("id").descending())).map(review -> ReviewDto.builder()
                 .id(review.getId())
                 .courseID(review.getCourse().getId())
                 .comment(review.getComment())

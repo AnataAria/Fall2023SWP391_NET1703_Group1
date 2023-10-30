@@ -28,7 +28,7 @@ public class ReviewController {
     }
     @GetMapping(value= "/reviews")
     public ResponseEntity<Page<ReviewDto>> getReviewsInCourse(@RequestParam(value = "courseID") BigDecimal courseID,
-                                                              @RequestParam(value = "page", defaultValue = "1") Integer page,
+                                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
                                                               @RequestParam(value = "maxPage", defaultValue = "5") Integer maxPage){
         return ResponseEntity.ok(reviewService.getReviewsInCourse(courseID, page, maxPage));
     }
