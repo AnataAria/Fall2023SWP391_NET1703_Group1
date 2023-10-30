@@ -112,4 +112,41 @@ type AccountPagination = {
       empty: boolean;
     };
     empty: boolean;
+};
+
+type Customer = {
+  customerID: number;
+  fullName: string;
+  birthDate: Date;
+  gender: number;
+  email: string;
+  joinDate: Date;
+};
+
+export type Review = {
+    id: number;
+ comment: string;
+  feedbackDate: Date;
+  updateDate: Date;
+  rating: number;
+  courseID: number;
+  customer: Customer;
+}
+  
+export type ReviewsPagination = {
+    content: Review[];
+    pageable: Pageable;
+    totalElements: number;
+    totalPages: number;
+    last: boolean;
+    numberOfElements: number;
+    first: boolean;
+    size: number;
+    number: number;
+    sort: {
+      unsorted: boolean;
+      sorted: boolean;
+      empty: boolean;
+    };
+    empty: boolean;
   };
