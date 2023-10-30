@@ -5,8 +5,19 @@
   import { GetCookie, ShowMessage, apiBaseUrl } from "../../../service";
   import SectionBar from "../../SectionBar.svelte";
   let course = $page.params.id;
-  import type { CourseMinDetail } from "../../../lib/types";
-  import { Button, Rating } from "flowbite-svelte";
+  import type {
+    CourseMinDetail,
+    Review,
+    ReviewsPagination,
+  } from "../../../lib/types";
+  import {
+    Button,
+    Pagination,
+    PaginationItem,
+    Rating,
+    RatingComment,
+  } from "flowbite-svelte";
+  import { ArrowLeftOutline, ArrowRightOutline } from "flowbite-svelte-icons";
   // export let id;
   let isBought: boolean = false;
   async function isCourseBought() {
@@ -37,7 +48,7 @@
     instructorName: "",
   };
   let datain: CourseMinDetail = [];
-  let rating:number = 5;
+  let rating: number = 5;
 
   async function handleGetCourse() {
     try {
@@ -49,7 +60,11 @@
           datain = response.data;
           console.log(datain);
         });
-        await axios.get(apiBaseUrl + `review/rating?courseID=${course}`).then((response) => {if(response.status === 200) rating = response.data})
+      await axios
+        .get(apiBaseUrl + `review/rating?courseID=${course}`)
+        .then((response) => {
+          if (response.status === 200) rating = response.data;
+        });
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +80,7 @@
     }
     try {
       await axios
-        .get(`http://localhost:9090/api/v1/cart?courseID=${course}`, {
+        .get(apiBaseUrl + `cart?courseID=${course}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwtToken}`,
@@ -84,8 +99,7 @@
       }
       if (error.response.status === 405) {
         ShowMessage("Cart Already In Cart List", 3000, 1, 1);
-      }
-      else{
+      } else {
         ShowMessage("Internal error, please try again!", 3000, 1, 1);
       }
       // showErrMessage("Add Cart Failed");
@@ -94,10 +108,101 @@
   onMount(() => {
     isCourseBought();
     handleGetCourse();
+    getCourseComment(0, 5);
     setTimeout(() => {
       On();
     }, 1000);
   });
+
+  let reviewPagination: ReviewsPagination = {
+    content: [],
+    pageable: {
+      pageNumber: 0,
+      pageSize: 0,
+      sort: {
+        unsorted: false,
+        sorted: false,
+        empty: false,
+      },
+      offset: 0,
+      unpaged: false,
+      paged: false,
+    },
+    totalElements: 0,
+    totalPages: 0,
+    last: false,
+    numberOfElements: 0,
+    first: false,
+    size: 0,
+    number: 0,
+    sort: {
+      unsorted: false,
+      sorted: false,
+      empty: false,
+    },
+    empty: true,
+  };
+  async function getCourseComment(page: number, maxPage: number) {
+    try {
+      await axios
+        .get(
+          apiBaseUrl +
+            `reviews?courseID=${course}&maxPage=${maxPage}&page=${page}`
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            reviewPagination = response.data;
+            console.log(reviewPagination);
+          }
+        });
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+  function createComment(reviewComment: Review) {
+    return (comment = {
+      id: reviewComment.id,
+      user: {
+        name: reviewComment.customer.fullName,
+        img: {
+          src: reviewComment.customer.fullName,
+          alt: reviewComment.customer.fullName,
+        },
+      },
+      total: 5,
+      rating: reviewComment.rating,
+      heading: "",
+      address: "Udemy",
+      datetime: reviewComment.feedbackDate,
+    });
+  }
+  let comment = {
+    id: "1",
+    user: {
+      name: "Jese Leos",
+      img: {
+        src: "/images/profile-picture-2.webp",
+        alt: "Jese Leos",
+      },
+    },
+    total: 5,
+    rating: 4.5,
+    heading: "Thinking to buy another one!",
+    address: "the UK",
+    datetime: "2022-03-25",
+  };
+  const previous = () => {
+    getCourseComment(
+      reviewPagination.pageable.pageNumber - 1,
+      reviewPagination.pageable.pageSize
+    );
+  };
+  const next = () => {
+    getCourseComment(
+      reviewPagination.pageable.pageNumber + 1,
+      reviewPagination.pageable.pageSize
+    );
+  };
 </script>
 
 {#if status}
@@ -120,8 +225,13 @@
             >By {datain.courseInfo.instructorName}</span
           >
           <div class="flex mb-4">
-            <Rating rating={rating}>
-              <p slot="text" class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">{ Number(rating.toFixed(1))} out of 5</p>
+            <Rating {rating}>
+              <p
+                slot="text"
+                class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400"
+              >
+                {Number(rating.toFixed(1))} out of 5
+              </p>
             </Rating>
             <!-- <span class="flex items-center">
               <svg
@@ -312,6 +422,61 @@
             <SectionBar instructorCourseList={datain.sectionList} />
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+  <section class="align-middle">
+    <div class="text-gray-700 body-font mt-3 mb-8">
+      <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
+        Reviews
+      </h1>
+    </div>
+    <div class="w-12/12 overflow-y-scroll h-96">
+      {#each reviewPagination.content as reviewItem}
+        <div class="ml-12 mt-5 mb-5">
+          <article>
+            <div class="flex items-center mb-4 space-x-4">
+              <img
+                class="w-10 h-10 rounded-full"
+                src="/docs/images/people/profile-picture-5.jpg"
+                alt=""
+              />
+              <div class="space-y-1 font-medium dark:text-white">
+                <p>
+                  {reviewItem.customer.fullName}
+                  <time
+                    datetime="2014-08-16 19:00"
+                    class="block text-sm text-gray-500 dark:text-gray-400"
+                    >Joined on {reviewItem.customer.joinDate}</time
+                  >
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center mb-1">
+              <Rating rating={reviewItem.rating} />
+            </div>
+            <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400">
+              <p>
+                Review date <time datetime="2017-03-03 19:00"
+                  >{reviewItem.feedbackDate}</time
+                >
+              </p>
+            </footer>
+            <p class="mb-2 text-gray-500 dark:text-gray-400">
+              {reviewItem.comment}
+            </p>
+          </article>
+        </div>
+      {/each}
+    </div>
+    <div class="flex justify-center w-12/12">
+      <div class="flex space-x-3">
+        {#if reviewPagination.first !== true}
+          <PaginationItem on:click={previous}>Previous</PaginationItem>
+        {/if}
+        {#if reviewPagination.last !== true}
+          <PaginationItem on:click={next}>Next</PaginationItem>
+        {/if}
       </div>
     </div>
   </section>

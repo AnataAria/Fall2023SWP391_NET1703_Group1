@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@Entity
+@Entity(name = "file_meta")
 @Table(name = "FILE_META")
 @Getter @Setter
 public class FileMeta {

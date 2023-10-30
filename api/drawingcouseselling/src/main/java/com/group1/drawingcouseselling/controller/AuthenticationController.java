@@ -35,6 +35,8 @@ public class AuthenticationController {
     public ResponseEntity<?> registerInstructor(@RequestBody InstructorRegisterDto instructorDto, HttpServletResponse response) {
         Cookie cookie = new Cookie("USER", authenticationService.registerInstructor(instructorDto).getToken());
         cookie.setMaxAge(24 * 64 * 64);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return ResponseEntity.ok(cookie);
     }
     @PostMapping("/authentication")

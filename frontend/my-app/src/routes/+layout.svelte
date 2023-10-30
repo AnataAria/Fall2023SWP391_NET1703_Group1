@@ -7,7 +7,8 @@
 <header>
   <Header />
 </header>
-<body class="flex flex-col min-h-screen mt-20 mb-10">
+
+<body class="flex flex-col min-h-screen mb-10" style="margin-top: 5em;">
   <slot />
 </body>
 <footer>

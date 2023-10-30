@@ -83,13 +83,8 @@ A web application for drawing courses selling
 
 ---
 
-## ERD Logical
-
- <img src="./document/ERD.drawio.png">
-
----
-
 ## Others
 
 [Group Documentation](https://app.clickup.com/9008224118/v/dc/8cex5vp-25)
+
 [Document Template](https://drive.google.com/drive/u/1/folders/16Ohopwoo5iYcDEZZMm1BuJ8TW8g0rQw9https://drive.google.com/drive/u/1/folders/16Ohopwoo5iYcDEZZMm1BuJ8TW8g0rQw9)

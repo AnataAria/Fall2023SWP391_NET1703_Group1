@@ -19,7 +19,7 @@
   export let instructorCourseList: SectionMinDetail[];
 </script>
 
-<div class="flex justify-center">
+<div class="overflow-y-auto overflow-x-hidden h-64">
   <Sidebar class="w-full">
     {#each instructorCourseList as item}
       <SidebarWrapper>
