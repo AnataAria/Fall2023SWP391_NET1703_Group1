@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -23,8 +24,8 @@ public class CustomerServiceImpl implements CustomerService {
         this.accountService = accountService;
     }
     @Override
-    public Optional<Customer> searchCustomerByID(Long customerID) {
-        return Optional.empty();
+    public Optional<Customer> searchCustomerByID(BigDecimal customerID) {
+        return customerRepository.findById(customerID);
     }
 
     @Override

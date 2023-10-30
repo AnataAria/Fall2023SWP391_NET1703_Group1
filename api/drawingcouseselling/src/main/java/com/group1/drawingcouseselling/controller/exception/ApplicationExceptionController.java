@@ -99,4 +99,10 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> entityNotFoundException(EntityNotFoundException exception){
         return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
     }
+
+    @ExceptionHandler(ConditionNotMetException.class)
+    @ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+    public ResponseEntity<?> conditionNotMetException(ConditionNotMetException exception){
+        return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
+    }
 }

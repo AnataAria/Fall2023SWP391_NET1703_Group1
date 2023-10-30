@@ -1,3 +1,21 @@
+<script lang="ts">
+  import axios from "axios";
+  import { apiBaseUrl } from "../service";
+
+    export let courseID:number;
+    async function GetCourseNotActiveList(){
+        try{
+            axios.get(apiBaseUrl + 'courses/').then((response) => {
+                if(response.status === 200){
+                    
+                }
+            })
+        }catch(e){
+
+        }
+    }
+</script>
+
 <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
     <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div class="flex justify-between">
@@ -26,7 +44,7 @@
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Description</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Duration</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Status</th>
-                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">InstructorName</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Instructor Name</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider text-center">Actions</th>
                 </tr>
             </thead>
@@ -54,7 +72,9 @@
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">DungeonDefense</td>
                         <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                            <button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">View Details</button>
+                            <button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none" on:click={() =>{
+                                window.location.href = "/staff/browsecourses/course-demo?courseID=?"
+                            }}>View Details</button>
                             <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
                                 Accept
                             </button>

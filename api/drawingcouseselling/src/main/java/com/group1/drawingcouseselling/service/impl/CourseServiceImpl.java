@@ -27,14 +27,23 @@ public class CourseServiceImpl implements CourseService {
     private final SectionService sectionService;
     private final MyLearningService myLearningService;
     private final CourseContentCompletionService courseContentCompletionService;
+    private final CertificateService certificateService;
     @Autowired
-    public CourseServiceImpl(CourseRepository courseRepository, InstructorRepository instructorRepository, InstructorService instructorService, @Lazy SectionService sectionService, MyLearningService myLearningService, @Lazy CourseContentCompletionService courseContentCompletionService) {
+    public CourseServiceImpl(CourseRepository courseRepository,
+                             InstructorRepository instructorRepository,
+                             InstructorService instructorService,
+                             @Lazy SectionService sectionService,
+                             MyLearningService myLearningService,
+                             @Lazy CourseContentCompletionService courseContentCompletionService,
+                             @Lazy CertificateService certificateService
+    ) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.instructorService = instructorService;
         this.sectionService = sectionService;
         this.myLearningService = myLearningService;
         this.courseContentCompletionService = courseContentCompletionService;
+        this.certificateService = certificateService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
@@ -172,6 +181,8 @@ public class CourseServiceImpl implements CourseService {
             allCourseContentList.addAll(temp.lessons());
         }
         int size = courseContentCompletionService.getTotalCourseContentLearnedOnCourse(customerID,courseID);
+        var percent = allCourseContentList.isEmpty() ? 0.0 : size * 100 / allCourseContentList.size();
+        if (percent == 100.0) certificateService.createCertificate(customerID,courseID);
         return allCourseContentList.isEmpty() ? 0.0 : size * 100.00 / allCourseContentList.size();
     }
 }

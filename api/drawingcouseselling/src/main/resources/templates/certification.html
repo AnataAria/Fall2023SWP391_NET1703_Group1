@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>PDF Template</title>
+    <style>
+        @page {
+            size: 29.7cm 42cm;
+            margin: 1cm;
+        }
+
+
+        body {
+            width: 100%; /* Ensure content stretches to the page width */
+            height: 100%; /* Ensure content stretches to the page height */
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<div
+        style="
+        position: relative;
+        height: calc(210mm - 1px);
+        width: 297mm;
+        margin: 0px;
+        padding: 0px;
+      "
+>
+    <img
+            style="height: 100%; width: 100%"
+            src="https://apitemplateio.s3.ap-southeast-1.amazonaws.com/default-template-preview/cert_bg.png"
+    />
+
+    <img
+            style="
+          position: absolute;
+          top: 70px;
+          left: 500px;
+          width: 80px;
+          font-size: 20px;
+          font-family: Lato;
+          text-align: center;
+        "
+            src="https://apitemplateio-user.s3-ap-southeast-1.amazonaws.com/1/634/04a1481c-97e2-4c3b-b3c8-90646097adef.png"
+    />
+
+    <span
+            style="
+          position: absolute;
+          top: 70px;
+          left: 450px;
+          width: 600px;
+          font-size: 50px;
+          font-family: Lato;
+          text-align: center;
+        "
+    >
+        APITemplate.io
+      </span>
+
+    <table
+            style="
+          position: absolute;
+          top: 200px;
+          left: 410px;
+          width: 600px;
+          font-family: Staatliches;
+          text-align: center;
+        "
+    >
+        <tr>
+            <td style="font-size: 40px" th:text="${name}"></td>
+        </tr>
+        <tr>
+            <td style="font-size: 20px" th:text="${text1}"></td>
+        </tr>
+        <tr>
+            <td
+                    style="font-size: 40px; padding: 30px 20px"
+                    th:text="${course_name}"
+            ></td>
+        </tr>
+        <tr>
+            <td style="font-size: 20px" th:text="${text2}"></td>
+        </tr>
+    </table>
+
+    <img
+            style="
+          position: absolute;
+          top: 500px;
+          left: 470px;
+          width: 180px;
+          font-size: 20px;
+          font-family: Anton;
+          text-align: center;
+        "
+            src="https://apitemplateio-user.s3-ap-southeast-1.amazonaws.com/1/20/ce8988bc-dab7-4a0d-a368-0f6997396139.png"
+    />
+
+    <img
+            style="
+          position: absolute;
+          top: 500px;
+          left: 780px;
+          width: 180px;
+          font-size: 20px;
+          font-family: Anton;
+          text-align: center;
+        "
+            src="https://apitemplateio-user.s3-ap-southeast-1.amazonaws.com/1/20/ce8988bc-dab7-4a0d-a368-0f6997396139.png"
+    />
+
+    <span
+            style="
+          position: absolute;
+          top: 600px;
+          left: 400px;
+          width: 300px;
+          font-size: 20px;
+          font-family: Lato;
+          text-align: center;
+        "
+    >
+        <span th:text="${director}"></span><br />
+        Instructor
+      </span>
+    <span
+            style="
+          position: absolute;
+          top: 600px;
+          left: 720px;
+          width: 300px;
+          font-size: 20px;
+          font-family: Lato;
+          text-align: center;
+        "
+    >
+        <span th:text="${manager}"></span><br />
+        Ademy CEO
+      </span>
+</div>
+</body>
+</html>

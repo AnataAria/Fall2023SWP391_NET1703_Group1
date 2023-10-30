@@ -24,6 +24,10 @@ public class Centificate {
     @Column(name = "lecture_name")
     private String lectureName;
 
+    @OneToOne(targetEntity = FileMeta.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+    @JoinColumn(name = "file_location")
+    private FileMeta fileLocation;
+
     public BigDecimal getId() {
         return id;
     }
@@ -70,5 +74,13 @@ public class Centificate {
 
     public void setLectureName(String lectureName) {
         this.lectureName = lectureName;
+    }
+
+    public FileMeta getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(FileMeta fileLocation) {
+        this.fileLocation = fileLocation;
     }
 }

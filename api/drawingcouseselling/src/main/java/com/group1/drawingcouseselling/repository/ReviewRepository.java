@@ -1,6 +1,8 @@
 package com.group1.drawingcouseselling.repository;
 
 import com.group1.drawingcouseselling.model.entity.Review;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +19,9 @@ public interface ReviewRepository extends JpaRepository<Review, BigDecimal> {
     public BigDecimal countAllByCourseId(@Param(value = "courseID") BigDecimal courseID);
     @Query("SELECT AVG(r.rating) FROM review r WHERE r.course.id = :courseID")
     public Double averageRatingOfCourse(@Param(value = "courseID") BigDecimal courseID);
+
+    @Query(value = "SELECT r FROM review r WHERE r.course.id = :courseID" ,
+            countQuery = "SELECT COUNT(r) FROM review r WHERE r.course.id = :courseID"
+    )
+    public Page<Review> getReviewsByCourseIDPaging(@Param(value = "courseID") BigDecimal courseID, Pageable pageable);
 }
