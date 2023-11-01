@@ -181,8 +181,8 @@ public class CourseServiceImpl implements CourseService {
             allCourseContentList.addAll(temp.lessons());
         }
         int size = courseContentCompletionService.getTotalCourseContentLearnedOnCourse(customerID,courseID);
-        var percent = allCourseContentList.isEmpty() ? 0.0 : size * 100 / allCourseContentList.size();
+        var percent = allCourseContentList.isEmpty() ? 0.0 : size * 100.00 / allCourseContentList.size();
         if (percent == 100.0) certificateService.createCertificate(customerID,courseID);
-        return allCourseContentList.isEmpty() ? 0.0 : size * 100.00 / allCourseContentList.size();
+        return percent;
     }
 }

@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.enums.ECertificateFileStatus;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -7,49 +8,32 @@ import java.sql.Date;
 
 @Entity(name = "certification")
 public class Centificate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", columnDefinition = "bigint")
-    private BigDecimal id;
-    @ManyToOne(targetEntity = Customer.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-    @ManyToOne(targetEntity = Course.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
+    @EmbeddedId
+    private CertificationKey id;
     @Column(name = "recieve_date", nullable = false)
     private Date recieveDate;
-    @Column(name = "path", nullable = true)
-    private String cetificatePath;
     @Column(name = "lecture_name")
     private String lectureName;
-
     @OneToOne(targetEntity = FileMeta.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "file_location")
     private FileMeta fileLocation;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "certificate_file_status")
+    private ECertificateFileStatus certificateFileStatus;
 
-    public BigDecimal getId() {
+    @PrePersist
+    @PreUpdate
+    private void updateCertificateFileStatus(){
+        if(fileLocation == null) certificateFileStatus = ECertificateFileStatus.CREATED;
+        else if(certificateFileStatus == ECertificateFileStatus.UPDATING) certificateFileStatus = ECertificateFileStatus.UPDATED;
+    }
+
+    public CertificationKey getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(CertificationKey id) {
         this.id = id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public Date getRecieveDate() {
@@ -60,13 +44,6 @@ public class Centificate {
         this.recieveDate = recieveDate;
     }
 
-    public String getCetificatePath() {
-        return cetificatePath;
-    }
-
-    public void setCetificatePath(String cetificatePath) {
-        this.cetificatePath = cetificatePath;
-    }
 
     public String getLectureName() {
         return lectureName;
@@ -82,5 +59,13 @@ public class Centificate {
 
     public void setFileLocation(FileMeta fileLocation) {
         this.fileLocation = fileLocation;
+    }
+
+    public ECertificateFileStatus getCertificateFileStatus() {
+        return certificateFileStatus;
+    }
+
+    public void setCertificateFileStatus(ECertificateFileStatus certificateFileStatus) {
+        this.certificateFileStatus = certificateFileStatus;
     }
 }
