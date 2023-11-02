@@ -147,6 +147,9 @@ function kickBackToLandingPage() {
                   <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                       Already have an account? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                   </p>
+                  <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                    Want to be an instructor? <a href="/teaching" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Click here</a>
+                  </p>
                 </div>
           </div>
       </div>
