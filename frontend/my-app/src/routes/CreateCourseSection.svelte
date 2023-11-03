@@ -17,6 +17,7 @@
         DisableSubmitButton,
         EnableSubmitButton,
         GetCookie,
+        ShowMessage,
         apiBaseUrl,
     } from "../service";
     import axios, { AxiosError, type AxiosResponse } from "axios";
@@ -76,13 +77,14 @@
                         sectionList.push(data);
                         EnableSubmitButton();
                         formModal = false;
+                        window.location.reload();
                     }, 1500);
-                    console.log("Success");
+                    showMessage("Success");
                 }
             })
             .catch((error: AxiosError) => {
                 EnableSubmitButton();
-                showErrMessage("There are some errors, please try again!");
+                showErrMessage(`Error code: ${error.response?.status}, please try again!`);
                 console.log(error);
             });
     }
@@ -101,13 +103,14 @@
                         // window.location.href = "/";
                         EnableSubmitButton();
                         formModal = false;
+                        window.location.reload();
                     }, 1500);
-                    console.log("Create course content success!");
+                    showMessage("Create course content success!");
                 }
             })
             .catch((error: AxiosError) => {
                 EnableSubmitButton();
-                showErrMessage("There are some errors, please try again!");
+                showErrMessage(`Error code: ${error.response?.status}, please try again!`);
                 console.log(error);
             });
     }

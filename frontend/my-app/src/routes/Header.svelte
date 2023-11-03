@@ -56,7 +56,7 @@
   });
   let jwtData = {
     email: "",
-    roles: "",
+    role: "",
     createDate:"",
     isActive:false
   }
@@ -76,6 +76,7 @@
       if(res.status === 200){
         jwtData = res.data;
         console.log(jwtData);
+        console.log(jwtData.role);
       }
     });
   }
@@ -123,9 +124,15 @@
             >{jwtData.email}</span
           >
         </DropdownHeader>
+        {#if jwtData.role === "INSTRUCTOR"}
+        <DropdownItem on:click={()=>{
+          window.location.href = "/instructor";
+        }}>Profile</DropdownItem>
+        {:else}
         <DropdownItem on:click={()=>{
           window.location.href = "/profile";
         }}>Profile</DropdownItem>
+        {/if}        
         <DropdownItem>Settings</DropdownItem>
         <DropdownItem>Earnings</DropdownItem>
         <DropdownItem on:click={()=>{
