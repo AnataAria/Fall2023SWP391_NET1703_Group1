@@ -35,6 +35,7 @@
     let open = true;
     let counter = 6;
     let message = "";
+    let termChecked: boolean = false;
     function showMessage(value: string) {
         message = "";
         errorMsg = "";
@@ -60,7 +61,7 @@
         fullName: "",
         password: "",
         specialization: "",
-        phone: "",
+        phone: 1,
     };
 
     let loginForm = {
@@ -77,7 +78,8 @@
             !registerForm.password ||
             !registerForm.specialization || 
             !registerForm.phone ||
-            !registerForm.fullName
+            !registerForm.fullName ||
+            !termChecked
         ) {
             showErrMessage("Required field cannot be empty");
             status = false;
@@ -88,6 +90,10 @@
         }
         if(!emailRegex.test(registerForm.email)){
             showErrMessage("Email is not in correct format");
+            status = false;
+        }
+        if(!isPhoneNumberValid(registerForm.phone)){
+            showErrMessage("Phone number is not in correct format");
             status = false;
         }
         let res = null;
@@ -170,6 +176,17 @@
             }
         }
         return null; // Cookie not found
+    }
+
+    function isPhoneNumberValid(inputElement: any): boolean {
+    // Regular expression for a basic phone number pattern (adjust as needed)
+    const phoneNumberPattern = /^\d{10}$/;
+
+    // Get the value from the input field
+    const phoneNumber = inputElement;
+
+    // Check if the value matches the phone number pattern
+    return phoneNumberPattern.test(phoneNumber);
     }
 
     onMount(() => {
@@ -366,7 +383,7 @@
                         >Confirm password <pc style="color: red;">*</pc></label
                     >
                     <input
-                        type="confirm-password"
+                        type="password"
                         name="confirm-password"
                         id="confirm-password"
                         placeholder="••••••••"
@@ -383,6 +400,7 @@
                             type="checkbox"
                             class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                             required
+                            bind:checked={termChecked}
                         />
                     </div>
                     <div class="ml-3 text-sm">
