@@ -1,0 +1,1 @@
+export let NOT_FOUND = 404;
