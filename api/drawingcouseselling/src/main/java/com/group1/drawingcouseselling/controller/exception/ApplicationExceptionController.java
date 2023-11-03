@@ -105,4 +105,9 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> conditionNotMetException(ConditionNotMetException exception){
         return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
     }
+
+    @ExceptionHandler(CourseContentExistedInsideSection.class)
+    public ResponseEntity<?> CourseContentExistedInsideSection(CourseContentExistedInsideSection exception){
+        return new ResponseEntity<>(exception.getErrorMessage(), exception.getErrorMessage().getStatus());
+    }
 }

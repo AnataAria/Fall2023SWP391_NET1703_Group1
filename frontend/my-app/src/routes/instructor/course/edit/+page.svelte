@@ -224,8 +224,11 @@
         if(error.response?.status === 404){
           ShowMessage("Please select a section to delete", 3000, 1, 1);
         }
-        if(error.response?.status === 500){
+        if(error.response?.status === 409){
           ShowMessage("There are more than 1 course content existing in this section", 3000, 1, 1);
+        }
+        else{
+          ShowMessage(`Error code: ${error.response?.status}`, 3000, 1, 1);
         }
       });
   }
