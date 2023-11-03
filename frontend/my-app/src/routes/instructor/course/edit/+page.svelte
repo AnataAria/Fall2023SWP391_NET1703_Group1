@@ -51,7 +51,7 @@
   import type { LayoutData } from "../../../$types";
   import { ExclamationCircleOutline } from "flowbite-svelte-icons";
   import axios, { AxiosError, type AxiosResponse } from "axios";
-  import { GetCookie, apiBaseUrl } from "../../../../service";
+  import { GetCookie, ShowMessage, apiBaseUrl } from "../../../../service";
   import type {
     Course,
     CourseAllInfo,
@@ -215,12 +215,18 @@
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          window.alert("Delete successfully!");
+          ShowMessage("Delete successfully!", 3000, 2, 1);
           window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
         console.log(error);
+        if(error.response?.status === 404){
+          ShowMessage("Please select a section to delete", 3000, 1, 1);
+        }
+        if(error.response?.status === 500){
+          ShowMessage("There are more than 1 course content existing in this section", 3000, 1, 1);
+        }
       });
   }
   async function DeleteCourseContent() {
@@ -237,12 +243,14 @@
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          window.alert("Delete successfully!");
+          ShowMessage("Delete successfully!", 3000, 2, 1);
           window.location.reload();
         }
       })
       .catch((error: AxiosError) => {
         console.log(error);
+        ShowMessage(`Error code: ${error.response?.status}`, 3000, 2, 1);
+
       });
   }
   function fetchValue() {
