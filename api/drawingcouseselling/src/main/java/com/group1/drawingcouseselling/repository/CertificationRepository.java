@@ -19,4 +19,5 @@ public interface CertificationRepository extends JpaRepository<Centificate, Cert
             "OR c.certificateFileStatus = :secondCondition")
     public Collection<Centificate> getCertificateByCertificateFileStatus(@Param(value = "firstCondition") ECertificateFileStatus firstCondition,
                                                                          @Param(value = "secondCondition") ECertificateFileStatus secondCondition);
+
 }

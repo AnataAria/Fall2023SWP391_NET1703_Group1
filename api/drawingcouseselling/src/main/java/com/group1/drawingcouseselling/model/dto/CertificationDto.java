@@ -11,5 +11,5 @@ public record CertificationDto(BigDecimal id,
                                String lectureName,
                                Date recieveDate,
                                CourseDto courseID,
-                               byte[] certificatePdf) {
+                               String path) {
 }

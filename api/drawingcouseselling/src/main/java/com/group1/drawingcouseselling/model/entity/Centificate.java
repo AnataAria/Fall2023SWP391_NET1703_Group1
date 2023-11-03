@@ -24,7 +24,7 @@ public class Centificate {
     @PrePersist
     @PreUpdate
     private void updateCertificateFileStatus(){
-        if(fileLocation == null) certificateFileStatus = ECertificateFileStatus.CREATED;
+        if(fileLocation == null) certificateFileStatus = ECertificateFileStatus.NOT_CREATED;
         else if(certificateFileStatus == ECertificateFileStatus.UPDATING) certificateFileStatus = ECertificateFileStatus.UPDATED;
     }
 

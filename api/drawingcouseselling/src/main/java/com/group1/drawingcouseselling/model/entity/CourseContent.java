@@ -1,6 +1,7 @@
 package com.group1.drawingcouseselling.model.entity;
 
 import com.group1.drawingcouseselling.model.dto.CourseContentDto;
+import com.group1.drawingcouseselling.model.enums.ECourseContentType;
 import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 
@@ -23,6 +24,8 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     private String description;
     @Column(name="video_link", nullable = false, updatable = true)
     private String videoLink;
+    @Enumerated(EnumType.STRING)
+    private ECourseContentType courseContentType;
     @Column(name = "create_date", nullable = false)
     private Date createDate;
     @Column(name="updated_date")
@@ -35,6 +38,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     private void createCreateDate(){
         this.createDate = Date.valueOf(LocalDate.now());
     }
+
 
     public BigDecimal getId() {
         return id;

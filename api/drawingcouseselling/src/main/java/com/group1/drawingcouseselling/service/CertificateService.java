@@ -13,4 +13,5 @@ public interface CertificateService {
     public void createCertificate(BigDecimal customerID, BigDecimal courseID);
     public MultipartFile getCertificate(String customerEmail, BigDecimal courseID);
     public List<CertificationDto> getAllCertificatesListOfCustomer(String customerEmail);
+    public byte[] getCertificateFileByCertificateID(BigDecimal courseID, BigDecimal customerID);
 }
