@@ -30,6 +30,7 @@
     videoLink: "",
     createDate: new Date(),
   };
+  let currentCourseContentStatus: boolean = false;
   let jwt: string | null;
   async function GetAllCourseInfo() {
     if (jwt != null) {
@@ -57,6 +58,28 @@
   function On() {
     status = true;
   }
+  async function CheckCourseContentCompleted() {
+    try {
+      let id: number = currenCourseContent.id;
+      await axios
+        .get(
+          apiBaseUrl +
+            `course-content-completion/course-content?courseID=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            currentCourseContentStatus = response.data;
+          }
+        });
+    } catch (e) {
+      console.log(currentCourseContentStatus);
+    }
+  }
   async function MarkCompleted() {
     if (jwt != null) {
       try {
@@ -72,10 +95,11 @@
           )
           .then((response) => {
             if (response.status === 200) {
-              setTimeout(() => {
-                courseInfo = response.data;
-                console.log(courseInfo);
-              }, 1000);
+              console.log(courseInfo);
+              currentCourseContentStatus = true;
+              // setTimeout(() => {
+              //   console.log(courseInfo);
+              // }, 1000);
             }
           });
       } catch (e) {}
@@ -86,7 +110,15 @@
   onMount(() => {
     jwt = GetCookie("USER");
     GetAllCourseInfo();
+
     setTimeout(() => {
+      if (courseInfo.sections.length > 0) {
+        var sectionList: SectionDetail = courseInfo.sections[0];
+        if (sectionList.lessons.length > 0) {
+          currenCourseContent = sectionList.lessons[0];
+          CheckCourseContentCompleted();
+        }
+      }
       On();
     }, 3000);
   });
@@ -112,14 +144,17 @@
             <Fileupload />
           </div>
           <div class="col-span-2 flex flex-row-reverse mr-20">
-            <Button
-              outline
-              color="red"
-              on:click={() => {
-                MarkCompleted();
-              }}>Mark As Completed</Button
-            >
-            <Button outline color="green">Completed</Button>
+            {#if currentCourseContentStatus}
+              <Button outline color="green">Completed</Button>
+            {:else}
+              <Button
+                outline
+                color="red"
+                on:click={() => {
+                  MarkCompleted();
+                }}>Mark As Completed</Button
+              >
+            {/if}
           </div>
         </div>
         <div class="text-2xl font-bold my-8">{currenCourseContent.title}</div>
@@ -581,6 +616,7 @@
                       activeClass=""
                       on:click={() => {
                         currenCourseContent = content;
+                        CheckCourseContentCompleted();
                       }}
                     >
                       <svelte:fragment>
