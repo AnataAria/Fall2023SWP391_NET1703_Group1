@@ -20,7 +20,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
     private Section section;
     @Column(name="title", nullable = false, updatable = true)
     private String title;
-    @Column(name="description", nullable = false, updatable = true)
+    @Column(name="description", nullable = false, updatable = true, columnDefinition = "text")
     private String description;
     @Column(name="video_link", nullable = false, updatable = true)
     private String videoLink;
