@@ -5,8 +5,9 @@
   axios.defaults.withCredentials = true;
   import Toastify from "toastify-js";
   import "toastify-js/src/toastify.css";
-  import { DisableSubmitButton, EnableSubmitButton, apiBaseUrl } from "../../service";
+  import { DisableSubmitButton, EnableSubmitButton, ShowMessage, apiBaseUrl } from "../../service";
     import { Button, Spinner } from "flowbite-svelte";
+    import ToastShowMessage from "../../templates/ToastShowMessage.svelte";
   let registerForm = {
     email: "",
     fullname: "",
@@ -54,7 +55,7 @@
   async function handleLogin() {
     let status = true;
     if (!loginForm.email || !loginForm.password) {
-      errorMsg = "Email or password cannot empty";
+      ShowMessage("Email or password cannot empty", 3000, 1, 1);
       status = false;
     }
     if (status) {
@@ -66,10 +67,17 @@
             if (response.status === 200) {
               EnableSubmitButton();
               window.location.href = "/";
+              ShowMessage("Login successfully!", 3000, 2, 1);
             }
           });
       } catch (err) {
         EnableSubmitButton();
+        if(err.response.status === 404){
+          ShowMessage("Username or password is not correct!", 3000, 1, 1);
+        }
+        else{
+          ShowMessage("Internal error, please try again!", 3000, 1, 1);
+        }
       }
     }
   }

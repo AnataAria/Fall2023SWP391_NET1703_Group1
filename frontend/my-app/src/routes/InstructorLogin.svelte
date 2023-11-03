@@ -281,6 +281,7 @@
                 >
                     Sign up to join our platform
                 </h3>
+                <span>For Instructor</span>
                 <div>
                     <label
                         for="fullname"
