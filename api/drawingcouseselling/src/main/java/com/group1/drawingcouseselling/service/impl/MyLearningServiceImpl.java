@@ -64,7 +64,7 @@ public class MyLearningServiceImpl implements MyLearningService {
         Map<BigDecimal,Course> userCourse = customerRepository.
                 searchCustomerByAccountEmail(email).getCourseList()
                 .stream().parallel().collect(Collectors.toMap(Course::getId, Function.identity()));
-        return userCourse.isEmpty() || userCourse.containsKey(courseID);
+        return userCourse.containsKey(courseID);
     }
     @Override
     public Boolean checkSomeoneLearningCourse(BigDecimal courseID){

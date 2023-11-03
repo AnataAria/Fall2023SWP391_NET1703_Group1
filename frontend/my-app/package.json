@@ -43,6 +43,7 @@
     "framework7-svelte": "^8.3.0",
     "i": "^0.3.7",
     "js-cookie": "^3.0.5",
+    "pdfjs-dist": "^3.11.174",
     "save-dev": "^0.0.1-security",
     "svelte-routing": "^2.4.0",
     "swiper": "^10.3.0",
