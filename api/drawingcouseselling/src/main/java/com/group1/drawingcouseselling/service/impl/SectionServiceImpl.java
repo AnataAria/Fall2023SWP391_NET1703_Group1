@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.service.impl;
 
+import com.group1.drawingcouseselling.exception.CourseContentExistedInsideSection;
 import com.group1.drawingcouseselling.exception.CourseNotFoundException;
 import com.group1.drawingcouseselling.exception.InstructorNotPermissonToEditException;
 import com.group1.drawingcouseselling.exception.UserNotFoundException;
@@ -7,6 +8,7 @@ import com.group1.drawingcouseselling.model.dto.CourseContentDto;
 import com.group1.drawingcouseselling.model.dto.SectionDefaultInfo;
 import com.group1.drawingcouseselling.model.dto.SectionDetailDto;
 import com.group1.drawingcouseselling.model.dto.SectionDto;
+import com.group1.drawingcouseselling.model.entity.CourseContent;
 import com.group1.drawingcouseselling.model.entity.Section;
 import com.group1.drawingcouseselling.repository.SectionRepository;
 import com.group1.drawingcouseselling.service.CourseContentService;
@@ -101,7 +103,7 @@ public class SectionServiceImpl implements SectionService {
         if(instructor == null) throw new UserNotFoundException("This instructor does not exist");
         var deletedSection = sectionRepository.findById(id).orElseThrow(() -> new CourseNotFoundException("This section is not found"));
         if(!Objects.equals(deletedSection.getCourse().getInstuctor().getId(), instructor.getId())) throw new InstructorNotPermissonToEditException("Only instructor create that can delete");
-        if(!courseContentService.getCourseContentDtoOfSection(deletedSection.getId()).isEmpty()) throw new CourseNotFoundException("");
+        if(!courseContentService.getCourseContentDtoOfSection(deletedSection.getId()).isEmpty()) throw new CourseContentExistedInsideSection("There are more than 1 course content existing inside this section");
         sectionRepository.deleteById(deletedSection.getId());
         return new Section().convertEntityToDto(deletedSection);
     }
