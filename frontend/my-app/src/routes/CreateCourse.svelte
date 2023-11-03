@@ -45,7 +45,7 @@
         .then((respone : AxiosResponse) => {
             if (respone.status === 200){
                 showMessage(course.name + " created successfully!")
-                window.location.href = "/profile/instructor"
+                window.location.href = "/instructor"
             }
         })
         .catch ((error : AxiosError) => {
