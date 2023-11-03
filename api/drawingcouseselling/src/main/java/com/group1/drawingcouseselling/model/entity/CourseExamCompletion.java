@@ -15,24 +15,25 @@ public class CourseExamCompletion {
     @ManyToOne(targetEntity = Course.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false, updatable = true)
     private Customer customer;
-    @ManyToOne(targetEntity = Exam.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = CourseContent.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "exam_id", nullable = false, updatable = false)
-    private Exam exam;
+    private CourseContent courseContent;
     @Enumerated(EnumType.STRING)
     @Column(name="status", nullable = false)
     private EExamStatus status;
     @Column(name = "score")
-    private Double score;
-    @Temporal(TemporalType.DATE)
+    private Character score;
     @Column(name="submit_date")
     private Date submitDate;
 
-    
     @PreUpdate
     private void courseExamChecked(){
         if(score != null){
-            if(score >= 5) status = EExamStatus.PASSED;
-            else status = EExamStatus.FAILED;
+            switch (score) {
+                case 'A', 'B' -> status = EExamStatus.PASSED;
+                case 'C', 'D', 'E', 'F' -> status = EExamStatus.FAILED;
+                default -> status = EExamStatus.SUBMITTED;
+            }
         }
     }
 
@@ -60,11 +61,11 @@ public class CourseExamCompletion {
         this.status = status;
     }
 
-    public Double getScore() {
+    public Character getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public void setScore(Character score) {
         this.score = score;
     }
 
@@ -74,13 +75,5 @@ public class CourseExamCompletion {
 
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
-    }
-
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
     }
 }

@@ -105,4 +105,8 @@ public class ApplicationExceptionController {
     public ResponseEntity<?> conditionNotMetException(ConditionNotMetException exception){
         return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
     }
+    @ExceptionHandler(SomethingWentWrongExceptions.class)
+    public ResponseEntity<?> somethingWentWrongException(SomethingWentWrongExceptions exception){
+        return new ResponseEntity<>(exception.getErrorMessage(),exception.getErrorMessage().getStatus());
+    }
 }

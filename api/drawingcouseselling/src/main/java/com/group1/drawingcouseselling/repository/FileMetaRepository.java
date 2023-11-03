@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FileMetaRepository extends CrudRepository<FileMeta, Integer> {
     @Query(value = "SELECT fm FROM file_meta fm WHERE fm.fileName = :fileName ORDER BY fm.imgId DESC LIMIT 1")
-    public FileMeta searchFileMetaByFileNameOrderBySerialVersionUIDDesc(@Param("fileName") String fileName);
+    public FileMeta searchFileMetaByFileName(@Param("fileName") String fileName);
 }

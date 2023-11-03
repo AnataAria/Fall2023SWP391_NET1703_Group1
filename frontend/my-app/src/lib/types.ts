@@ -149,4 +149,13 @@ export type ReviewsPagination = {
       empty: boolean;
     };
     empty: boolean;
-  };
+};
+  
+
+export type CertificationDto = {
+  id: number;
+  lectureName: string;
+  recieveDate: Date;
+  courseID: Course;
+  path: string;
+};

@@ -17,6 +17,7 @@
   import { GetCookie, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import TextEditor from "../TextEditor.svelte";
+  import LoadingOverlay from "../LoadingOverlay.svelte";
   let spanClass = "flex-1 ml-3 whitespace-nowrap";
   let postIndex = 0;
   let id = 23;
@@ -596,14 +597,7 @@
     </div>
   </div>
 {:else}
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
-  <Skeleton size="xxl" class="mt-8 mb-2.5" />
+  <LoadingOverlay />
 {/if}
 
 <style>
