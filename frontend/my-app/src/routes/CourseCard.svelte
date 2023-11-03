@@ -53,7 +53,7 @@
     }
     try {
       await axios
-        .get(apiBaseUrl +`cart?courseID=${id}`, {
+        .get(apiBaseUrl + `cart?courseID=${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${jwtToken}`,
@@ -84,12 +84,20 @@
       console.log(error);
     }
   }
-  let rating:number = 0;
-  async function getRating(){
-    await axios.get(apiBaseUrl + `review/rating?courseID=${id}`).then((response) => {if(response.status === 200) rating = response.data})
+  let rating: number;
+  async function getRating() {
+    await axios
+      .get(apiBaseUrl + `review/rating?courseID=${id}`)
+      .then((response) => {
+        if (response.status === 200) rating = response.data;
+      });
+  }
+  let status = false;
+
+  function On() {
+    status = true;
   }
   onMount(() => {
-    getRating();
     if (!isFetchManual) {
       handleGetCourse();
     } else {
@@ -101,40 +109,47 @@
         instructorName: instructorName,
         instructorID: instructorId,
       };
+      getRating();
+      console.log(rating);
     }
+    setTimeout(() => {
+      On();
+    }, 100);
   });
 </script>
 
-<Card padding="none" class="w-64 h-auto">
-  <a href="/course/{id}">
-    <img
-      class="p-11 rounded-t-sm"
-      src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c"
-      alt="product 1"
-    />
-  </a>
-  <div class="px-5 pb-5">
+{#if status}
+  <Card padding="none" class="w-64 h-auto">
     <a href="/course/{id}">
-      <h5
-        class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white whitespace-nowrap w-50 overflow-hidden truncate"
-      >
-        {course.name}
-      </h5>
+      <img
+        class="p-11 rounded-t-sm"
+        src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c"
+        alt="product 1"
+      />
     </a>
-    <a href="/instructor/{1}">
-      <h5
-        class="text-sm font-semibold tracking-tight text-gray-900 dark:text-white"
-      >
-        By {course.instructorName}
-      </h5>
-    </a>
-    <Rating rating={rating} class="mt-2.5 mb-5">
-      <Badge slot="text" class="ml-3">4</Badge>
-    </Rating>
-    <div class="flex justify-between items-center">
-      <span class="text-3xl font-bold text-gray-900 dark:text-white"
-        >{CurrencyHandler(course.price)}</span
-      >
+    <div class="px-5 pb-5">
+      <a href="/course/{id}">
+        <h5
+          class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white whitespace-nowrap w-50 overflow-hidden truncate"
+        >
+          {course.name}
+        </h5>
+      </a>
+      <a href="/instructor/{1}">
+        <h5
+          class="text-sm font-semibold tracking-tight text-gray-900 dark:text-white"
+        >
+          By {course.instructorName}
+        </h5>
+      </a>
+      <Rating {rating} class="mt-2.5 mb-5">
+        <Badge slot="text" class="ml-3">4</Badge>
+      </Rating>
+      <div class="flex justify-between items-center">
+        <span class="text-3xl font-bold text-gray-900 dark:text-white"
+          >{CurrencyHandler(course.price)}</span
+        >
+      </div>
     </div>
-  </div>
-</Card>
+  </Card>
+{/if}
