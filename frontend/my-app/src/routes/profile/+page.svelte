@@ -113,8 +113,8 @@
                 <div class="grid grid-cols-2">
                   <div class="px-4 py-2 font-semibold">Email.</div>
                   <div class="px-4 py-2">
-                    <a class="text-blue-800" href="mailto:jane@example.com"
-                      >{customerInfo.email}</a
+                    <div class="text-blue-800"
+                      >{customerInfo.email}</div
                     >
                   </div>
                 </div>
