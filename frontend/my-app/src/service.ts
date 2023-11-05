@@ -196,6 +196,14 @@ export function EnableSubmitButton() {
   (document.getElementById('loader') as HTMLElement).hidden = true;
 
 }
+export function hasUnicodeCharacters(input: string): boolean {
+  for (let i = 0; i < input.length; i++) {
+    if (input.charCodeAt(i) > 127) {
+      return true;
+    }
+  }
+  return false;
+}
 
 export async function CurrencyExchange(amount: number): Promise<number> {
   try {

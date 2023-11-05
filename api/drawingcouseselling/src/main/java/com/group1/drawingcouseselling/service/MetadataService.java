@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface MetadataService {
-    public void upload(MultipartFile file, ES3 folder) throws IOException;
+    public String upload(MultipartFile file, ES3 folder) throws IOException;
     public S3Object download (int id);
     public List<FileMeta> list();
 }

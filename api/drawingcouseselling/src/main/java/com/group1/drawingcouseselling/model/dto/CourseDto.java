@@ -17,16 +17,19 @@ public record CourseDto(BigDecimal id,
                         String description,
                         @NotBlank(message = "Duration is mandatory")
                         String durations,
+                        @NotBlank(message = "Thumbnail path is mandatory")
+                        String thumbnail_path,
                         @NotNull(message = "Instructor ID is mandatory")
                         BigDecimal instructorID,
                         @NotBlank(message = "Instructor Name is mandatory")
                         String instructorName) {
-    public CourseDto(BigDecimal id, String name, BigDecimal price, String description, String durations, BigDecimal instructorID, String instructorName) {
+    public CourseDto(BigDecimal id, String name, BigDecimal price, String description, String durations, String thumbnail_path, BigDecimal instructorID, String instructorName) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.description = description;
         this.durations = durations;
+        this.thumbnail_path = thumbnail_path;
         this.instructorID = instructorID;
         this.instructorName = instructorName;
     }
