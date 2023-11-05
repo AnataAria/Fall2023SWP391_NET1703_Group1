@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, BigDecimal> {
-    @Query(value = "SELECT c FROM course c",
+    @Query(value = "SELECT c FROM course c WHERE c.id IN ( SELECT s.course.id FROM section s JOIN course_content cc ON s.id = cc.section.id WHERE cc.section.id IS NOT NULL )",
             countQuery = "SELECT count(*) FROM course c")
     public Page<Course>getCourseOnPaging(Pageable pageable);
 
-    @Query(value = "SELECT u FROM course u WHERE u.name LIKE %:searchName%",
+    @Query(value = "SELECT u FROM course u WHERE u.name LIKE %:searchName% AND u.id IN ( SELECT s.course.id FROM section s JOIN course_content cc ON s.id = cc.section.id WHERE cc.section.id IS NOT NULL )",
             countQuery = "SELECT count(*) FROM course u WHERE u.name LIKE %:searchName%")
     public Page<Course> searchCourseByNameAndFilter(@Param(value = "searchName") String searchName, Pageable pageable);
     @Query(value = "SELECT u FROM course u WHERE u.id IN :coursesID"
