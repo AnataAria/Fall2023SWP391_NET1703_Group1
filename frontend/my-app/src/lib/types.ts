@@ -54,6 +54,7 @@ export type CourseCreate ={
     description:string;
     durations:string;
     price:number;
+    thumbnail_path:string;
 }
 
 export type SectionMinDetail = {
