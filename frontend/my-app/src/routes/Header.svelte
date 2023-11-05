@@ -83,15 +83,27 @@
         });
     }
   }
+  
 </script>
 
 <!-- ======= Header ======= -->
 <Navbar
   class="px-2 sm:px-4 py-2.5 fixed  z-20 top-0 left-0 border-b md:flex md:justify-start"
->
+> 
+  {#if jwtData.role == "Customer"|| jwtData.role == ""}
   <NavBrand href="/">
     <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
   </NavBrand>
+  {:else if jwtData.role == "STAFF"}
+  <NavBrand href="/staff">
+    <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
+  </NavBrand>
+  {:else}
+  <NavBrand href="/instructor">
+    <img src={headerImage} class="mr-3 h-6 lg:h-20" alt="Ademy Logo" />
+  </NavBrand>
+  {/if}
+  
   <div class="flex">
     <div class="hidden relative md:block">
       <div
@@ -112,9 +124,14 @@
     <NavHamburger />
   </div>
   <NavUl>
-    <NavLi href="/teaching">Assign Instructor</NavLi>
-    <NavLi href="/mylearning">My Learning</NavLi>
-    <NavLi href="/cart">Your Cart</NavLi>
+    {#if jwtData.role=="CUSTOMER"}
+      <NavLi href="/mylearning">My Learning</NavLi>
+      <NavLi href="/cart">Your Cart</NavLi>
+    {:else }
+      <NavLi href="/teaching">Assign Instructor</NavLi>
+    {/if}
+   
+
   </NavUl>
   <div class="ml-20 w-20">
     {#if status === true}
