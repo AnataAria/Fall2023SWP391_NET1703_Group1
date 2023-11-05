@@ -4,7 +4,7 @@ import { onMount } from "svelte";
 axios.defaults.withCredentials = true;
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-    import { ShowMessage, apiBaseUrl, emailRegex } from "../../service";
+    import { ShowMessage, apiBaseUrl, emailRegex, hasUnicodeCharacters } from "../../service";
 let registerForm = {
   email: "",
   fullname: "",
@@ -34,6 +34,9 @@ async function handleRegister() {
   }
   if(!emailRegex.test(registerForm.email)){
     ShowMessage("Email is not in correct format", 3000, 1, 1);
+  }
+  if(hasUnicodeCharacters(registerForm.fullname)){
+    ShowMessage("Please enter non-unicode fullname", 3000, 1, 1);
   }
   let res = null;
   if (status) {
