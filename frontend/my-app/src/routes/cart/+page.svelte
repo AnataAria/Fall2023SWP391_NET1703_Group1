@@ -19,8 +19,8 @@
     cartTotal.subtotal = cartTotal.subtotal + price;
   }
   let cartTotal= {
-    subtotal:19,
-    taxes: 2,
+    subtotal:0,
+    taxes: 0,
     shipping: 0,
     total: 0
   }
