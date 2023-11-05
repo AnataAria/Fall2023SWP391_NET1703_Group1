@@ -25,6 +25,7 @@
         ShowMessage,
         apiBaseUrl,
         emailRegex,
+        hasUnicodeCharacters,
     } from "../service";
     import { Toast } from "flowbite-svelte";
     import { CheckCircleSolid, CloseCircleSolid } from "flowbite-svelte-icons";
@@ -94,6 +95,10 @@
         }
         if(!isPhoneNumberValid(registerForm.phone)){
             showErrMessage("Phone number is not in correct format");
+            status = false;
+        }
+        if(hasUnicodeCharacters(registerForm.fullName)){
+            ShowMessage("Please enter non-unicode fullname", 3000, 1, 1);
             status = false;
         }
         let res = null;
