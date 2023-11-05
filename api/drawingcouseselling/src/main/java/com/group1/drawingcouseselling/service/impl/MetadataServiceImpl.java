@@ -28,7 +28,7 @@ public class MetadataServiceImpl implements MetadataService {
     private String bucketName;
 
     @Override
-    public void upload(MultipartFile file, ES3 folder) throws IOException {
+    public String upload(MultipartFile file, ES3 folder) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
         }
@@ -47,6 +47,7 @@ public class MetadataServiceImpl implements MetadataService {
 
         //Saving metadata to DB
         fileMetaRepository.save(new FileMeta(fileName, path, putObjectResult.getMetadata().getVersionId()));
+        return fileName.trim();
     }
 
     @Override

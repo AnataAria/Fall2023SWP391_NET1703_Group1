@@ -5,7 +5,6 @@ import com.group1.drawingcouseselling.service.MetadataService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +18,10 @@ public class ImageController {
     private MetadataService metadataService;
 
     @PostMapping("/upload/image")
-    public ResponseEntity<?> uploadImage(
+    public ResponseEntity<String> uploadImage(
             @RequestParam("file") MultipartFile file) throws IOException {
-        metadataService.upload(file, ES3.images);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("https://ademyimage.s3.ap-southeast-1.amazonaws.com/images/" + metadataService.upload(file, ES3.images),
+                                    HttpStatus.CREATED);
     }
 
     @PostMapping("/upload/certification")
@@ -31,6 +30,7 @@ public class ImageController {
         metadataService.upload(file, ES3.certification);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PostMapping("/upload/avatar")
     public ResponseEntity<?> uploadAvatar(
             @RequestParam("file") MultipartFile file) throws IOException {
