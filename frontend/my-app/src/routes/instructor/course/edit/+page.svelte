@@ -170,14 +170,22 @@
   async function ChangeSessionInfo() {
     try {
       await axios
-        .put(apiBaseUrl + "course/edit", course, {
-          headers: {
-            Authorization: `Bearer ${GetCookie("USER")}`,
+        .put(
+          apiBaseUrl + "section/edit",
+          {
+            id: section.sectionInfo.id,
+            sectionOrder: 1,
+            title: sectionChoice,
           },
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${GetCookie("USER")}`,
+            },
+          }
+        )
         .then((response) => {
           if (response.status === 200) {
-            alert("Course updated");
+            alert("Section updated");
             ChangeView();
           }
         });
@@ -221,28 +229,32 @@
       })
       .catch((error: AxiosError) => {
         console.log(error);
-        if(error.response?.status === 404){
+        if (error.response?.status === 404) {
           ShowMessage("Please select a section to delete", 3000, 1, 1);
         }
-        if(error.response?.status === 409){
-          ShowMessage("There are more than 1 course content existing in this section", 3000, 1, 1);
-        }
-        else{
+        if (error.response?.status === 409) {
+          ShowMessage(
+            "There are more than 1 course content existing in this section",
+            3000,
+            1,
+            1
+          );
+        } else {
           ShowMessage(`Error code: ${error.response?.status}`, 3000, 1, 1);
         }
       });
   }
   async function DeleteCourseContent() {
     let res;
-    let id = courseContent.id
+    let id = courseContent.id;
     res = axios
       .delete(apiBaseUrl + "course-content/delete", {
         params: {
-          id
+          id,
         },
         headers: {
           Authorization: `Bearer ${GetCookie("USER")}`,
-        }
+        },
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
@@ -253,7 +265,6 @@
       .catch((error: AxiosError) => {
         console.log(error);
         ShowMessage(`Error code: ${error.response?.status}`, 3000, 2, 1);
-
       });
   }
   function fetchValue() {
@@ -560,8 +571,7 @@
           <div class="w-full max-w-sm">
             <div>Section Name</div>
             <Select on:change={fetchValue} bind:value={sectionChoice}>
-              <option selected>
-              </option>
+              <option selected />
               {#each sectionList as sectionItem}
                 <option
                   value="{sectionItem.sectionInfo.id}|{sectionItem.sectionInfo

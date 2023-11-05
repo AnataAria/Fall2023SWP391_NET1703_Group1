@@ -72,4 +72,10 @@ public class CourseContentCompletionServiceImpl implements CourseContentCompleti
     public Integer getTotalCourseContentLearnedOnCourse(BigDecimal customerID, BigDecimal courseID){
         return courseContentCompletionRepository.getCourseContentCompletionByCustomerID(customerID, courseID).size();
     }
+    @Override
+    public Boolean checkCourseContentCompleted(BigDecimal courseContentID, String email){
+        var customer = customerService.searchCustomerByEmail(email).orElseThrow(()->new UserNotFoundException(""));
+        var result = courseContentCompletionRepository.searchCourseContentCompletionByCourseContentAndCustomerID(courseContentID,customer.getId());
+        return result !=null;
+    }
 }

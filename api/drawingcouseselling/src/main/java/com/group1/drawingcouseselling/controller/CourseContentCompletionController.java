@@ -30,4 +30,10 @@ public class CourseContentCompletionController {
         return ResponseEntity.ok(courseContentCompletionService.getCustomerCourseContentCompletionList(id,email));
     }
 
+    @GetMapping("/course-content-completion/course-content")
+    public ResponseEntity<Boolean>isCourseContentCompleted(@RequestParam(value = "courseID") BigDecimal id,
+                                                           @RequestHeader(value = "Authorization") String authorization){
+        String email = jwtService.extractUserEmail(authorization.substring(7));
+        return ResponseEntity.ok(courseContentCompletionService.checkCourseContentCompleted(id, email));
+    }
 }
