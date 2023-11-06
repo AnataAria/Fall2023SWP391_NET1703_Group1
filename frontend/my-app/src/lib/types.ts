@@ -12,6 +12,7 @@ export type CourseContent = {
     description:string;
     videoLink:string;
     createDate:Date;
+    courseType:string;
 }
 
 export type SectionDetail = {
