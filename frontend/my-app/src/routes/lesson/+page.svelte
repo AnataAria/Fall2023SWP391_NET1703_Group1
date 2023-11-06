@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CourseAllInfo, CourseContent, SectionDetail } from "$lib/types";
-  import axios, { Axios } from "axios";
+  import axios, { Axios, AxiosError, type AxiosResponse } from "axios";
   import {
     Sidebar,
     SidebarDropdownWrapper,
@@ -14,11 +14,16 @@
   } from "flowbite-svelte";
   import { page } from "$app/stores";
   const courseID = $page.url.searchParams.get("courseID");
-  import { GetCookie, apiBaseUrl } from "../../service";
+  import { GetCookie, ShowMessage, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import TextEditor from "../TextEditor.svelte";
   import LoadingOverlay from "../LoadingOverlay.svelte";
   let spanClass = "flex-1 ml-3 whitespace-nowrap";
+  let openExamSubmit:boolean = false;
+  let openSubmitButton:boolean = true;
+  let submitted:boolean = false;
+  let file: FileList;
+  let formData = new FormData();
   let postIndex = 0;
   let id = 23;
   let courseInfo: CourseAllInfo;
@@ -29,7 +34,11 @@
     description: "",
     videoLink: "",
     createDate: new Date(),
+    courseType: ""
   };
+  let submitExam = {
+    
+  }
   let currentCourseContentStatus: boolean = false;
   let jwt: string | null;
   async function GetAllCourseInfo() {
@@ -74,6 +83,7 @@
         .then((response) => {
           if (response.status === 200) {
             currentCourseContentStatus = response.data;
+            console.log(currenCourseContent)
           }
         });
     } catch (e) {
@@ -107,6 +117,31 @@
       window.location.href = "/";
     }
   }
+
+  async function UploadImage() {
+        let res;
+        formData.set("file", file[0]);
+        formData.set("id", currenCourseContent.id.toString())
+        console.log(formData);
+        res = await axios
+            .post(apiBaseUrl + "course-content-completion/submit-exam", formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Bearer ${GetCookie("USER")}`,
+                }
+            })
+            .then((response: AxiosResponse) => {
+                if (response.status === 200) {
+                    ShowMessage("Submit successfully", 3000, 2, 1);
+                    //openSubmitButton = false;
+                    //submitted = true;
+                }
+            })
+            .catch((error: AxiosError) => {
+                console.log(error);
+                ShowMessage(`Error code ${error.code}`, 3000, 2, 1);
+            });
+    }
   onMount(() => {
     jwt = GetCookie("USER");
     GetAllCourseInfo();
@@ -140,10 +175,23 @@
           />
         </div>
         <div class="grid grid-cols-4 mt-5">
-          <div class="col-span-2">
-            <Fileupload />
-          </div>
-          <div class="col-span-2 flex flex-row-reverse mr-20">
+          {#if openExamSubmit}
+            <div class="col-span-2">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+              <input bind:files={file} accept="image/png, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only accept PNG, JPG file</p>
+              {#if submitted}
+              <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Default</span>
+              {/if}
+      {#if openSubmitButton}
+                  <Button outline color="blue" on:click={UploadImage}>Submit</Button>
+              {/if}
+            </div>
+            {:else}
+            <div class="col-span-2"/>
+          {/if}
+          
+            <div class="col-span-2 flex flex-row-reverse mr-20">
             {#if currentCourseContentStatus}
               <Button outline color="green">Completed</Button>
             {:else}
@@ -155,7 +203,7 @@
                 }}>Mark As Completed</Button
               >
             {/if}
-          </div>
+            </div>
         </div>
         <div class="text-2xl font-bold my-8">{currenCourseContent.title}</div>
         <div class="w-12/12">
@@ -610,11 +658,28 @@
                   spanClass="font-bold"
                 >
                   {#each sectionItem.lessons as content}
+                    {#if content.courseType === "TESTING"}
                     <SidebarItem
+                    label={content.title}
+                    spanClass="ml-12 font"
+                    activeClass=""
+                    on:click={() => {
+                      openExamSubmit = true;
+                      currenCourseContent = content;
+                      CheckCourseContentCompleted();
+                    }}
+                  >
+                    <svelte:fragment>
+                      <Checkbox />
+                    </svelte:fragment>
+                  </SidebarItem>
+                  {:else}
+                  <SidebarItem
                       label={content.title}
                       spanClass="ml-12 font"
                       activeClass=""
                       on:click={() => {
+                        openExamSubmit = false;
                         currenCourseContent = content;
                         CheckCourseContentCompleted();
                       }}
@@ -623,6 +688,7 @@
                         <Checkbox />
                       </svelte:fragment>
                     </SidebarItem>
+                    {/if}
                   {/each}
                 </SidebarDropdownWrapper>
               </SidebarGroup>
