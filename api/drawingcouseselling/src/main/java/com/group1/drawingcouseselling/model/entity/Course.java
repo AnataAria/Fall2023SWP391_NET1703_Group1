@@ -25,6 +25,8 @@ public class Course implements ObjectMapper<Course, CourseDto> {
     private String duration;
     @Column(name="status", nullable = false)
     private Boolean status;
+    @Column(name="thumbnail_path")
+    private String thumbnailPath;
     @PrePersist
     public void updateStatusWhenCreate(){
         this.status = true;
@@ -86,6 +88,14 @@ public class Course implements ObjectMapper<Course, CourseDto> {
         this.status = status;
     }
 
+    public String getThumbnailPath() {
+        return thumbnailPath;
+    }
+
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
+    }
+
     @Override
     public Course covertDtoToEntity(CourseDto data) {
         Course dataset = new Course();
@@ -93,6 +103,7 @@ public class Course implements ObjectMapper<Course, CourseDto> {
         dataset.setName(data.name());
         dataset.setPrice(data.price());
         dataset.setDescription(data.durations());
+        dataset.setThumbnailPath(data.thumbnail_path());
         return dataset;
     }
 
@@ -106,6 +117,7 @@ public class Course implements ObjectMapper<Course, CourseDto> {
                 .durations(data.getDuration())
                 .instructorID(data.getInstuctor().getId())
                 .instructorName(data.getInstuctor().getFullName())
+                .thumbnail_path(data.getThumbnailPath())
                 .build();
     }
 }
