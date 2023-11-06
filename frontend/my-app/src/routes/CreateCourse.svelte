@@ -19,7 +19,7 @@
     let counter = 6;
     let message = "";
     let errorMsg = "";
-    let file: any[] | Blob;
+    let file: FileList;
     let formData = new FormData();
 
     let formModal = false;
@@ -42,7 +42,7 @@
 
     async function UploadImage() {
         let res;
-        formData.append("file", file[0]);
+        formData.set("file", file[0]);
         console.log(formData);
         let img_url:string;
         res = await axios
