@@ -15,4 +15,7 @@ public class EntityNotFoundException extends BaseException{
                 .currentTimeError(new Date(System.currentTimeMillis()))
                 .build();
     }
+    public EntityNotFoundException(ErrorMessage errorMessage) {
+        super(errorMessage);
+    }
 }
