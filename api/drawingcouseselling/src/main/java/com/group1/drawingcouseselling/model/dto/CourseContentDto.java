@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.model.dto;
 
+import com.group1.drawingcouseselling.model.enums.ECourseContentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -19,12 +20,14 @@ public record CourseContentDto(BigDecimal id,
                                @Pattern(regexp = "^(https?://)?(www\\.)?youtube\\.com/watch\\?v=[a-zA-Z0-9_-]+.*$", message = "Invalid YouTube link")
                                @NotBlank(message = "The youtube link must not be empty")
                                String videoLink,
+                               ECourseContentType courseType,
                                Date createDate) {
-    public CourseContentDto(BigDecimal id, String title, String description, String videoLink, Date createDate) {
+    public CourseContentDto(BigDecimal id, String title, String description, String videoLink, ECourseContentType courseType, Date createDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.videoLink = videoLink;
         this.createDate = createDate;
+        this.courseType = courseType;
     }
 }

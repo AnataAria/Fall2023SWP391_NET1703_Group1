@@ -38,7 +38,7 @@ public class CourseContentCompletionController {
         String email = jwtService.extractUserEmail(authorization.substring(7));
         return ResponseEntity.ok(courseContentCompletionService.checkCourseContentCompleted(id, email));
     }
-    @GetMapping("/course-content-completion/submit-exam")
+    @PostMapping("/course-content-completion/submit-exam")
     public ResponseEntity<ExamDto>submitExam(@RequestParam(value = "id")BigDecimal id,
                                              @RequestParam(value = "file")MultipartFile file,
                                              @RequestHeader(value = "Authorization") String authorization){
