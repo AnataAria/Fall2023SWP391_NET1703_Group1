@@ -1,5 +1,6 @@
 package com.group1.drawingcouseselling.model.entity;
 
+import com.group1.drawingcouseselling.model.enums.ECourseContentType;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -22,6 +23,9 @@ public class CourseContentCompletion {
     private Date finishDate;
     @Column(name = "done")
     private Boolean isDone;
+    @JoinColumn(name = "content_exam")
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST}, targetEntity = Exam.class)
+    private Exam exam;
     @PreUpdate
     @PrePersist
     private void courseCompleted(){
@@ -68,5 +72,13 @@ public class CourseContentCompletion {
 
     public void setCourseContent(CourseContent courseContent) {
         this.courseContent = courseContent;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
     }
 }
