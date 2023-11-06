@@ -52,7 +52,7 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     public S3Object download (int id){
-        FileMeta fileMeta = fileMetaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        FileMeta fileMeta = fileMetaRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         return amazonS3Service.download(fileMeta.getFilePath(), fileMeta.getFileName());
     }
 

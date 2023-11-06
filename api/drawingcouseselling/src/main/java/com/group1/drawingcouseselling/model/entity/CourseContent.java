@@ -96,6 +96,14 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
         this.updateDate = updateDate;
     }
 
+    public ECourseContentType getCourseContentType() {
+        return courseContentType;
+    }
+
+    public void setCourseContentType(ECourseContentType courseContentType) {
+        this.courseContentType = courseContentType;
+    }
+
     @Override
     public CourseContent covertDtoToEntity(CourseContentDto data) {
         CourseContent lesson  = new CourseContent();
