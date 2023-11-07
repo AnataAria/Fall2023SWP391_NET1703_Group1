@@ -11,6 +11,10 @@ aws:
       key: tN7GXYsy2zZHqb1znrfCf/hmNXzdFuRN9MSPdG2P
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     url: jdbc:mariadb://${DB_HOST:anataarisa.hopto.org}:${DB_PORT:3306}/ademy
 #    url: jdbc:mariadb://localhost:3307/ademy

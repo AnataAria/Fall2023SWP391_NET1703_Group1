@@ -29,6 +29,10 @@
     let errorMsg = "";
     export let id: number;
     let sectionList: Section[] = [];
+    let courseContentType = [
+    { value: 'COURSE_CONTENT', name: 'Normal' },
+    { value: 'TESTING', name: 'Test' }
+  ];
 
     let modeSelect: string;
     let content: CourseContentCreate = {
@@ -39,6 +43,7 @@
             createDate: new Date("2023-10-19"),
             title: "",
             videoLink: "",
+            courseType: ""
         },
     };
     let section: SectionCreate = {
@@ -91,6 +96,7 @@
     async function CreateCourseContent() {
         let res;
         DisableSubmitButton();
+        console.log(content);
         res = await axios
             .post(apiBaseUrl + "course-content", content, {
                 headers: {
@@ -284,6 +290,10 @@
                     required
                 />
             </Label>
+            <Label>
+                Course content type
+                <Select class="mt-2" items={courseContentType} bind:value={content.courseContent.courseType} />
+              </Label>
         {/if}
         <div id="submitButton">
             <Button

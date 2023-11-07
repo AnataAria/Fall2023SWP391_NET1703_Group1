@@ -1,4 +1,39 @@
 import { type } from "os";
+export type GradingExam = {
+  examID:number;
+  score:string;
+  comment:string;
+}
+export type GetExamAllInfo = {
+  examInfo: ExamStatusInfo;
+  customerInfo:Customer
+  courseContent:CourseContent;
+  course:Course
+};
+export type ReviewsPaginationForGrading = {
+  content: ExamStatusInfo[];
+  pageable: Pageable;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  numberOfElements: number;
+  first: boolean;
+  size: number;
+  number: number;
+  sort: {
+    unsorted: boolean;
+    sorted: boolean;
+    empty: boolean;
+  };
+  empty: boolean;
+};
+export type ExamStatusInfo = {
+  id:number;
+  score:string;
+  artLink:string;
+  examStatus:string;
+  comment:string;
+}
 
 export type Section = {
     id:number;
@@ -12,6 +47,7 @@ export type CourseContent = {
     description:string;
     videoLink:string;
     createDate:Date;
+    courseType:string;
 }
 
 export type SectionDetail = {
@@ -115,7 +151,7 @@ type AccountPagination = {
     empty: boolean;
 };
 
-type Customer = {
+export type Customer = {
   customerID: number;
   fullName: string;
   birthDate: Date;

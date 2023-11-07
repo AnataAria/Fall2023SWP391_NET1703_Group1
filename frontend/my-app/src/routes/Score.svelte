@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     let open = false;
-    let score = null;
+    export let score:string = "";
 
-    function selectScore(s) {
+    function selectScore(s:string) {
         score = s;
         open = false;
     }
