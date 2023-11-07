@@ -141,11 +141,14 @@
             if(examInfo.examStatus === "SUBMITTED"){
               openSubmitButton = false;
               submitted = true;
+              passed = false;
+              failed = false;
             }
             else if (examInfo.examStatus === "PASSED"){
               openSubmitButton = false;
               submitted = false;
               passed = true;
+              failed = false;
               // MarkCompleted();
             }
             else if (examInfo.examStatus === "FAILED"){
@@ -158,6 +161,7 @@
               openSubmitButton = true;
               submitted = false;
               passed = false;
+              failed = false;
             }
           })
           .catch((error: AxiosError) =>{
@@ -167,6 +171,7 @@
               openSubmitButton = true;
               submitted = false;
               passed = false;
+              failed = false;
             }
           })
   }
