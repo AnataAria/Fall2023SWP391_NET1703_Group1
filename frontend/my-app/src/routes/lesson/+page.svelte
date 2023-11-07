@@ -11,6 +11,7 @@
     Fileupload,
     Checkbox,
     Button,
+    A,
   } from "flowbite-svelte";
   import { page } from "$app/stores";
   const courseID = $page.url.searchParams.get("courseID");
@@ -242,11 +243,18 @@
               <input bind:files={file} accept="image/png, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only accept PNG, JPG file</p>
               {#if submitted}
-              <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Submitted</span>
+              <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Submitted</span>
+              <p class="text-base dark:text-white"><A href="{examInfo.artLink}" class="underline hover:no-underline">Download your submission</A></p>
               {:else if passed}
-              <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Passed</span>
+              <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Passed</span>
+              <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Score: {examInfo.score}</span>
+              <p class="text-base dark:text-white">Instructor comment: {examInfo.comment}</p>
+              <p class="text-base dark:text-white"><A href="{examInfo.artLink}" class="underline hover:no-underline">Download your submission</A></p>
               {:else if failed}
-              <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Failed</span>
+              <span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Failed</span>
+              <span class="bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Score: {examInfo.score}</span>
+              <p class="text-base dark:text-white">Instructor comment: {examInfo.comment}</p>
+              <p class="text-base dark:text-white"><A href="{examInfo.artLink}" class="underline hover:no-underline">Download your submission</A></p>
               {/if}
               {#if openSubmitButton}
                   <Button outline color="blue" on:click={UploadImage}>Submit</Button>
