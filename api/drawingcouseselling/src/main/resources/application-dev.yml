@@ -84,11 +84,11 @@ paypal:
 
 
 frontend:
-  url: http://anataarisa.hopto.org:3000/
+  url: http://localhost:3000/
 
 api:
   base:
-    url: http://anataarisa.hopto.org:7070/api/v1/
+    url: http://localhost:9090/api/v1/
 
 #auththentication:
 #  facebook-url: /oauth2/authorization/facebook
