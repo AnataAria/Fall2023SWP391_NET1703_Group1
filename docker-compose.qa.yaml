@@ -6,7 +6,7 @@ services:
       context: "./api/drawingcouseselling/"
       dockerfile: Dockerfile
       args:
-        - API_ENV=qa
+        - API_ENV=staging
     ports:
       - "7070:9090"
     networks:
