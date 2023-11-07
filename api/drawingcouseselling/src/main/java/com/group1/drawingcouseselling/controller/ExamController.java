@@ -1,12 +1,15 @@
 package com.group1.drawingcouseselling.controller;
 
+import com.group1.drawingcouseselling.model.dto.ExamDetailInfoDto;
 import com.group1.drawingcouseselling.model.dto.ExamDto;
 import com.group1.drawingcouseselling.service.ExamService;
 import com.group1.drawingcouseselling.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -22,5 +25,18 @@ public class ExamController {
     {
         String email = jwtService.extractUserEmail(authorization.substring(7));
         return ResponseEntity.ok(examService.getExamInformation(courseContentID, email));
+    }
+    @GetMapping("/exams/instructor")
+    public ResponseEntity<Page<ExamDto>> getExamsSubmittedListOnPaging(@RequestHeader("Authorization") String authorization,
+                                                                       @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                       @RequestParam(value = "maxPage", defaultValue = "10") Integer maxPage
+                                                                       ){
+        String email = jwtService.extractUserEmail(authorization.substring(7));
+        return ResponseEntity.ok(examService.getExamListAndPaging(page,maxPage,email));
+    }
+
+    @GetMapping("/exams/detailinfo")
+    public ResponseEntity<ExamDetailInfoDto> getExamDetailInformation(BigDecimal examID){
+        return ResponseEntity.ok(examService.getExamInfoDetail(examID));
     }
 }
