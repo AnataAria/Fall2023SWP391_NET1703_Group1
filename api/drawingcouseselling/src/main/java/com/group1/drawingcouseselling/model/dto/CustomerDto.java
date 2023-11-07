@@ -18,6 +18,9 @@ public record CustomerDto(BigDecimal customerID,
                           EGender gender,
                           @Email(message = "Please enter a valid email address")
                           @NotBlank(message = "Email can't be empty")
-                          String email, Date joinDate) {
+                          String email,
+                          Date joinDate,
+                          String avatarLink
+) {
 
 }
