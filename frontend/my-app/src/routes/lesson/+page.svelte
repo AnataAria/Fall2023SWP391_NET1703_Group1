@@ -149,7 +149,7 @@
               submitted = false;
               passed = true;
               failed = false;
-              // MarkCompleted();
+              MarkCompleted();
             }
             else if (examInfo.examStatus === "FAILED"){
               openSubmitButton = true;
@@ -165,13 +165,16 @@
             }
           })
           .catch((error: AxiosError) =>{
-            ShowMessage(`Error code ${error.code}`, 3000, 1, 1);
+            // ShowMessage(`Error code ${error.code}`, 3000, 1, 1);
             if(error.response?.status === 420){
-              ShowMessage("Exam not submitted", 3000, 1, 1);
+              // ShowMessage("Exam not submitted", 3000, 1, 1);
               openSubmitButton = true;
               submitted = false;
               passed = false;
               failed = false;
+            }
+            else{
+              ShowMessage(`Error code ${error.code}`, 3000, 1, 1);
             }
           })
   }
