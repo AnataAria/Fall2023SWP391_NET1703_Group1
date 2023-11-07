@@ -3,5 +3,6 @@ LABEL authors="AnataArisa"
 WORKDIR /api-backend
 ARG API_ENV
 COPY . .
-RUN mvn clean install -P${API_ENV}
+ENV SPRING_PROFILES_ACTIVE=${API_ENV}
+RUN mvn clean install
 ENTRYPOINT ["java", "-jar", "./target/drawingcouseselling-0.1.jar"]
