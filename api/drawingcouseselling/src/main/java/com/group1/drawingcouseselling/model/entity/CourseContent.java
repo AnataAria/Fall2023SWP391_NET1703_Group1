@@ -111,6 +111,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
         lesson.setDescription(data.description());
         lesson.setVideoLink(data.videoLink());
         lesson.setCreateDate(data.createDate());
+        lesson.setCourseContentType(data.courseType());
         return lesson;
     }
 
@@ -122,6 +123,7 @@ public class CourseContent implements ObjectMapper<CourseContent, CourseContentD
                 .description(data.getDescription())
                 .videoLink(data.getVideoLink())
                 .createDate(data.getCreateDate())
+                .courseType(data.getCourseContentType())
                 .build();
     }
 }
