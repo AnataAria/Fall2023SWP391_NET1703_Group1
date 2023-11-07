@@ -28,10 +28,16 @@ public class Exam {
     @PreUpdate
     private void updateScoreStatus(){
         if(score != null){
-            courseContentCompletion.setDone(switch (score) {
-                case 'A', 'B', 'C' -> true;
-                default -> false;
-            });
+            switch (score) {
+                case 'A', 'B', 'C':
+                    courseContentCompletion.setDone(true);
+                    submitStatus = EExamStatus.PASSED;
+                    break;
+                default:
+                    submitStatus = EExamStatus.FAILED;
+                    courseContentCompletion.setDone(false);
+                    break;
+            }
 
         }else {
             courseContentCompletion.setDone(false);

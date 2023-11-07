@@ -2,15 +2,13 @@ package com.group1.drawingcouseselling.controller;
 
 import com.group1.drawingcouseselling.model.dto.ExamDetailInfoDto;
 import com.group1.drawingcouseselling.model.dto.ExamDto;
+import com.group1.drawingcouseselling.model.dto.ExamMarkDto;
 import com.group1.drawingcouseselling.service.ExamService;
 import com.group1.drawingcouseselling.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -38,5 +36,13 @@ public class ExamController {
     @GetMapping("/exams/detailinfo")
     public ResponseEntity<ExamDetailInfoDto> getExamDetailInformation(BigDecimal examID){
         return ResponseEntity.ok(examService.getExamInfoDetail(examID));
+    }
+
+    @PostMapping("/exam/mark")
+    public ResponseEntity<ExamDto> markExam(@RequestHeader("Authorization") String authorization,
+                                            @RequestBody ExamMarkDto examMark
+    ){
+        String instructorEmail = jwtService.extractUserEmail(authorization.substring(7));
+        return ResponseEntity.ok(examService.assignScoreSubmit(instructorEmail,examMark));
     }
 }
