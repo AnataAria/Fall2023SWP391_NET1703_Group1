@@ -8,12 +8,13 @@ import com.group1.drawingcouseselling.model.dto.ExamDto;
 import com.group1.drawingcouseselling.model.dto.ExamMarkDto;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.CourseContent;
+import com.group1.drawingcouseselling.model.entity.CourseContentCompletion;
 import com.group1.drawingcouseselling.model.entity.Customer;
 import com.group1.drawingcouseselling.model.enums.EExamStatus;
+import com.group1.drawingcouseselling.repository.CourseContentCompletionRepository;
+import com.group1.drawingcouseselling.repository.CourseContentRepository;
 import com.group1.drawingcouseselling.repository.ExamRepository;
-import com.group1.drawingcouseselling.service.CustomerService;
-import com.group1.drawingcouseselling.service.ExamService;
-import com.group1.drawingcouseselling.service.InstructorService;
+import com.group1.drawingcouseselling.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,7 @@ public class ExamServiceImpl implements ExamService {
     private final ExamRepository examRepository;
     private final CustomerService customerService;
     private final InstructorService instructorService;
+    private final CourseContentCompletionRepository courseContentCompletionRepository;
     @Override
     public ExamDto getExamInformation(BigDecimal courseContentID, String customerEmail){
         var customer = customerService.searchCustomerByEmail(customerEmail).orElseThrow(() -> new UserNotFoundException(""));
@@ -86,6 +88,24 @@ public class ExamServiceImpl implements ExamService {
     public ExamDto assignScoreSubmit(String instructorEmail, ExamMarkDto examMark){
         var instructor = instructorService.findInstructorByInstructorEmail(instructorEmail);
         if(instructor == null) throw new UserNotFoundException("");
-        return null;
+        var exam = examRepository.findById(examMark.examID()).orElseThrow(() ->
+                new EntityNotFoundException("This exam isn't existed"));
+        exam.setScore(examMark.score());
+        exam.setInstructorComment(examMark.comment());
+        var result = examRepository.save(exam);
+        var a = result.getCourseContentCompletion();
+        if(result.getSubmitStatus() == EExamStatus.PASSED){
+            a.setDone(true);
+        }else{
+            a.setDone(false);
+        }
+        courseContentCompletionRepository.save(a);
+        return ExamDto.builder()
+                .id(result.getId())
+                .examStatus(result.getSubmitStatus())
+                .comment(result.getInstructorComment())
+                .score(result.getScore())
+                .artLink(result.getArtLinked())
+                .build();
     }
 }
