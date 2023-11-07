@@ -1,49 +1,253 @@
 <script lang="ts">
-    import { Button } from "flowbite-svelte";
+    import {
+        Button,
+        Checkbox,
+        PaginationItem,
+        Sidebar,
+        SidebarDropdownWrapper,
+        SidebarGroup,
+        SidebarItem,
+        SidebarWrapper,
+    } from "flowbite-svelte";
     import Score from "./Score.svelte";
-    let getScore:string = "";
-    function Show(){
-        console.log(getScore)
+    import axios, { AxiosError, type AxiosResponse } from "axios";
+    import { GetCookie, ShowMessage, apiBaseUrl } from "../service";
+    import type {
+        GetExamAllInfo,
+        GradingExam,
+        ReviewsPagination,
+        ReviewsPaginationForGrading,
+    } from "$lib/types";
+    import { onMount } from "svelte";
+    let getScore: string = "";
+    let showEmptyMessage: boolean = false;
+    let reviewPagination: ReviewsPaginationForGrading = {
+        content: [],
+        pageable: {
+            pageNumber: 0,
+            pageSize: 0,
+            sort: {
+                unsorted: false,
+                sorted: false,
+                empty: false,
+            },
+            offset: 0,
+            unpaged: false,
+            paged: false,
+        },
+        totalElements: 0,
+        totalPages: 0,
+        last: false,
+        numberOfElements: 0,
+        first: false,
+        size: 0,
+        number: 0,
+        sort: {
+            unsorted: false,
+            sorted: false,
+            empty: false,
+        },
+        empty: true,
+    };
+    let getAllExamInfo: GetExamAllInfo = {
+        examInfo: {
+            id: 0,
+            score: "",
+            artLink: "",
+            examStatus: "",
+            comment: "",
+        },
+        customerInfo: {
+            customerID: 0,
+            fullName: "",
+            birthDate: new Date(),
+            gender: 0,
+            email: "",
+            joinDate: new Date(),
+        },
+        courseContent: {
+            id: 0,
+            title: "",
+            description: "",
+            videoLink: "",
+            createDate: new Date(),
+            courseType: "",
+        },
+        course: {
+            id: 0,
+            name: "",
+            price: 0,
+            description: "",
+            durations: "",
+            instructorID: 0,
+            instructorName: "",
+        },
+    };
+    let gradeExam: GradingExam = {
+        examID: 0,
+        score: "",
+        comment: ""
     }
+    async function GetExamSubmission(page: number, maxPage: number) {
+        try {
+            await axios
+                .get(
+                    apiBaseUrl +
+                        `exams/instructor?page=${page}&maxPage=${maxPage}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${GetCookie("USER")}`,
+                        },
+                    }
+                )
+                .then((response) => {
+                    if (response.status === 200) {
+                        reviewPagination = response.data;
+                        if(reviewPagination.content.length == 0){
+                            showEmptyMessage = true
+                        }
+                        console.log(reviewPagination);
+                    }
+                });
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            GetExamInfo();
+        }
+    }
+    async function GetExamInfo() {
+        let res;
+        res = await axios
+            .get<GetExamAllInfo>(
+                apiBaseUrl +
+                    `exams/detailinfo?examID=${reviewPagination.content[0].id}`
+            )
+            .then((response: AxiosResponse) => {
+                getAllExamInfo = response.data;
+                console.log(getAllExamInfo);
+            })
+            .catch((error: AxiosError) => {
+                console.log(error);
+            });
+    }
+    async function GradeExam() {
+        let res;
+        gradeExam.examID = reviewPagination.content[0].id;
+        gradeExam.score = getScore;
+        console.log(gradeExam)
+        res = await axios
+            .post(apiBaseUrl + "exam/mark", gradeExam, {
+                headers: {
+                    Authorization: `Bearer ${GetCookie("USER")}`,
+                },
+            })
+            .then((response: AxiosResponse) => {
+                if (response.status === 200) {
+                    ShowMessage("Graded Successfully", 3000, 2, 1);
+                    window.location.reload();
+                }
+            })
+            .catch((error: AxiosError) => {
+                console.log(error);
+            });
+    }
+    const previous = () => {
+        GetExamSubmission(
+            reviewPagination.pageable.pageNumber - 1,
+            reviewPagination.pageable.pageSize
+        );
+    };
+    const next = () => {
+        GetExamSubmission(
+            reviewPagination.pageable.pageNumber + 1,
+            reviewPagination.pageable.pageSize
+        );
+    };
+    onMount(() => {
+        GetExamSubmission(0, 1);
+    });
 </script>
+{#if showEmptyMessage}
+    <div class="flex flex-col items-center justify-center mb-12">
+        <p class="text-4xl dark:text-white">Nothing to grade... Grab yourself a cup of coffee</p>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-1/2 h-64">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
+          </svg>
+          
+    </div>
+{/if}
+
 
 <div class="grid grid-cols-4 gap-4">
     <!-- Phần hiển thị bức vẽ chiếm 4/5 -->
     <div class="col-span-4 md:col-span-3">
-        <img
-            src="data:image/jpeg;base64,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"
-            alt="Bức vẽ"
-            class="pic"
-        />
+        {#each reviewPagination.content as item}
+            <img
+                style="position: relative;"
+                src={item.artLink}
+                alt="Bức vẽ"
+                class="h-auto max-w-full"
+            />
+        {/each}
     </div>
-
     <!-- Phần thông tin bức vẽ chiếm 1/5 -->
     <div class="col-span-4 md:col-span-1 bg-green-100">
-        <div class="flex mt-6 ml-4">
-            <div class="w-2/3">
-                <h1>Student ID: 123</h1>
-                <h1>Student Name: Thang</h1>
-                <!-- <Button color="alternative" on:click={Show}>Alternative</Button> -->
-            </div>
+        {#each reviewPagination.content as item}
+            <div class="flex mt-6 ml-4">
+                <div class="w-2/3">
+                    <h1>
+                        Student ID: {getAllExamInfo.customerInfo.customerID}
+                    </h1>
+                    <h1>
+                        Student Name: {getAllExamInfo.customerInfo.fullName}
+                    </h1>
+                    <h1>Exam ID: {item.id}</h1>
+                    <!-- <Button color="alternative" on:click={Show}>Alternative</Button> -->
+                </div>
 
-            <div class="w-1/3">
-                <div class="border-4 border-current w-24 h-24 text-center">
-                    <Score bind:score={getScore}/>
+                <div class="w-1/3">
+                    <div class="border-4 border-current w-24 h-24 text-center">
+                        <Score bind:score={getScore} />
+                    </div>
                 </div>
             </div>
-        </div>
-        <br />
-        <h1
-            class="py-4 px-6 text-2xl font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
-        >
-            Tên khoá học vẽ
-        </h1>
-        <p class="text-3xl dark:text-white">FlowBite</p>
-        <h1
-            class="py-4 px-6 text-xl text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
-        >
-            Section
-        </h1>
+            <br />
+            <h1
+                class="py-4 px-6 text-2xl font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
+            >
+                Course Name: {getAllExamInfo.course.name}
+            </h1>
+            <h1
+                class="py-4 px-6 text-xl text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
+            >
+                Course Content: {getAllExamInfo.courseContent.title}
+            </h1>
+
+            <label
+                for="message"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Your comment</label
+            >
+            <textarea
+            bind:value={gradeExam.comment}
+                id="message"
+                rows="4"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Write your comment here..."
+            />
+
+            <div class="inline-flex rounded-md shadow-sm" role="group">
+                <Button on:click={GradeExam} color="blue">Submit</Button>
+                {#if reviewPagination.first !== true}
+                    <PaginationItem large on:click={previous}
+                        >Previous</PaginationItem
+                    >
+                {/if}
+                {#if reviewPagination.last !== true}
+                    <PaginationItem large on:click={next}>Next</PaginationItem>
+                {/if}
+            </div>
+        {/each}
     </div>
 </div>
 
