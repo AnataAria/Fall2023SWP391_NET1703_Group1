@@ -74,8 +74,8 @@ paypal:
 
 
 frontend:
-  url: http://localhost:3000/
+  url: http://anataarisa.hopto.org:3000/
 
 api:
   base:
-    url: http://localhost:9090/api/v1/
+    url: http://anataarisa.hopto.org:7070/api/v1/
