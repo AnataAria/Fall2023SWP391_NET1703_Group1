@@ -6,6 +6,7 @@
   import type { Course } from "$lib/types";
   import CreateCourseSection from "../CreateCourseSection.svelte";
   import CreateCourse from "../CreateCourse.svelte";
+  import { Button } from "flowbite-svelte";
 
   interface Instructorinterface {
     email: string;
@@ -152,6 +153,11 @@
                 >
                   Add Course</a
                 > -->
+                <div class="flex flex-col items-center justify-center mt-2">
+                  <Button href="/instructor/grading" color="blue"
+                    >Grade Submission</Button
+                  >
+                </div>
               </div>
             </div>
           </div>
