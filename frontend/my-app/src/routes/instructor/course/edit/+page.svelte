@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   const id: number = $page.url.searchParams.get("courseId");
-  let apiKey = "7gq4en8n7fdu1f8nqawf1uqup1tx0smi6v7dc3v1tf3dnhwa";
+  let apiKey = "rin7yni45fy4pbp6hub9mnmcpi5wrhapvxjyll03gr68j3og";
   let conf = {
     plugins: [
       "a11ychecker",
@@ -308,8 +308,11 @@
 </script>
 
 {#if status}
-  <div class="grid grid-cols-4 gap-4 mt-10 ">
-    <div class="col-span-1 bg-gray-400 overflow-y-scroll" style="height: 500px;">
+  <div class="grid grid-cols-4 gap-4 mt-10">
+    <div
+      class="col-span-1 bg-gray-400 overflow-y-scroll"
+      style="height: 500px;"
+    >
       <Sidebar asideClass="w-full list-none h-12">
         <SidebarWrapper>
           {#each courseInfo.sections as section}
