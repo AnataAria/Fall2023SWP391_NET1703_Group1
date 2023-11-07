@@ -1,4 +1,11 @@
 import { type } from "os";
+export type ExamStatusInfo = {
+  id:number;
+  score:string;
+  artLink:string;
+  examStatus:string;
+  comment:string;
+}
 
 export type Section = {
     id:number;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CourseAllInfo, CourseContent, SectionDetail } from "$lib/types";
+  import type { CourseAllInfo, CourseContent, ExamStatusInfo, SectionDetail } from "$lib/types";
   import axios, { Axios, AxiosError, type AxiosResponse } from "axios";
   import {
     Sidebar,
@@ -22,6 +22,8 @@
   let openExamSubmit:boolean = false;
   let openSubmitButton:boolean = true;
   let submitted:boolean = false;
+  let passed:boolean = false;
+  let failed:boolean = false;
   let file: FileList;
   let formData = new FormData();
   let postIndex = 0;
@@ -36,8 +38,12 @@
     createDate: new Date(),
     courseType: ""
   };
-  let submitExam = {
-    
+  let examInfo:ExamStatusInfo = {
+    id: 0,
+    score: "",
+    examStatus: "",
+    artLink: "",
+    comment: ""
   }
   let currentCourseContentStatus: boolean = false;
   let jwt: string | null;
@@ -118,6 +124,53 @@
     }
   }
 
+  async function GetExamInfo() {
+    let res;
+    res = await axios
+        .get<ExamStatusInfo>(apiBaseUrl + `exam`, {
+          headers: {
+            Authorization: `Bearer ${GetCookie("USER")}`
+          },
+          params: {
+            courseContentID: currenCourseContent.id
+          }
+        })
+          .then((response: AxiosResponse) => {
+            examInfo = response.data;
+            console.log(examInfo);
+            if(examInfo.examStatus === "SUBMITTED"){
+              openSubmitButton = false;
+              submitted = true;
+            }
+            else if (examInfo.examStatus === "PASSED"){
+              openSubmitButton = false;
+              submitted = false;
+              passed = true;
+              // MarkCompleted();
+            }
+            else if (examInfo.examStatus === "FAILED"){
+              openSubmitButton = true;
+              submitted = false;
+              passed = false;
+              failed = true;
+            }
+            else{
+              openSubmitButton = true;
+              submitted = false;
+              passed = false;
+            }
+          })
+          .catch((error: AxiosError) =>{
+            ShowMessage(`Error code ${error.code}`, 3000, 1, 1);
+            if(error.response?.status === 420){
+              ShowMessage("Exam not submitted", 3000, 1, 1);
+              openSubmitButton = true;
+              submitted = false;
+              passed = false;
+            }
+          })
+  }
+
   async function UploadImage() {
         let res;
         formData.set("file", file[0]);
@@ -133,8 +186,8 @@
             .then((response: AxiosResponse) => {
                 if (response.status === 200) {
                     ShowMessage("Submit successfully", 3000, 2, 1);
-                    //openSubmitButton = false;
-                    //submitted = true;
+                    openSubmitButton = false;
+                    submitted = true;
                 }
             })
             .catch((error: AxiosError) => {
@@ -181,20 +234,33 @@
               <input bind:files={file} accept="image/png, image/jpeg" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Only accept PNG, JPG file</p>
               {#if submitted}
-              <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Default</span>
+              <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Submitted</span>
+              {:else if passed}
+              <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Passed</span>
+              {:else if failed}
+              <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Failed</span>
               {/if}
-      {#if openSubmitButton}
+              {#if openSubmitButton}
                   <Button outline color="blue" on:click={UploadImage}>Submit</Button>
               {/if}
             </div>
             {:else}
             <div class="col-span-2"/>
           {/if}
-          
+
             <div class="col-span-2 flex flex-row-reverse mr-20">
-            {#if currentCourseContentStatus}
+            {#if currentCourseContentStatus && currenCourseContent.courseType === "COURSE_CONTENT"}
               <Button outline color="green">Completed</Button>
-            {:else}
+            {:else if currentCourseContentStatus && currenCourseContent.courseType === "TESTING" && examInfo.examStatus === "PASSED"}
+            <Button outline color="green">Test Completed</Button>
+            {:else if !currentCourseContentStatus && currenCourseContent.courseType === "TESTING"}
+            <Button
+            outline
+            color="red"
+            on:click={() => {
+            }}>Test Not Completed</Button
+          >
+            {:else if !currentCourseContentStatus && currenCourseContent.courseType === "COURSE_CONTENT"}
               <Button
                 outline
                 color="red"
@@ -203,6 +269,16 @@
                 }}>Mark As Completed</Button
               >
             {/if}
+            <!-- {#if currentCourseContentStatus && currenCourseContent.courseType === "TESTING" && examInfo.examStatus !== "PASSED"}
+              <Button outline color="green">Completed</Button>
+            {:else}
+              <Button
+                outline
+                color="red"
+                on:click={() => {
+                }}>Test As Completed</Button
+              >
+            {/if} -->
             </div>
         </div>
         <div class="text-2xl font-bold my-8">{currenCourseContent.title}</div>
@@ -666,6 +742,7 @@
                     on:click={() => {
                       openExamSubmit = true;
                       currenCourseContent = content;
+                      GetExamInfo();
                       CheckCourseContentCompleted();
                     }}
                   >
