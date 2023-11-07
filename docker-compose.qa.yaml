@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  api-backend:
+    container_name: api-backend-server-qa
+    build:
+      context: "./api/drawingcouseselling/"
+      dockerfile: Dockerfile
+      args:
+        - API_ENV=qa
+    ports:
+      - "7070:9090"
+    networks:
+      - dev-network
+    environment:
+      DB_HOST: anataarisa.hopto.org
+      DB_PORT: 3306
+      DB_USERNAME: pim
+      DB_PASSWORD: Vinh12345.
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/api/v1/courses"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  front-end:
+    container_name: svelte-frontend-server-qa
+    build:
+      context: "./frontend/my-app/"
+      dockerfile: Dockerfile
+      args:
+        - ENV_DP=testing
+    ports:
+      - "3000:3000"
+    networks:
+      - dev-network
+    restart: always
+    depends_on:
+      api-backend:
+        condition: service_healthy
+networks:
+  dev-network:
