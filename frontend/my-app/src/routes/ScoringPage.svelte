@@ -1,5 +1,10 @@
 <script lang="ts">
+    import { Button } from "flowbite-svelte";
     import Score from "./Score.svelte";
+    let getScore:string = "";
+    function Show(){
+        console.log(getScore)
+    }
 </script>
 
 <div class="grid grid-cols-4 gap-4">
@@ -16,13 +21,14 @@
     <div class="col-span-4 md:col-span-1 bg-green-100">
         <div class="flex mt-6 ml-4">
             <div class="w-2/3">
-                <h1>Student ID:</h1>
-                <h1>Student Name:</h1>
+                <h1>Student ID: 123</h1>
+                <h1>Student Name: Thang</h1>
+                <!-- <Button color="alternative" on:click={Show}>Alternative</Button> -->
             </div>
 
             <div class="w-1/3">
                 <div class="border-4 border-current w-24 h-24 text-center">
-                    <Score />
+                    <Score bind:score={getScore}/>
                 </div>
             </div>
         </div>
@@ -32,6 +38,7 @@
         >
             Tên khoá học vẽ
         </h1>
+        <p class="text-3xl dark:text-white">FlowBite</p>
         <h1
             class="py-4 px-6 text-xl text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
         >
