@@ -27,7 +27,6 @@ pipeline {
 			steps{
 				withDockerRegistry(credentialsId: 'Arisa Docker Hub Account', url: 'https://index.docker.io/v1/'){
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' build'
-					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' push'
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up -d'
 					sh 'docker tag ' + DOCKER_IMAGE_BACKEND_API + ':latest ' + DOCKER_IMAGE_BACKEND_API + ':latest'
 					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
