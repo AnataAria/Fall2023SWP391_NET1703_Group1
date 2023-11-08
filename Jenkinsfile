@@ -5,8 +5,8 @@ pipeline {
 		DOCKER_COMPOSE_NAME = 'ademy-dev-application'
 		DOCKER_COMPOSE_QA_FILE = 'docker-compose.qa.yaml'
 		DOCKER_COMPOSE_PROD_FILE = 'docker-compose.prod.yaml'
-		DOCKER_IMAGE_BACKEND_API = 'api-backend-server'
-		DOCKER_IMAGE_FRONTEND_SERVER = 'svelte-frontend-server'
+		DOCKER_IMAGE_BACKEND_API = 'api-backend-server-qa'
+		DOCKER_IMAGE_FRONTEND_SERVER = 'svelte-frontend-server-qa'
 	}
 	tools {
 		maven 'Arisa CI/CD Maven'
@@ -23,11 +23,16 @@ pipeline {
 				sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME +  ' down --rmi all -v'
 			}
 		}
-		stage('Build docker-compose dev and push images'){
+		stage('Build docker-compose qa enviroment and push images to docker-hub'){
 			steps{
 				withDockerRegistry(credentialsId: 'Arisa Docker Hub Account', url: 'https://index.docker.io/v1/'){
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' build'
+					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' push'
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up -d'
+					sh 'docker tag ' + DOCKER_IMAGE_BACKEND_API + ':latest ' + DOCKER_IMAGE_BACKEND_API + ':latest'
+					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
+					sh 'docker push ' + DOCKER_IMAGE_BACKEND_API + ':latest'
+					sh 'docker push ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
 				}
 			}
 		}
