@@ -32,6 +32,7 @@ pipeline {
 					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
 					sh 'docker push anataarisa/' + DOCKER_IMAGE_BACKEND_API + ':latest'
 					sh 'docker push anataarisa/' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
+					sh 'docker rmi anataarisa/api-backend-server-qa:latest anataarisa/svelte-frontend-server-qa:latest'
 				}
 			}
 		}
