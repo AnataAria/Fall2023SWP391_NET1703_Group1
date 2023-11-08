@@ -30,8 +30,8 @@ pipeline {
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up -d'
 					sh 'docker tag ' + DOCKER_IMAGE_BACKEND_API + ':latest ' + DOCKER_IMAGE_BACKEND_API + ':latest'
 					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
-					sh 'docker push ' + DOCKER_IMAGE_BACKEND_API + ':latest'
-					sh 'docker push ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
+					sh 'docker push anataarisa/' + DOCKER_IMAGE_BACKEND_API + ':latest'
+					sh 'docker push anataarisa/' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
 				}
 			}
 		}
