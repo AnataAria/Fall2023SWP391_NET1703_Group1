@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   api-backend:
+    image: api-backend-server-qa
     container_name: api-backend-server-qa
     build:
       context: "./api/drawingcouseselling/"
@@ -24,6 +25,7 @@ services:
       retries: 3
 
   front-end:
+    image: svelte-frontend-server-qa
     container_name: svelte-frontend-server-qa
     build:
       context: "./frontend/my-app/"
