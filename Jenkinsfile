@@ -29,7 +29,7 @@ pipeline {
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' build'
 					sh 'docker compose -f ' + DOCKER_COMPOSE_QA_FILE + ' -p ' + DOCKER_COMPOSE_NAME + ' up -d'
 					sh 'docker tag ' + DOCKER_IMAGE_BACKEND_API + ':latest anataarisa/' + DOCKER_IMAGE_BACKEND_API + ':latest'
-					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
+					sh 'docker tag ' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest anataarisa/' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
 					sh 'docker push anataarisa/' + DOCKER_IMAGE_BACKEND_API + ':latest'
 					sh 'docker push anataarisa/' + DOCKER_IMAGE_FRONTEND_SERVER + ':latest'
 					sh 'docker rmi anataarisa/api-backend-server-qa:latest anataarisa/svelte-frontend-server-qa:latest'
