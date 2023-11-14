@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourseDefaultInfo(id));
     }
     @PostMapping(value = "/course")
-    public ResponseEntity<CourseDto> createCourse(@RequestBody @Valid CourseCreateDto courseData, @RequestHeader(value = "Authorization") String jwt){
+    public ResponseEntity<CourseDto> createCourse(@ModelAttribute @Valid CourseCreateDto courseData, @RequestHeader(value = "Authorization") String jwt) throws IOException {
         String email = jwtService.extractUserEmail(jwt.substring(7));
         return ResponseEntity.ok(courseService.createCourseUsingJwt(courseData, email));
     }
