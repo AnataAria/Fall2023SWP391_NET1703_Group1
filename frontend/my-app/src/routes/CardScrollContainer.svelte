@@ -13,6 +13,7 @@
     durations: string;
     instructorID: number;
     instructorName: string;
+    thumbnail_path: string;
   }
   let searchValue: string;
   let course: CourseTemplate[] = [];
@@ -22,9 +23,7 @@
   async function handlePull() {
     try {
       await axios
-        .get<CourseTemplate[]>(
-          apiBaseUrl + `courses?maxPage=20`
-        )
+        .get<CourseTemplate[]>(apiBaseUrl + `courses?maxPage=20`)
         .then((response) => {
           console.log(response.data);
           course = response.data;
@@ -34,23 +33,26 @@
     }
   }
 </script>
+
 <div class="mt-32 mt-10 mb-10">
   <h1 class="mb-2 mt-0 text-5xl font-medium leading-tight text-primary">
     Course Most Choices
   </h1>
   <div class="media-scroller snaps-inline">
     {#each course as item}
-    <div class="media-element">
-      <CourseCard id={item.id}
-      name={item.name}
-      description={item.description}
-      price={item.price}
-      instructorId={item.instructorID}
-      instructorName={item.instructorName}
-      duration={item.durations}
-      isFetchManual={true}
-      />
-    </div>
+      <div class="media-element">
+        <CourseCard
+          id={item.id}
+          name={item.name}
+          description={item.description}
+          price={item.price}
+          instructorId={item.instructorID}
+          instructorName={item.instructorName}
+          duration={item.durations}
+          image_card={item.thumbnail_path}
+          isFetchManual={true}
+        />
+      </div>
     {/each}
   </div>
 </div>

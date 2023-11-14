@@ -26,6 +26,8 @@ services:
     build:
       context: "./api/drawingcouseselling/"
       dockerfile: Dockerfile
+      args:
+        - API_ENV=dev
     ports:
       - "7070:9090"
     networks:
@@ -50,6 +52,8 @@ services:
     build:
       context: "./frontend/my-app/"
       dockerfile: Dockerfile
+      args:
+        - ENV_DP=development
     ports:
       - "3000:3000"
     networks:
@@ -58,5 +62,6 @@ services:
     depends_on:
       api-backend:
         condition: service_healthy
+
 networks:
   dev-network:
