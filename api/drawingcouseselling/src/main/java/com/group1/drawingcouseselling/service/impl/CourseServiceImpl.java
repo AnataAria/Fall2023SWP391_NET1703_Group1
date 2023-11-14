@@ -4,9 +4,11 @@ import com.group1.drawingcouseselling.exception.*;
 import com.group1.drawingcouseselling.model.dto.*;
 import com.group1.drawingcouseselling.model.entity.Course;
 import com.group1.drawingcouseselling.model.entity.Instructor;
+import com.group1.drawingcouseselling.model.enums.ES3;
 import com.group1.drawingcouseselling.repository.CourseRepository;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.*;
+import com.group1.drawingcouseselling.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ public class CourseServiceImpl implements CourseService {
     private final MyLearningService myLearningService;
     private final CourseContentCompletionService courseContentCompletionService;
     private final CertificateService certificateService;
+    private final MetadataService metadataService;
     @Autowired
     public CourseServiceImpl(CourseRepository courseRepository,
                              InstructorRepository instructorRepository,
@@ -35,8 +39,8 @@ public class CourseServiceImpl implements CourseService {
                              @Lazy SectionService sectionService,
                              MyLearningService myLearningService,
                              @Lazy CourseContentCompletionService courseContentCompletionService,
-                             @Lazy CertificateService certificateService
-    ) {
+                             @Lazy CertificateService certificateService,
+                             AmazonS3Service amazonS3Service, MetadataService metadataService) {
         this.courseRepository = courseRepository;
         this.instructorRepository = instructorRepository;
         this.instructorService = instructorService;
@@ -44,6 +48,7 @@ public class CourseServiceImpl implements CourseService {
         this.myLearningService = myLearningService;
         this.courseContentCompletionService = courseContentCompletionService;
         this.certificateService = certificateService;
+        this.metadataService = metadataService;
     }
     @Override
     public List<CourseDto> getAllCourseByPaging(Integer paging, Integer maxPage) {
@@ -84,8 +89,9 @@ public class CourseServiceImpl implements CourseService {
                 .map(course -> new Course().convertEntityToDto(course)).toList();
     }
     @Override
-    public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail){
+    public CourseDto createCourseUsingJwt(CourseCreateDto course, String instructorEmail) throws IOException {
         Course courseNew = new Course();
+        String s3Path = "https://ademyimage.s3.ap-southeast-1.amazonaws.com/course_images/";
         CourseDto courseDto;
         courseNew.setName(course.name());
         courseNew.setDescription(course.description());
@@ -96,6 +102,14 @@ public class CourseServiceImpl implements CourseService {
             courseDto = new Course().convertEntityToDto(courseRepository.save(courseNew));
         }catch(IllegalArgumentException | DataIntegrityViolationException e){
             throw new ValueIsInvalidException("Course value isn't valid");
+        }
+        if (courseDto != null){
+            var newImageName = Tool.changeMultipartFileName("course_" + courseDto.id().toString(), course.file());
+            var path = metadataService.upload(newImageName, ES3.course_images);
+            Course courseInDatabase = courseRepository.findById(courseDto.id()).orElseThrow(()->
+                    new CourseNotFoundException("Course ID isn't found"));
+            courseInDatabase.setThumbnailPath(s3Path + path);
+            courseDto = new Course().convertEntityToDto(courseRepository.save(courseInDatabase));
         }
         return courseDto;
     }

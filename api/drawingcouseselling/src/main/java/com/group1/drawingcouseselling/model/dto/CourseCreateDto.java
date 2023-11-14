@@ -3,6 +3,7 @@ package com.group1.drawingcouseselling.model.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -11,19 +12,21 @@ public record CourseCreateDto(BigDecimal id,
                               @NotNull(message = "Name is mandatory")
                               String name,
                               @NotBlank(message = "Description is mandatory")
-                           @NotNull(message = "Description is mandatory")
-                           String description,
+                              @NotNull(message = "Description is mandatory")
+                              String description,
                               @NotBlank(message = "Duration is mandatory")
-                           @NotNull(message = "Duration is mandatory")
-                           String durations,
+                              @NotNull(message = "Duration is mandatory")
+                              String durations,
                               @Min(value = 0, message = "Price is bigger than 0")
-                              BigDecimal price
-                           ) {
-    public CourseCreateDto(BigDecimal id, String name, String description, String durations, BigDecimal price){
+                              BigDecimal price,
+                              MultipartFile file
+) {
+    public CourseCreateDto(BigDecimal id, String name, String description, String durations, BigDecimal price, MultipartFile file) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.durations = durations;
         this.price = price;
+        this.file = file;
     }
 }
