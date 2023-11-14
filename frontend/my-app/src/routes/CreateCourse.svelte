@@ -43,46 +43,49 @@
     async function UploadImage() {
         let res;
         formData.set("file", file[0]);
+        formData.set("name", course.name);
+        formData.set("description", course.description);
+        formData.set("durations", course.durations);
+        formData.set("price", course.price);
         console.log(formData);
         let img_url:string;
         res = await axios
-            .post(apiBaseUrl + "upload/image", formData, {
+            .post(apiBaseUrl + "course", formData, {
                 headers: {
+                    Authorization: `Bearer ${GetCookie("USER")}`,
                     "Content-Type": "multipart/form-data",
                 },
             })
             .then((response: AxiosResponse) => {
-                if (response.status === 201) {
-                    ShowMessage("Uploaded", 3000, 2, 1);
-                    course.thumbnail_path = response.data;
+                if (response.status === 200) {
+                    ShowMessage("Course created successfully!", 3000, 2, 1);
+                    window.location.reload();
+                    // course.thumbnail_path = response.data;
                 }
             })
             .catch((error: AxiosError) => {
                 console.log(error);
             })
-            .finally(() => {
-                CreateCourse();
-            });
     }
-    async function CreateCourse() {
-        let res;
-        console.log(course);
-        res = await axios
-            .post(apiBaseUrl + "course", course, {
-                headers: {
-                    Authorization: `Bearer ${GetCookie("USER")}`,
-                },
-            })
-            .then((respone: AxiosResponse) => {
-                if (respone.status === 200) {
-                    showMessage(course.name + " created successfully!");
-                    // window.location.reload;
-                }
-            })
-            .catch((error: AxiosError) => {
-                showErrMessage("There are some errors, please try again!");
-            });
-    }
+    // async function CreateCourse() {
+    //     let res;
+    //     console.log(course);
+    //     res = await axios
+    //         .post(apiBaseUrl + "course", course, {
+    //             headers: {
+    //                 Authorization: `Bearer ${GetCookie("USER")}`,
+    //             },
+    //         })
+    //         .then((respone: AxiosResponse) => {
+    //             if (respone.status === 200) {
+    //                 showMessage(course.name + " created successfully!");
+    //                 // window.location.reload;
+    //             }
+    //         })
+    //         .catch((error: AxiosError) => {
+    //             showErrMessage("There are some errors, please try again!");
+    //         });
+    // }
 
     function showMessage(value: string) {
         message = "";
