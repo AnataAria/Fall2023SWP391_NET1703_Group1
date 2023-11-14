@@ -1,4 +1,19 @@
-export const apiBaseUrl: string = "http://localhost:7070/api/v1/"
+import { PUBLIC_API_BASE_URL_DEV, PUBLIC_API_BASE_URL_PROD, PUBLIC_API_BASE_URL_QA } from "$env/static/public";
+let apiBaseUrl: string;
+
+if (process.env.NODE_ENV === 'production') {
+  apiBaseUrl = PUBLIC_API_BASE_URL_PROD;
+} else if (process.env.NODE_ENV === 'development') {
+  apiBaseUrl = PUBLIC_API_BASE_URL_DEV;
+} else if (process.env.NODE_ENV === 'testing') {
+  apiBaseUrl = PUBLIC_API_BASE_URL_QA;
+} else {
+  apiBaseUrl = "http://localhost:9090/api/v1/";
+}
+console.log(process.env.NODE_ENV)
+export { apiBaseUrl };
+
+
 export const BaseUrl: string = "http://localhost:3000/"
 export const apiCurrencyExchange: string = "https://api.exchangerate-api.com/v4/latest/USD"
 import axios, { type AxiosResponse } from 'axios';

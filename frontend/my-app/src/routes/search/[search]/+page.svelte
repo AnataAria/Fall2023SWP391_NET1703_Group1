@@ -16,6 +16,7 @@
     durations: string;
     instructorID: number;
     instructorName: string;
+    thumbnail_path: string;
   }
   let searchValue: string;
   let course: CourseTemplate[] = [];
@@ -36,7 +37,7 @@
     try {
       await axios
         .get<CourseTemplate[]>(
-          apiBaseUrl+`courses?name=${searchValue}&maxPage=10`
+          apiBaseUrl + `courses?name=${searchValue}&maxPage=10`
         )
         .then((response) => {
           console.log(response.data);
@@ -61,7 +62,10 @@
         <div class="flex items-center">
           <div class="relative inline-block text-left">
             <div>
-              <Button>Sort<ChevronDownOutline class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"/></Button
+              <Button
+                >Sort<ChevronDownOutline
+                  class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                /></Button
               >
               <Dropdown>
                 <DropdownItem>Dashboard</DropdownItem>
@@ -397,6 +401,7 @@
                   isFetchManual={true}
                   duration={item.durations}
                   instructorId={item.instructorID}
+                  image_card={item.thumbnail_path}
                 />
               {/each}
             </div>

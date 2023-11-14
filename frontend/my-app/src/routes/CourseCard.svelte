@@ -10,6 +10,7 @@
   export let duration: string;
   export let instructorName: string;
   export let instructorId: number;
+  export let image_card: string;
   export let isFetchManual: boolean;
   import { Card, Rating, Badge } from "flowbite-svelte";
   let open = true;
@@ -45,6 +46,7 @@
     durations: "",
     instructorName: "",
     instructorID: 0,
+    thumbnail_path: "",
   };
   async function handleAddCart() {
     jwtToken = GetCookie("USER");
@@ -75,7 +77,7 @@
   async function handleGetCourse() {
     try {
       let res = await axios
-        .get(`http://localhost:9090/api/v1/course?id=${id + 1}`)
+        .get(apiBaseUrl + `course?id=${id + 1}`)
         .then((response) => {
           console.log(response.data);
           course = response.data;
@@ -108,6 +110,7 @@
         durations: duration,
         instructorName: instructorName,
         instructorID: instructorId,
+        thumbnail_path: image_card,
       };
       getRating();
       console.log(rating);
@@ -123,7 +126,7 @@
     <a href="/course/{id}">
       <img
         class="p-11 rounded-t-sm"
-        src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c"
+        src={course.thumbnail_path}
         alt="product 1"
       />
     </a>

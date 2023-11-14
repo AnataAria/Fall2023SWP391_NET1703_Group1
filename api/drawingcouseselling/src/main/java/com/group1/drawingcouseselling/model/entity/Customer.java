@@ -113,6 +113,7 @@ public class Customer implements ObjectMapper<Customer, CustomerDto> {
                 .birthDate(data.getBirthDate())
                 .gender(data.getGender())
                 .email(data.getAccount().getEmail())
+                .avatarLink(getPath())
                 .build();
     }
 }

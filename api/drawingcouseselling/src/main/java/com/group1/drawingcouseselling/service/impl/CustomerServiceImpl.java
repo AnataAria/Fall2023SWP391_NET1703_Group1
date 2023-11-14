@@ -60,6 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
                     .gender(data.getGender())
                     .email(customerEmailDto)
                     .joinDate(accountService.checkAccountByEmail(customerEmailDto).getCreateDate())
+                    .avatarLink(data.getPath())
                     .build();
         }
         assert customerDto != null;
