@@ -19,7 +19,7 @@
 </script>
 
 <footer>
-  <Footer footerType="socialmedia" class="mt-auto" >
+  <Footer footerType="socialmedia" class="mt-auto">
     <div class="md:flex md:justify-between top-px">
       <div class="mb-6 md:mb-0">
         <FooterBrand
@@ -38,7 +38,10 @@
           </h2>
           <FooterLinkGroup>
             <FooterLink liClass="mb-4" href="/">Ademy</FooterLink>
-            <FooterLink liClass="mb-4" href="/">Tailwind CSS</FooterLink>
+            <FooterLink
+              liClass="mb-4"
+              href="https://forms.gle/kPSbceijMGGifvbW6">Feedback</FooterLink
+            >
           </FooterLinkGroup>
         </div>
         <div>
@@ -48,7 +51,11 @@
             Follow us
           </h2>
           <FooterLinkGroup>
-            <FooterLink liClass="mb-4" href="https://github.com/AnataAria/Fall2023SWP391_NET1703_Group1">GitHub</FooterLink>
+            <FooterLink
+              liClass="mb-4"
+              href="https://github.com/AnataAria/Fall2023SWP391_NET1703_Group1"
+              >GitHub</FooterLink
+            >
             <FooterLink liClass="mb-4" href="/">Discord</FooterLink>
           </FooterLinkGroup>
         </div>
@@ -89,11 +96,8 @@
             class="w-4 h-4 text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white"
           />
         </FooterIcon>
-        <FooterIcon href="/">
-        </FooterIcon>
+        <FooterIcon href="/" />
       </div>
     </div>
   </Footer>
 </footer>
-  
-
