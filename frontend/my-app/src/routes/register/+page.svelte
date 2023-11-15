@@ -12,31 +12,34 @@ let registerForm = {
   birthDate: "",
   gender: ""
 };
+let checked: boolean = false;
 let rePassword = "";
 let errorMsg = "";
 let jwtToken = "";
 async function handleRegister() {
   let status = true;
+  console.log(registerForm)
   if (
     !registerForm.email ||
     !registerForm.password ||
     !registerForm.birthDate ||
-    !registerForm.gender ||
-    !registerForm.password
+    !registerForm.password ||
+    !checked
   ) {
     ShowMessage("Required field cannot be empty", 3000, 1, 1);
     status = false;
   }
   if (registerForm.password !== rePassword) {
     ShowMessage("Re-enter password must match with password", 3000, 1, 1);
-
     status = false;
   }
   if(!emailRegex.test(registerForm.email)){
     ShowMessage("Email is not in correct format", 3000, 1, 1);
+    status = false;
   }
   if(hasUnicodeCharacters(registerForm.fullname)){
     ShowMessage("Please enter non-unicode fullname", 3000, 1, 1);
+    status = false;
   }
   let res = null;
   if (status) {
@@ -136,11 +139,11 @@ function kickBackToLandingPage() {
                   </div>
                   <div>
                       <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password <pc style="color: red;">*</pc></label>
-                      <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={rePassword}>
+                      <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={rePassword}>
                   </div>
                   <div class="flex items-start">
                       <div class="flex items-center h-5">
-                        <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required>
+                        <input bind:checked={checked} id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required>
                       </div>
                       <div class="ml-3 text-sm">
                         <label for="terms" class="font-light text-gray-500 dark:text-gray-300">I accept the <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
