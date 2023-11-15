@@ -7,6 +7,14 @@
   import { GetCookie } from "../service";
   import PartnerBanner from "./PartnerBanner.svelte";
   let loginStatus = false;
+  import { SpeedDial, Listgroup, ListgroupItem } from "flowbite-svelte";
+  import {
+    DotsHorizontalOutline,
+    ShareNodesSolid,
+    PrintSolid,
+    DownloadSolid,
+    FileCopySolid,
+  } from "flowbite-svelte-icons";
   function checkLogin() {
     if (GetCookie("USER") != null) loginStatus = true;
     else loginStatus = false;
@@ -20,11 +28,10 @@
   <Carousel />
   <div class="flex justify-center">
     <div class="w-11/12">
-      <PartnerBanner></PartnerBanner>
+      <PartnerBanner />
       <CardScrollContainer />
     </div>
   </div>
-  {:else}
-  <UserLandingPage></UserLandingPage>
+{:else}
+  <UserLandingPage />
 {/if}
-
