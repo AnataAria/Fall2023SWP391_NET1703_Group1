@@ -4,18 +4,19 @@ let BaseUrl: string;
 
 if (process.env.NODE_ENV === 'production') {
   apiBaseUrl = PUBLIC_API_BASE_URL_PROD;
-  BaseUrl = "http://http://anataarisa.hopto.org:3000/"
+  BaseUrl = "http://anataarisa.hopto.org:3000/"
 } else if (process.env.NODE_ENV === 'development') {
   apiBaseUrl = PUBLIC_API_BASE_URL_DEV;
   BaseUrl = "http://localhost:3000/"
 } else if (process.env.NODE_ENV === 'testing') {
   apiBaseUrl = PUBLIC_API_BASE_URL_QA;
-  BaseUrl = "http://http://anataarisa.hopto.org:3000/"
+  BaseUrl = "http://anataarisa.hopto.org:3000/"
 } else {
   apiBaseUrl = "http://localhost:9090/api/v1/";
   BaseUrl = "http://localhost:3000/"
 }
 console.log(process.env.NODE_ENV)
+console.log(BaseUrl)
 export { apiBaseUrl, BaseUrl };
 
 
