@@ -24,6 +24,7 @@ async function handleRegister() {
     !registerForm.password ||
     !registerForm.birthDate ||
     !registerForm.password ||
+    registerForm.gender.length == 0 ||
     !checked
   ) {
     ShowMessage("Required field cannot be empty", 3000, 1, 1);
