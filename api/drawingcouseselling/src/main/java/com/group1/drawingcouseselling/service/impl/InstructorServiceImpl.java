@@ -8,6 +8,8 @@ import com.group1.drawingcouseselling.model.entity.Instructor;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.InstructorService;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -37,6 +39,10 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public InstructorDto findInstructorDtoByInstructorEmail(String instructorEmail){
         return instructorRepository.findInstructorByEmail(instructorEmail).map(c -> new Instructor().convertEntityToDto(c)).orElseThrow(()-> new InstructorNotFoundException("Not found instructor with this email")) ;
+    }
+    @Override
+    public Page<Instructor> getInstructorOnPaging(Integer page, Integer maxPage){
+        return instructorRepository.getInstructorsOnPaging(PageRequest.of(page,maxPage));
     }
 
 }
