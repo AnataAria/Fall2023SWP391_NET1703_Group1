@@ -7,6 +7,7 @@ import com.group1.drawingcouseselling.model.dto.InstructorDto;
 import com.group1.drawingcouseselling.model.entity.Instructor;
 import com.group1.drawingcouseselling.repository.InstructorRepository;
 import com.group1.drawingcouseselling.service.InstructorService;
+import com.group1.drawingcouseselling.util.Tool;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,5 +45,13 @@ public class InstructorServiceImpl implements InstructorService {
     public Page<Instructor> getInstructorOnPaging(Integer page, Integer maxPage){
         return instructorRepository.getInstructorsOnPaging(PageRequest.of(page,maxPage));
     }
-
+    @Override
+    public InstructorDto addInstructorPayPalEmail(String instructorEmail, String paypalEmail){
+        var instructorInfo = instructorRepository.findInstructorByEmail(instructorEmail).orElseThrow(
+                () -> new UserNotFoundException("Not found this instructor in system")
+        );
+        if(!Tool.isValidEmailAddress(paypalEmail)) throw new ValueIsInvalidException("Email is not valid");
+        instructorInfo.setPaypalEmail(paypalEmail);
+        return new Instructor().convertEntityToDto(instructorRepository.save(instructorInfo));
+    }
 }

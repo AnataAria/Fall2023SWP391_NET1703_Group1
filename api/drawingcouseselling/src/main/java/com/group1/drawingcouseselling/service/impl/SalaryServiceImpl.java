@@ -33,11 +33,9 @@ public class SalaryServiceImpl implements SalaryService {
             do{
                 instructorPage.stream().forEach(instructor -> {
                     var monthSalary = new Salary();
-                    var instructorAcc = instructor.getAccount();
                     monthSalary.setInstructor(instructor);
                     monthSalary.setAmount(BigDecimal.ZERO);
                     monthSalary.setCurrency("USD");
-                    monthSalary.setEmail(instructorAcc.getEmail());
                     monthSalary.setRecipientWallet("PayPal");
                     salaryRepository.save(monthSalary);
                 });
