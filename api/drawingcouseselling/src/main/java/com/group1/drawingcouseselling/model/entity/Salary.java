@@ -15,8 +15,6 @@ public class Salary {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Instructor.class)
     @JoinColumn(name = "instructor_id", updatable = true, nullable = false)
     private Instructor instructor;
-    @Column(name = "email", nullable = false)
-    private String email;
     @Column(name = "amount", columnDefinition = "decimal(20,5)", nullable = false)
     private BigDecimal amount;
     @Column(name = "currency", nullable = false)
@@ -44,14 +42,6 @@ public class Salary {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public BigDecimal getAmount() {

@@ -5,7 +5,6 @@ import com.group1.drawingcouseselling.model.dto.InstructorDto;
 import com.group1.drawingcouseselling.util.ObjectMapper;
 import jakarta.persistence.*;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity(name = "instructor")
@@ -20,6 +19,8 @@ public class Instructor implements ObjectMapper<Instructor, InstructorDto> {
     private String specialization;
     @Column(name ="phone_number")
     private String phone;
+    @Column(name = "paypal_email")
+    private String paypalEmail;
     @OneToOne(targetEntity = Account.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
     @JoinColumn(name = "account_id")
     private Account account;
@@ -79,6 +80,14 @@ public class Instructor implements ObjectMapper<Instructor, InstructorDto> {
         return null;
     }
 
+    public String getPaypalEmail() {
+        return paypalEmail;
+    }
+
+    public void setPaypalEmail(String paypalEmail) {
+        this.paypalEmail = paypalEmail;
+    }
+
     @Override
     public InstructorDto convertEntityToDto(Instructor data) {
         return InstructorDto.builder()
@@ -87,6 +96,7 @@ public class Instructor implements ObjectMapper<Instructor, InstructorDto> {
                 .specialization(data.getSpecialization())
                 .phone(data.getPhone())
                 .avatar(data.getAvatar())
+                .paypalEmail(data.getPaypalEmail())
                 .build();
     }
 }

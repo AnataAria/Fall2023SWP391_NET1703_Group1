@@ -12,4 +12,5 @@ public interface InstructorService {
     public Instructor findInstructorByInstructorEmail(String instructorEmail);
     public InstructorDto findInstructorDtoByInstructorEmail(String instructorEmail);
     public Page<Instructor> getInstructorOnPaging(Integer page, Integer maxPage);
+    public InstructorDto addInstructorPayPalEmail(String instructorEmail, String paypalEmail);
 }
