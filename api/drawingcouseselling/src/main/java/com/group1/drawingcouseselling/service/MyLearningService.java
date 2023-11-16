@@ -12,4 +12,5 @@ public interface MyLearningService {
 
     public boolean hasCourse(String email, BigDecimal courseID);
     public Boolean checkSomeoneLearningCourse(BigDecimal courseID);
+    public BigDecimal getQuantityOfLeaningCourse(BigDecimal courseID);
 }
