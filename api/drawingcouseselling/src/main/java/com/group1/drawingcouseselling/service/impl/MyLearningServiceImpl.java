@@ -71,4 +71,9 @@ public class MyLearningServiceImpl implements MyLearningService {
         var count = customerRepository.countAllCustomerHasLearnedCourseUsingCourseID(courseID);
         return !count.equals(BigDecimal.ZERO);
     }
+
+    @Override
+    public BigDecimal getQuantityOfLeaningCourse(BigDecimal courseID){
+        return customerRepository.countAllCustomerHasLearnedCourseUsingCourseID(courseID);
+    }
 }

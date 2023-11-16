@@ -5,6 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.group1.drawingcouseselling.service.MyLearningService;
 import com.group1.drawingcouseselling.service.PaymentService;
+import com.group1.drawingcouseselling.service.SalaryService;
 import com.group1.drawingcouseselling.service.TransactionService;
 import com.paypal.api.payments.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,16 @@ import java.math.BigDecimal;
 public class PaymentServiceImpl implements PaymentService {
     private final MyLearningService myLearningService;
     private final TransactionService transactionService;
+    private final SalaryService salaryService;
     private LoadingCache<String, String> paymentAccountInfo;
     @Autowired
     public PaymentServiceImpl(MyLearningService myLearningService,
-                              TransactionService transactionService) {
+                              TransactionService transactionService,
+                              SalaryService salaryService) {
         super();
         this.myLearningService = myLearningService;
         this.transactionService = transactionService;
+        this.salaryService = salaryService;
         paymentAccountInfo = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
             @Override
             public String load(String s) {
@@ -40,6 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
         if(!email.isEmpty()){
             myLearningService.orderCourse(email);
             transactionService.makeTransaction(email,new BigDecimal(transaction.getAmount().getTotal()), transaction.getDescription());
+            salaryService.updateSalary(email, new BigDecimal(transaction.getAmount().getTotal()));
             clearAccountPaymentInfo(paymentToken);
         }
     }
