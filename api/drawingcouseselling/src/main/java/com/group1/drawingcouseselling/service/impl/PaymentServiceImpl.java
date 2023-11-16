@@ -17,16 +17,13 @@ import java.math.BigDecimal;
 public class PaymentServiceImpl implements PaymentService {
     private final MyLearningService myLearningService;
     private final TransactionService transactionService;
-    private final SalaryService salaryService;
     private LoadingCache<String, String> paymentAccountInfo;
     @Autowired
     public PaymentServiceImpl(MyLearningService myLearningService,
-                              TransactionService transactionService,
-                              SalaryService salaryService) {
+                              TransactionService transactionService) {
         super();
         this.myLearningService = myLearningService;
         this.transactionService = transactionService;
-        this.salaryService = salaryService;
         paymentAccountInfo = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
             @Override
             public String load(String s) {
@@ -44,7 +41,6 @@ public class PaymentServiceImpl implements PaymentService {
         if(!email.isEmpty()){
             myLearningService.orderCourse(email);
             transactionService.makeTransaction(email,new BigDecimal(transaction.getAmount().getTotal()), transaction.getDescription());
-            salaryService.updateSalary(email, new BigDecimal(transaction.getAmount().getTotal()));
             clearAccountPaymentInfo(paymentToken);
         }
     }

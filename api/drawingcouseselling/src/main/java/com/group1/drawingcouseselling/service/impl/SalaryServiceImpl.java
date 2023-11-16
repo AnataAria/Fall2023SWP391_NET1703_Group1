@@ -3,6 +3,7 @@ package com.group1.drawingcouseselling.service.impl;
 import com.group1.drawingcouseselling.exception.EntityNotFoundException;
 import com.group1.drawingcouseselling.model.dto.CourseDto;
 import com.group1.drawingcouseselling.model.dto.InstructorFinanceDto;
+import com.group1.drawingcouseselling.model.entity.Instructor;
 import com.group1.drawingcouseselling.model.entity.Salary;
 import com.group1.drawingcouseselling.repository.SalaryRepository;
 import com.group1.drawingcouseselling.service.*;
@@ -66,6 +67,10 @@ public class SalaryServiceImpl implements SalaryService {
     @Override
     public void updateSalary(String instructorEmail, BigDecimal income){
         var instructorInfo = instructorService.findInstructorByInstructorEmail(instructorEmail);
+        updateSalary(instructorInfo, income);
+    }
+    @Override
+    public void updateSalary(Instructor instructorInfo, BigDecimal income){
         var salaryInfo = salaryRepository.getSalariesByInstructorID(instructorInfo.getId()).orElseThrow(
                 () -> new EntityNotFoundException("The salary for this instructor is invalid")
         );
