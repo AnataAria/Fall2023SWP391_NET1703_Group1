@@ -17,7 +17,7 @@ public class Salary {
     private Instructor instructor;
     @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "amount", columnDefinition = "bigint", nullable = false)
+    @Column(name = "amount", columnDefinition = "decimal(20,5)", nullable = false)
     private BigDecimal amount;
     @Column(name = "currency", nullable = false)
     private String currency;
