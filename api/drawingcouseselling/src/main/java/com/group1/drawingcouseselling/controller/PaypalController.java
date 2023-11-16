@@ -71,7 +71,8 @@ public class PaypalController {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             System.out.println(payment.toJSON());
             if (payment.getState().equals("approved")) {
-                paymentService.orderPayment(paymentId);
+                var transaction = payment.getTransactions().get(0);
+                paymentService.orderPayment(paymentId, transaction);
                 try{
                     response.sendRedirect(FRONTEND_URL + "pay/status?paymentID=" + paymentId + "&status=success");
                 }catch(Exception e){

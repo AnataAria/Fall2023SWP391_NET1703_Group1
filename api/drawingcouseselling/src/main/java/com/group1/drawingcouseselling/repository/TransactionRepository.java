@@ -18,4 +18,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, BigDec
     @Transactional
     @Modifying(clearAutomatically = true)
     public void makeTransactionUsingCustomerEmail(String customerEmail);
+
+    @Query("SELECT COALESCE(SUM(t.totalAmount), 0) FROM transaction t " +
+            "WHERE FUNCTION('MONTH', t.transactionDate) = :month AND FUNCTION('YEAR', t.transactionDate) = :year")
+    BigDecimal getSumByMonthAndYear(@Param("month") int month, @Param("year") int year);
 }
