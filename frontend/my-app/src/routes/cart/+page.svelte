@@ -11,6 +11,7 @@
     price:number;
     description:string;
     durations:string;
+    thumbnail_path:string;
     instructorID:number;
     instructorName:string;
   }
@@ -56,6 +57,7 @@ let courses:CourseTemplate[] = [];
           <div class="md:w-3/4">
             {#each courses as item}
             <CartItem id={item.id}
+            thumbnail={item.thumbnail_path}
             prouduct_name={item.name}
             product_description={item.description}
             product_price={item.price}

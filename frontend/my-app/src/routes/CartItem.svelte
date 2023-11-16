@@ -6,6 +6,7 @@
   export let prouduct_name: string;
   export let product_description: string;
   export let product_price : number;
+  export let thumbnail: string;
   let jwt:string|null = "";
   async function removeItemCart(){
     try{
@@ -42,7 +43,7 @@
             <tr>
                 <td class="py-4">
                     <div class="flex items-center">
-                        <img class="h-16 w-16 mr-4" src="https://via.placeholder.com/150" alt="Product image">
+                        <img src={thumbnail} class="h-16 w-16 mr-4" alt="Productimage">
                         <span class="font-semibold mr-8">{prouduct_name}</span>
                     </div>
                 </td>
