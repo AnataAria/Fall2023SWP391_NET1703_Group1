@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-@Entity(name = " staff")
+@Entity(name = "staff")
 @NoArgsConstructor(force = true)
 public class Staff implements Serializable {
     @Id
