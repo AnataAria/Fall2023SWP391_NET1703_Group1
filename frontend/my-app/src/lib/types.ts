@@ -76,6 +76,7 @@ export type Course = {
     price: number;
     description: string;
     durations: string;
+    thumbnail_path:string;
     instructorID: number;
     instructorName: string;
 }
