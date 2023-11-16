@@ -23,9 +23,9 @@ public class InstructorController {
         return ResponseEntity.ok(instructorService.findInstructorDtoByInstructorEmail(email));
     }
 
-    @PostMapping("/instructor/paypal")
-    public ResponseEntity<InstructorDto> addPayPalEmail(@RequestHeader(value = "Authorization") String instructorToken,
-                                                        @RequestParam(value = "paypalEmail")  String paypalEmail){
+    @GetMapping("/instructor/paypal")
+    public ResponseEntity<InstructorDto> addPayPalEmail(@RequestHeader(value = "Authorization", defaultValue = "") String instructorToken,
+                                                        @RequestParam String paypalEmail){
         String email = jwtService.extractUserEmail(instructorToken.substring(7));
         return ResponseEntity.ok(instructorService.addInstructorPayPalEmail(email,paypalEmail));
     }

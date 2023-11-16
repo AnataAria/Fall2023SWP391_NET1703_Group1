@@ -20,6 +20,7 @@ export type InstructorInfo = {
   specialization:string;
   phone:number;
   avatar:string;
+  paypalEmail:string;
 };
 export type InstructorSalary = {
   instructorInfo: InstructorInfo;
