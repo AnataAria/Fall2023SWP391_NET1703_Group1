@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.Collection;
 import java.util.Optional;
 
 @Repository
@@ -15,4 +17,8 @@ public interface SalaryRepository extends JpaRepository<Salary, BigDecimal> {
             "AND YEAR(s.salaryDate) = YEAR(CURRENT_DATE)" +
             " AND MONTH(s.salaryDate) = MONTH(CURRENT_DATE )")
     public Optional<Salary> getSalariesByInstructorID(@Param(value = "instructorID") BigDecimal instructorID);
+    @Query(value = "SELECT s FROM salary s WHERE " +
+            "YEAR(s.salaryDate) = YEAR(:salaryDate)" +
+            " AND MONTH(s.salaryDate) = MONTH(:salaryDate)")
+    public Collection<Salary> getSalariesByYearsAndMonth(@Param(value = "salaryDate")Date salaryDate);
 }

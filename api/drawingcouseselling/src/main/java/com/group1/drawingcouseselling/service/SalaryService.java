@@ -9,4 +9,5 @@ public interface SalaryService {
     public InstructorFinanceDto getInstructorFinance(String instructorEmail);
     public void updateSalary(String instructorEmail, BigDecimal income);
     public void updateSalary(Instructor instructorInfo, BigDecimal income);
+    public byte[] getSalaryExcelOfMonths(Integer month, Integer year, String staffEmail);
 }
