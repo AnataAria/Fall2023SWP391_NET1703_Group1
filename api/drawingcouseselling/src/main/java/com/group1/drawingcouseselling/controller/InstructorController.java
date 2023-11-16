@@ -4,7 +4,6 @@ import com.group1.drawingcouseselling.model.dto.InstructorDto;
 import com.group1.drawingcouseselling.service.InstructorService;
 import com.group1.drawingcouseselling.service.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,5 +21,12 @@ public class InstructorController {
     ){
         String email = jwtService.extractUserEmail(instructorToken.substring(7));
         return ResponseEntity.ok(instructorService.findInstructorDtoByInstructorEmail(email));
+    }
+
+    @PostMapping("/instructor/paypal")
+    public ResponseEntity<InstructorDto> addPayPalEmail(@RequestHeader(value = "Authorization") String instructorToken,
+                                                        @RequestParam(value = "paypalEmail")  String paypalEmail){
+        String email = jwtService.extractUserEmail(instructorToken.substring(7));
+        return ResponseEntity.ok(instructorService.addInstructorPayPalEmail(email,paypalEmail));
     }
 }
