@@ -1,4 +1,17 @@
 import { type } from "os";
+export type InstructorInfo = {
+  id: number;
+  fullName: string;
+  specialization:string;
+  phone:number;
+  avatar:string;
+};
+export type InstructorSalary = {
+  instructorInfo: InstructorInfo;
+  monthlySalary: number;
+  courseSelling: number;
+  totalMoneySelling: number
+}
 export type GradingExam = {
   examID:number;
   score:string;
