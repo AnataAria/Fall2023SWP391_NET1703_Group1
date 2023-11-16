@@ -48,7 +48,7 @@
     </div>
   </section>
 
-  <section class="bg-white dark:bg-gray-900">
+  <!-- <section class="bg-white dark:bg-gray-900">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
       <h2
         class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-center text-gray-900 lg:mb-16 dark:text-white md:text-4xl"
@@ -267,7 +267,7 @@
         </a>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- <section class="bg-gray-50 dark:bg-gray-800">
         <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
