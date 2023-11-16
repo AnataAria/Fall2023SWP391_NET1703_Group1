@@ -73,7 +73,7 @@
       } catch (err) {
         EnableSubmitButton();
         if(err.response.status === 404){
-          ShowMessage("Username or password is not correct!", 3000, 1, 1);
+          ShowMessage("Incorrect email or password!", 3000, 1, 1);
         }
         else{
           ShowMessage("Internal error, please try again!", 3000, 1, 1);
@@ -128,13 +128,14 @@
   </div>
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
       <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <form>
           <div class="space-y-6">
               <div>
                   <label for="email" class="block text-sm font-medium text-gray-700">
                       Email address
                   </label>
                   <div class="mt-1">
-                      <input id="email" name="email" type="email" autocomplete="email" required
+                      <input id="email" type="email" autocomplete="email" required
                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                           placeholder="Enter your email address"
                           bind:value={loginForm.email}>
@@ -145,7 +146,7 @@
                       Password
                   </label>
                   <div class="mt-1">
-                      <input id="password" name="password" type="password" autocomplete="current-password" required
+                      <input id="password" type="password" autocomplete="current-password" required
                           class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                           placeholder="Enter your password"
                           bind:value={loginForm.password}>
@@ -179,6 +180,8 @@
                 </Button>
               </div>
             </div>
+        </form>
+          
           <div class="mt-6">
               <div class="relative">
                   <div class="absolute inset-0 flex items-center">

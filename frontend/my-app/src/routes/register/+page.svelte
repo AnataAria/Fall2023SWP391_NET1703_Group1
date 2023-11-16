@@ -55,6 +55,9 @@ async function handleRegister() {
         });
     } catch (err) {
       console.log(err);
+      if(err.response.status === 400){
+          ShowMessage("This email have already registered, please use another email", 3000, 1, 1);
+        }
     }
   }
 }
@@ -104,18 +107,19 @@ function kickBackToLandingPage() {
               <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Create and account
               </h1>
-              <div class="space-y-4 md:space-y-5">
+              <form>
+                <div class="space-y-4 md:space-y-5">
                   <div>
                       <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name <pc style="color: red;">*</pc></label>
-                      <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" bind:value={registerForm.fullname} required >
+                      <input type="text" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" bind:value={registerForm.fullname} required >
                   </div>
                   <div>
                       <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email <pc style="color: red;">*</pc></label>
-                      <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" bind:value={registerForm.email} required>
+                      <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" bind:value={registerForm.email} required>
                   </div>
                   <div>
                       <label for="Birthday" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Birthday <pc style="color: red;">*</pc></label>
-                      <input type="date" name="Birthday" id="Birthday" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required bind:value={registerForm.birthDate}>
+                      <input type="date" id="Birthday" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required bind:value={registerForm.birthDate}>
                   </div>
                   <div>
                       <label for="Gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender <pc style="color: red;">*</pc></label>
@@ -136,11 +140,11 @@ function kickBackToLandingPage() {
                   </div>
                   <div>
                       <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password <pc style="color: red;">*</pc></label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={registerForm.password}>
+                      <input type="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={registerForm.password}>
                   </div>
                   <div>
                       <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password <pc style="color: red;">*</pc></label>
-                      <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={rePassword}>
+                      <input type="password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required bind:value={rePassword}>
                   </div>
                   <div class="flex items-start">
                       <div class="flex items-center h-5">
@@ -158,6 +162,7 @@ function kickBackToLandingPage() {
                     Want to be an instructor? <a href="/teaching" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Click here</a>
                   </p>
                 </div>
+              </form>
           </div>
       </div>
   </div>
