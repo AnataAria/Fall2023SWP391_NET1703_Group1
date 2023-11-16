@@ -3,10 +3,11 @@
   import { CurrencyHandler, GetCookie, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
-  import type { Course } from "$lib/types";
+  import type { Course, InstructorSalary } from "$lib/types";
   import CreateCourseSection from "../CreateCourseSection.svelte";
   import CreateCourse from "../CreateCourse.svelte";
-  import { Button } from "flowbite-svelte";
+  import { Button, Popover } from "flowbite-svelte";
+    import { ChevronRightOutline, QuestionCircleSolid } from "flowbite-svelte-icons";
 
   interface Instructorinterface {
     email: string;
@@ -15,7 +16,47 @@
     specialization: string;
     phone: string;
   }
-  let InstructorInfo: Instructorinterface = [];
+  let instructorRevenue: InstructorSalary = {
+      instructorInfo: {
+          id: 0,
+          fullName: "",
+          specialization: "",
+          phone: 0,
+          avatar: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+      },
+      monthlySalary: 0,
+      courseSelling: 0,
+      totalMoneySelling: 0
+  }
+  let jwtData = {
+    email: "",
+    role: "",
+    createDate: "",
+    isActive: false,
+  };
+  let InstructorInfo: Instructorinterface = {
+      email: "",
+      password: "",
+      fullName: "",
+      specialization: "",
+      phone: ""
+  };
+  async function getInstructorSalary() {
+    try {
+      await axios
+        .get(apiBaseUrl + "salary", {
+          headers: {
+            Authorization: `Bearer ${GetCookie("USER")}`,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data);
+            instructorRevenue = response.data;
+          }
+        });
+    } catch (e) {}
+  }
   async function getInstructorInfo() {
     try {
       await axios
@@ -48,9 +89,32 @@
         });
     } catch (e) {}
   }
+  async function UserInfo() {
+    const token = GetCookie("USER");
+    if (token != null) {
+      let header = {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      await axios
+        .get(apiBaseUrl + "account", {
+          headers: header,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            jwtData = res.data;
+            console.log(jwtData);
+            console.log(jwtData.role);
+          }
+        });
+    }
+  }
   onMount(() => {
     getInstructorInfo();
     getInstructorCourseList();
+    getInstructorSalary();
+    UserInfo();
   });
 </script>
 
@@ -68,19 +132,19 @@
             <div class="items-center">
               <img
                 class="mx-auto w-2/5 rounded-full"
-                src="https://scontent.xx.fbcdn.net/v/t1.15752-9/384527701_207166732257295_191374629976122951_n.jpg?stp=dst-jpg_s206x206&_nc_cat=109&ccb=1-7&_nc_sid=aee45a&_nc_ohc=vAuht4IB9AgAX8LtnXT&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTaA-FOdDgEHBlJNHUe3qr7Kqe3pd6wM66h30NWjjGCUA&oe=65447FAE"
+                src={instructorRevenue.instructorInfo.avatar}
                 alt=""
               />
             </div>
 
             <br />
             <div class="text-center">
-              <h1 class="text-2xl font-bold mb-4">Contact</h1>
+              <h1 class="text-2xl font-bold mb-4">Profile Information</h1>
 
               <div class="text-lg text-gray-500 p-0.5">
                 <i class="fa fa-envelope" />Email address
               </div>
-              <div class="font-medium p-0.5">{InstructorInfo.email}</div>
+              <div class="font-medium p-0.5">{jwtData.email}</div>
 
               <div class="text-lg text-gray-500 p-0.5">
                 <i class="fa fa-phone" />Phone number
@@ -89,6 +153,30 @@
             </div>
           </div>
           <hr class="my-6 border-t border-gray-300" />
+          <div class="text-center">
+            <h1 class="text-2xl font-bold mb-4"><i class="fa-solid fa-money-bill"></i>Revenue Statistics</h1>
+            <div class="text-lg text-gray-500 p-0.5">
+              Monthly Salary
+             </div>
+             <div class="font-medium p-0.5">${instructorRevenue.monthlySalary}</div>
+             <div class="text-lg text-gray-500 p-0.5">
+              Course sold 
+              <button id="b3">
+                <QuestionCircleSolid class="w-4 h-4 ml-1.5" />
+                <span class="sr-only">Show information</span>
+              </button>
+              <Popover triggeredBy="#b3" class="w-72 text-sm font-light text-gray-500 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400" placement="bottom-start">
+                <div class="p-3 space-y-2">
+                  Number of users have bought courses created by this instructor
+                </div>
+              </Popover>
+             </div>
+             <div class="font-medium p-0.5">{instructorRevenue.courseSelling}</div>
+             <div class="text-lg text-gray-500 p-0.5">
+              Total Revenue
+             </div>
+             <div class="font-medium p-0.5">${instructorRevenue.totalMoneySelling}</div>
+          </div>
         </div>
       </div>
       <!--Right-->
@@ -97,10 +185,7 @@
           <h1 class="text-2xl font-bold mb-4">General information</h1>
           <h2 class="text-xl font-medium mb-4">About Me</h2>
           <p class="text-gray-700">
-            Tincidunt quam neque in cursus viverra orci, dapibus nec tristique.
-            Nullam ut sit dolor consectetur urna, dui cras nec sed. Cursus risus
-            congue arcu aenean posuere aliquam.
-          </p>
+            Hey there! I'm {InstructorInfo.fullName}, a passionate {InstructorInfo.specialization} who embarked on this captivating journey back in {jwtData.createDate}.          </p>
 
           <br />
           <!--1-->
@@ -111,7 +196,7 @@
             </div>
             <div>
               <div>Join Date</div>
-              <div class="font-medium">12-09-2021</div>
+              <div class="font-medium">{jwtData.createDate}</div>
             </div>
 
             <div>
@@ -229,12 +314,12 @@
                             >
                               Course Name
                             </th>
-                            <th
+                            <!-- <th
                               scope="col"
                               class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
                             >
                               Description
-                            </th>
+                            </th> -->
                             <th
                               scope="col"
                               class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
@@ -265,12 +350,12 @@
                               >
                               <td
                                 class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
-                                >{course.name}</td
+                                style="margin-right: 100%;">{course.name}</td
                               >
-                              <td
+                              <!-- <td
                                 class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white overflow-ellipsis overflow-hidden ..."
                                 >{course.description}</td
-                              >
+                              > -->
                               <td
                                 class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                 >{course.durations}</td

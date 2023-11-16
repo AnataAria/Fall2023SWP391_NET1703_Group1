@@ -9,8 +9,17 @@
     gender: number;
     email: string;
     joinDate: Date;
+    avatarLink:string;
   }
-  let customerInfo: CustomerInterface = [];
+  let customerInfo: CustomerInterface = {
+      customerID: 0,
+      fullName: "",
+      birthDate: new Date(),
+      gender: 0,
+      email: "",
+      joinDate: new Date(),
+      avatarLink: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+  };
 
   async function getCustomerInfo() {
     try {
@@ -41,7 +50,7 @@
         <div class="bg-white shadow rounded-lg p-6">
           <div class="flex flex-col items-center">
             <img
-              src="https://randomuser.me/api/portraits/men/94.jpg"
+              src={customerInfo.avatarLink}
               class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"
             />
 

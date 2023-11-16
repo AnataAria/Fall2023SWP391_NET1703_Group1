@@ -212,7 +212,7 @@
         <img
           alt="ecommerce"
           class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-          src="https://static.miraheze.org/bluearchivewiki/0/0f/Arisu.png?version=8fe2ae44d97dabab9a4d147a3bbd158c"
+          src={datain.courseInfo.thumbnail_path}
         />
         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 class="text-sm title-font text-gray-500 tracking-widest">
