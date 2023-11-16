@@ -124,9 +124,11 @@
     <NavHamburger />
   </div>
   <NavUl>
-    {#if jwtData.role == "CUSTOMER"}
+    {#if jwtData.role === "CUSTOMER"}
       <NavLi href="/mylearning">My Learning</NavLi>
       <NavLi href="/cart">Your Cart</NavLi>
+      {:else if jwtData.role === "STAFF"}
+      <NavLi href="/staff/revenuestatistics">Staff Management Dashboard</NavLi>
     {:else}
       <NavLi href="/teaching">Assign Instructor</NavLi>
     {/if}
