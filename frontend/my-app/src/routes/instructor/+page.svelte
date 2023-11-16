@@ -1,28 +1,22 @@
 <script lang="ts">
-  import axios from "axios";
+  import axios, { AxiosError, type AxiosResponse } from "axios";
   import { CurrencyHandler, GetCookie, apiBaseUrl } from "../../service";
   import { onMount } from "svelte";
   import headerImage from "$lib/assets/Header.jpg";
-  import type { Course, InstructorSalary } from "$lib/types";
+  import type { Course, InstructorInfo, InstructorSalary } from "$lib/types";
   import CreateCourseSection from "../CreateCourseSection.svelte";
   import CreateCourse from "../CreateCourse.svelte";
   import { Button, Popover } from "flowbite-svelte";
-    import { ChevronRightOutline, QuestionCircleSolid } from "flowbite-svelte-icons";
+  import { ChevronRightOutline, QuestionCircleSolid } from "flowbite-svelte-icons";
 
-  interface Instructorinterface {
-    email: string;
-    password: string;
-    fullName: string;
-    specialization: string;
-    phone: string;
-  }
   let instructorRevenue: InstructorSalary = {
       instructorInfo: {
           id: 0,
           fullName: "",
           specialization: "",
           phone: 0,
-          avatar: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+          avatar: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg",
+          paypalEmail: ""
       },
       monthlySalary: 0,
       courseSelling: 0,
@@ -34,13 +28,32 @@
     createDate: "",
     isActive: false,
   };
-  let InstructorInfo: Instructorinterface = {
-      email: "",
-      password: "",
+  let instructorInfo: InstructorInfo = {
+      id: 0,
       fullName: "",
       specialization: "",
-      phone: ""
+      phone: 0,
+      avatar: "",
+      paypalEmail: ""
   };
+  async function AddPaypalEmail() {
+    let res;
+    res = await axios.get(apiBaseUrl + `instructor/paypal?paypalEmail=${instructorInfo.paypalEmail}`,{
+      headers: {
+        Authorization: `Bearer ${GetCookie("USER")}`,
+      },
+    })
+    .then((response: AxiosResponse) => {
+      if (response.status === 200){
+        instructorInfo = response.data;
+        console.log(instructorInfo);
+        window.location.reload();
+      }
+    })
+    .catch((error: AxiosError) => {
+      console.log(error);
+    })
+  }
   async function getInstructorSalary() {
     try {
       await axios
@@ -71,7 +84,7 @@
         .then((response) => {
           if (response.status === 200) {
             console.log(response.data);
-            InstructorInfo = response.data;
+            instructorInfo = response.data;
           }
         });
     } catch (e) {}
@@ -152,7 +165,7 @@
               <div class="text-lg text-gray-500 p-0.5">
                 <i class="fa fa-phone" />Phone number
               </div>
-              <div class="font-medium p-0.5">{InstructorInfo.phone}</div>
+              <div class="font-medium p-0.5">{instructorInfo.phone}</div>
             </div>
           </div>
           <hr class="my-6 border-t border-gray-300" />
@@ -188,14 +201,14 @@
           <h1 class="text-2xl font-bold mb-4">General information</h1>
           <h2 class="text-xl font-medium mb-4">About Me</h2>
           <p class="text-gray-700">
-            Hey there! I'm {InstructorInfo.fullName}, a passionate {InstructorInfo.specialization} who embarked on this captivating journey back in {jwtData.createDate}.          </p>
+            Hey there! I'm {instructorInfo.fullName}, a passionate {instructorInfo.specialization} who embarked on this captivating journey back in {jwtData.createDate}.          </p>
 
           <br />
           <!--1-->
           <div class="grid grid-cols-2 gap-4">
             <div>
               <div>FullName</div>
-              <div class="font-medium">{InstructorInfo.fullName}</div>
+              <div class="font-medium">{instructorInfo.fullName}</div>
             </div>
             <div>
               <div>Join Date</div>
@@ -204,24 +217,26 @@
 
             <div>
               <div>Specialization</div>
-              <div class="font-medium">{InstructorInfo.specialization}</div>
+              <div class="font-medium">{instructorInfo.specialization}</div>
             </div>
 
             <div>
               <div>Birthday</div>
               <div class="font-medium">01-12-2003</div>
             </div>
-            <div>
-              <div class="flex items-center border-b border-teal-500 py-2">
+            <form on:submit={AddPaypalEmail}>
+              <div>Paypal Email</div>
+              <div class="flex items-center mr-32 border-b border-teal-500 py-2">
                 <input
                   class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                   type="text"
                   placeholder=" "
                   aria-label="Full name"
+                  bind:value={instructorInfo.paypalEmail}
                 />
                 <button
                   class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                  type="button"
+                  type="submit"
                 >
                   Save
                 </button>
@@ -232,7 +247,7 @@
                   Cancel
                 </button>
               </div>
-            </div>
+            </form>
           </div>
           <hr class="my-6 border-t border-gray-300" />
           <!--2-->
