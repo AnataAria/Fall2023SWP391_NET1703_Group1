@@ -14,6 +14,7 @@
   export let isFetchManual: boolean;
   import { Card, Rating, Badge } from "flowbite-svelte";
   let open = true;
+  let tmpRating: number;
   let counter = 6;
   let message = "";
   let errorMsg = "";
@@ -91,7 +92,10 @@
     await axios
       .get(apiBaseUrl + `review/rating?courseID=${id}`)
       .then((response) => {
-        if (response.status === 200) rating = response.data;
+        if (response.status === 200){
+          tmpRating = response.data;
+          rating = parseFloat(tmpRating.toFixed(1));
+        } 
       });
   }
   let status = false;
@@ -146,7 +150,7 @@
         </h5>
       </a>
       <Rating {rating} class="mt-2.5 mb-5">
-        <Badge slot="text" class="ml-3">{rating.toFixed(1)}</Badge>
+        <Badge slot="text" class="ml-3">{rating}</Badge>
       </Rating>
       <div class="flex justify-between items-center">
         <span class="text-3xl font-bold text-gray-900 dark:text-white"

@@ -124,9 +124,11 @@
     <NavHamburger />
   </div>
   <NavUl>
-    {#if jwtData.role == "CUSTOMER"}
+    {#if jwtData.role === "CUSTOMER"}
       <NavLi href="/mylearning">My Learning</NavLi>
       <NavLi href="/cart">Your Cart</NavLi>
+      {:else if jwtData.role === "STAFF"}
+      <NavLi href="/staff/revenuestatistics">Staff Management Dashboard</NavLi>
     {:else}
       <NavLi href="/teaching">Assign Instructor</NavLi>
     {/if}
@@ -136,7 +138,7 @@
       <Avatar id="user-drop" src="" class="cursor-pointer" />
       <Dropdown triggeredBy="#user-drop">
         <DropdownHeader>
-          <span class="block text-sm">User</span>
+          <span class="block text-sm">{jwtData.role}</span>
           <span class="block truncate text-sm font-medium">{jwtData.email}</span
           >
         </DropdownHeader>

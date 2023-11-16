@@ -1,10 +1,26 @@
 import { type } from "os";
+export type MonthlyData = {
+  year?: number | null;
+  firstMonth: number;
+  secondMonth: number;
+  thirdMonth: number;
+  fourthMonth: number;
+  fifthMonth: number;
+  sixthMonth: number;
+  seventhMonth: number;
+  eighthMonth: number;
+  ninthMonth: number;
+  tenthMonth: number;
+  eleventhMonth: number;
+  twelfthMonth: number;
+}
 export type InstructorInfo = {
   id: number;
   fullName: string;
   specialization:string;
   phone:number;
   avatar:string;
+  paypalEmail:string;
 };
 export type InstructorSalary = {
   instructorInfo: InstructorInfo;
