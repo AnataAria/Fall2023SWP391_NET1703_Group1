@@ -33,6 +33,9 @@
           if (response.status === 200) {
             console.log(response.data);
             customerInfo = response.data;
+            if(customerInfo.avatarLink === null || customerInfo.avatarLink === ""){
+              customerInfo.avatarLink = "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg";
+            }
           } else if (response.status === 401) {
           }
         });

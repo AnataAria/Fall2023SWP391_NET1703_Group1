@@ -53,6 +53,9 @@
           if (response.status === 200) {
             console.log(response.data);
             instructorRevenue = response.data;
+            if(instructorRevenue.instructorInfo.avatar === null || instructorRevenue.instructorInfo.avatar === ""){
+              instructorRevenue.instructorInfo.avatar = "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg"
+            }
           }
         });
     } catch (e) {}
@@ -207,6 +210,28 @@
             <div>
               <div>Birthday</div>
               <div class="font-medium">01-12-2003</div>
+            </div>
+            <div>
+              <div class="flex items-center border-b border-teal-500 py-2">
+                <input
+                  class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  placeholder=" "
+                  aria-label="Full name"
+                />
+                <button
+                  class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                  type="button"
+                >
+                  Save
+                </button>
+                <button
+                  class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
+                  type="reset"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
           <hr class="my-6 border-t border-gray-300" />
