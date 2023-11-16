@@ -146,7 +146,7 @@
         </h5>
       </a>
       <Rating {rating} class="mt-2.5 mb-5">
-        <Badge slot="text" class="ml-3">{rating}</Badge>
+        <Badge slot="text" class="ml-3">{rating.toFixed(1)}</Badge>
       </Rating>
       <div class="flex justify-between items-center">
         <span class="text-3xl font-bold text-gray-900 dark:text-white"
