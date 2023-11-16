@@ -138,7 +138,7 @@
       <Avatar id="user-drop" src="" class="cursor-pointer" />
       <Dropdown triggeredBy="#user-drop">
         <DropdownHeader>
-          <span class="block text-sm">User</span>
+          <span class="block text-sm">{jwtData.role}</span>
           <span class="block truncate text-sm font-medium">{jwtData.email}</span
           >
         </DropdownHeader>
