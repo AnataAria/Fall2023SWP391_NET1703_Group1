@@ -24,6 +24,7 @@
     price: number;
     description: string;
     durations: string;
+    thumbnail_path:string;
     instructorID: number;
     instructorName: string;
   }
@@ -85,7 +86,7 @@
       <div class=" w-full lg:max-w lg:flex">
         <div
           class="h-48 lg:h-auto lg:w-2/4 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-          style="background-image: url('{img_url}')"
+          style="background-image: url('{course.courseInfo.thumbnail_path}')"
           title="Mountain"
         />
         <div
@@ -105,7 +106,7 @@
             </p>
           </div>
           <Rating {rating} size={24} class="mt-2.5 mb-5">
-            <Badge slot="text" class="ml-3">{rating}</Badge>
+            <Badge slot="text" class="ml-3">{rating.toFixed(1)}</Badge>
           </Rating>
           <Progressbar
             progress={course.finishCoursePercent}

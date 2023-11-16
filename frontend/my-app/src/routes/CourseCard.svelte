@@ -138,7 +138,7 @@
           {course.name}
         </h5>
       </a>
-      <a href="/instructor/{1}">
+      <a href="#">
         <h5
           class="text-sm font-semibold tracking-tight text-gray-900 dark:text-white"
         >
