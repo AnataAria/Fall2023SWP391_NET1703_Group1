@@ -29,7 +29,7 @@ services:
       args:
         - API_ENV=dev
     ports:
-      - "7070:9090"
+      - "9090:9090"
     networks:
       - dev-network
     environment:

@@ -11,6 +11,10 @@ aws:
       key: tN7GXYsy2zZHqb1znrfCf/hmNXzdFuRN9MSPdG2P
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
     #    url: jdbc:mariadb://anataarisa.hopto.org:3306/hitler-store
     #    url: jdbc:mariadb://anataarisa.hopto.org:3306/ademy-test
@@ -51,7 +55,6 @@ server:
   error:
     include-message: always
 
-
 logging:
   level:
     org:
@@ -62,8 +65,6 @@ logging:
         orm:
           jdbc:
             bind: trace
-
-
 
 paypal:
   client:
@@ -83,7 +84,6 @@ api:
 
 security:
   secret-key: 49906c40c2bd2ce2a35571ebf991e74573d0e5cc5db9e032a7b1c5af42c8b038
-
 #auththentication:
 #  facebook-url: /oauth2/authorization/facebook
 #  google-url: /oauth2/authorization/google
