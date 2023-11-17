@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2023 at 10:09 PM
+-- Generation Time: Nov 17, 2023 at 01:50 PM
 -- Server version: 10.5.21-MariaDB-0+deb11u1
 -- PHP Version: 7.4.33
 
@@ -97,7 +97,9 @@ INSERT INTO `account` (`id`, `create_date`, `email`, `password`, `active`, `role
 (100, '2023-11-07', 'baohuy@gmail.com', '$2a$10$tjYGDuISRD1BbbyrVOZr4eKwu9ukekgZJY9sOXLcavVSoWQiy1a2m', b'1', 'INSTRUCTOR', b'1'),
 (101, '2023-11-07', 'susan@gmail.com', '$2a$10$zjUO/Oo/L1GSLK8ycHfddeiS06ncYlaZE7v9NdfDjpqSMxs43AO46', b'1', 'INSTRUCTOR', b'1'),
 (102, '2023-11-15', 'baovmse161280@fpt.edu.vn', '$2a$10$IR5IflRub6CFR0g6rRgXNu2yt5xtvljWreSzV0MNuxLvEadCUWZiW', b'1', 'CUSTOMER', b'1'),
-(104, '2023-11-15', 'ngohoangtam113@gmail.com', '$2a$10$3E385c0F99Div8mWnZ.EdOhHZzphPoP8RUO0uUQTBXxELxcqqAy6W', b'1', 'CUSTOMER', b'1');
+(104, '2023-11-15', 'ngohoangtam113@gmail.com', '$2a$10$3E385c0F99Div8mWnZ.EdOhHZzphPoP8RUO0uUQTBXxELxcqqAy6W', b'1', 'CUSTOMER', b'1'),
+(108, '2023-11-17', 'staff@gmail.com', '$2a$10$chQHRpQRLJcSFU/lcVf8oeHEzbl/fO.EatGeVqqAxllfK57M7MLl.', b'1', 'STAFF', b'1'),
+(109, '2023-11-17', 'nguyenthithanhlam1977@gmail.com', '$2a$10$asPKG13XCN5y.JH8kGou7OMRWFOYG9YTitFPPaidkBKZDiPy5oXkO', b'1', 'CUSTOMER', b'1');
 
 -- --------------------------------------------------------
 
@@ -730,7 +732,7 @@ INSERT INTO `customer` (`id`, `birhthdate`, `fullname`, `gender`, `avatar`, `acc
 (9, '2023-09-01', 'Robert Miller', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuR47TZ9ZChzRcpuhLgOOWQa57dglAb3-51vJemcRRFwj8g9a3c8yqLeFpKXhqfvXMJvY&usqp=CAU', 29),
 (10, '2023-09-01', 'Karen Wilson', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBAwW5OHvmrEel4Aawe00qf4-LJYs8Mwf2wDcooFYhCXrgDW7jRrhvcIhJ0uln5EOI9KY&usqp=CAU', 30),
 (11, '2023-09-01', 'Charles Garcia', 1, 'https://us.123rf.com/450wm/januaryxii/januaryxii1401/januaryxii140100298/25080701-beau-mec-avec-une-barbe-et-son-pouce-sur-blanc.jpg?ver=6', 32),
-(12, '2023-06-09', 'Lisa Rodriguez', 0, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRadgs_oYq3kiVgrfPgjPcRlNtoWtazlKpHLwoBqwTwAISxGlgLiB-ZwtfS6gcp7RLeFag&usqp=CAU', 33),
+(12, '2023-06-09', 'Lisa Rodriguez', 0, '', 33),
 (13, '2013-11-02', 'William Martinez', 1, 'https://us.123rf.com/450wm/luissantos84/luissantos841104/luissantos84110400152/9304637-jeune-homme-souriant-thumbs-up-principalement-sur-le-main-sur-un-fond-blanc-isol%C3%A9.jpg?ver=6', 36),
 (14, '2023-09-22', 'Patricia Hernandez', 1, 'https://us.123rf.com/450wm/peopleimages12/peopleimages122301/peopleimages12230119957/196971700-thumbs-up-ok-and-man-with-smile-portrait-with-hand-sign-yes-and-thank-you-with-feedback-against.jpg?ver=6', 39),
 (15, '2023-09-22', 'Joseph Thompson', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdb_TY9Xwt3789u9FEmTbEN_Jtkh3s_Y1lHpnsWTlnmsGoD2pex5rbjJtJwwxwubKhwWE&usqp=CAU', 40),
@@ -745,7 +747,8 @@ INSERT INTO `customer` (`id`, `birhthdate`, `fullname`, `gender`, `avatar`, `acc
 (24, '2003-01-01', 'Laura Scott', 1, 'https://assets-global.website-files.com/6245dc1e30cd521a34cf7059/64e883083d07a12f356aece3_Tile.png', 92),
 (25, '2003-12-01', 'James Moore', 1, 'https://assets-global.website-files.com/6245dc1e30cd521a34cf7059/64e883083d07a12f356aece3_Tile.png', 99),
 (26, '2002-12-05', 'Vo Minh Bao', 0, '', 102),
-(27, '2003-02-07', 'Mr J', 0, '', 104);
+(27, '2003-02-07', 'Mr J', 0, '', 104),
+(28, '2003-11-23', 'Ngo Quang Thang', 0, '', 109);
 
 -- --------------------------------------------------------
 
@@ -926,36 +929,37 @@ CREATE TABLE `instructor` (
   `phone_number` varchar(255) DEFAULT NULL,
   `specialization` varchar(255) NOT NULL,
   `account_id` bigint(20) DEFAULT NULL,
-  `avatar_url` varchar(255) DEFAULT NULL
+  `avatar_url` varchar(255) DEFAULT NULL,
+  `paypal_email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `instructor`
 --
 
-INSERT INTO `instructor` (`id`, `fullname`, `phone_number`, `specialization`, `account_id`, `avatar_url`) VALUES
-(1, 'John Smith', '0123456789', 'Portrait Artist', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtOtQutTuqumO5wEp6OPemfjo5_cbojnNauQ&usqp=CAU'),
-(2, 'David Johnson', '123456789', 'Caricature Artist', 27, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnWmvO2s_0Y3nnI522tF9A0U9-78FNJWNgvMOdcUea-2rad6odwp4ULBHa1XFcaBLB6w&usqp=CAU'),
-(3, 'Sarah Brown', '0123456781', 'Manga Illustrator', 26, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Dkysr5shsd-eHbja4w0O3xpB-yManI3kkzUxhxdvpRiXwhct1ONGAbbmjynjO6lQmLY&usqp=CAU'),
-(4, 'Le Hong Ngoc', '123456789', 'Watercolor Painter', 9, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShYYBSIcRqzZuY4P9LtLghTglDIt4hFX6R3Lju3Fln2MzYDLNgzRukDAl6UgflEVv9sxQ&usqp=CAU'),
-(5, 'Le Thanh Long', '0123456783', 'Comic Book Artist', 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZycaAwan6jcpTNinqNG9VBlON9klV3ZmF8zoRo1e0Etb07N7o_w49ojQys-e0FGbCCHQ&usqp=CAU'),
-(6, 'Ngo Quang Thang', '0986342445', 'Digital Illustrator', 61, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VDRZGRkqHy8z0LhukSXkfdw59VCVIoXKDA3x1o8Vw0gkQiG3rlgAeEqXYbf4gDS_lGY&usqp=CAU'),
-(7, 'James Miller', '0123456785', 'Street Artist', 63, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxWpZr0ZxT0wjShDqOYmT3TXyXwqd5ZQa9ghMkkZvX-KXbLk5ZQHmVvX_dldAxPa7abq0&usqp=CAU'),
-(8, 'Olivia Taylor', '0923432354', 'Calligraphy Expert', 64, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK__qaa0XClwK7_ASIR35noXG2wgu0n_qg2EA5G8PZqkeuYhrBdVTfvH6lE8jIs4DcUZA&usqp=CAU'),
-(9, 'William Anderson', '0123456787', 'Charcoal Sketch Artist', 66, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh0v22CyjBbwnu6ABJB58qxw6nAnP3IGYFDQ2xgQhxyYYByXQC_EZ3oIuaNmy3BEWCqfE&usqp=CAU'),
-(10, 'Sophia White', '0123456788', 'Landscape Painter', 68, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv3Yj8yr3vjKvhXdqJxLJE6CYdQSMW_KPyAvWLlcoYsCwk9LRQSwQ910nyy206-ynt4GE&usqp=CAU'),
-(11, 'Daniel Clark', '0123456789', 'Digital Concept Artist\r\n', 74, 'https://fiverr-res.cloudinary.com/videos/t_main1,q_auto,f_auto/rnk6p1ndtrxnzryriill/create-a-realistic-talking-ai-avatar.png'),
-(12, 'Nguyen Quang Vinh', '0918125719', 'Potrait Sculptor', 75, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpP2yywZgMwoZbZ41ru5crr0m8G7QHGkcrxNgWzucFtCW1PTY54Kzr-0-0DYgTsBXBB64&usqp=CAU'),
-(13, 'Ethan Hall', '0123456702', 'Pen and Ink Illustrator', 77, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLR3hKDmkDNmi2wbkMro4BaEkd1ih9hYKgrcuzX_AkEaLZRZcRl2tASARh0aDok8KSk_4&usqp=CAU'),
-(14, 'Ava Garcia', '0123456703', 'Storyboard Artist', 79, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWKg18nmbOm6KCGbwwfjofQYBylIKJ0GLHa_Q1nlr909PmaZo4_gJQkrnFxBaEwcT_qLU&usqp=CAU'),
-(15, 'Noah King', '0123456704', 'Graffiti Artist', 80, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOjzT1-pPv1-TMif77yJKFb43eylSm0Q0uPw1ZAMchP9AsS_CV7uKVCU5HeGh6Sh6HS-A&usqp=CAU'),
-(16, 'James Hernandez', '0123456706', 'Wildlife Illustrator', 82, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTofOYwKajRd0tzJnKLF_NDbHJ1HaHaK9pgRh1n94_i9ZJReS1zHnr52CasK2WjffmJxls&usqp=CAU'),
-(17, 'Emma Martinez', '0123456707', 'Architectural Illustrator', 84, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAUjlZswjSRd0YDeZ4GD9dwumU-wqMaT8Yw1umf_3FBgu77AetByxOIW8qiTgaMwt_K-8&usqp=CAU'),
-(18, 'Benjamin Adams', '0123456708', 'Abstract Painter', 86, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnK41bbOoEIUruUufKeg9mZwQb2Wi1oczFHH4f04dwaZga8cJVrCDOh2_3m-A2jC3K4EU&usqp=CAU'),
-(19, 'Chloe Turner', '0123456709', 'Tattoo Artist', 87, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSr66MdbJq0riRezq4UN0H2fvNzfNuPF0uS0foJA-y0fNrUPN4qgvteSUN3zpQn-r9KkQ&usqp=CAU'),
-(20, 'Samuel Parker', ' 0123456710', 'Street Art Muralist', 93, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD-fbyx-9rTd3whXxJrMMHjpZDNWa-92cKfbWt2o8oyQI5WxB2nFZVb6_tcbZlXGHU7z4&usqp=CAU'),
-(21, 'hoangbaohuy', '1234567890', 'drawing course', 100, NULL),
-(22, 'Susan Smith', '0111111111', 'Modern Drawing', 101, NULL);
+INSERT INTO `instructor` (`id`, `fullname`, `phone_number`, `specialization`, `account_id`, `avatar_url`, `paypal_email`) VALUES
+(1, 'John Smith', '0123456789', 'Portrait Artist', 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtOtQutTuqumO5wEp6OPemfjo5_cbojnNauQ&usqp=CAU', NULL),
+(2, 'David Johnson', '123456789', 'Caricature Artist', 27, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBnWmvO2s_0Y3nnI522tF9A0U9-78FNJWNgvMOdcUea-2rad6odwp4ULBHa1XFcaBLB6w&usqp=CAU', NULL),
+(3, 'Sarah Brown', '0123456781', 'Manga Illustrator', 26, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7Dkysr5shsd-eHbja4w0O3xpB-yManI3kkzUxhxdvpRiXwhct1ONGAbbmjynjO6lQmLY&usqp=CAU', NULL),
+(4, 'Le Hong Ngoc', '123456789', 'Watercolor Painter', 9, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShYYBSIcRqzZuY4P9LtLghTglDIt4hFX6R3Lju3Fln2MzYDLNgzRukDAl6UgflEVv9sxQ&usqp=CAU', NULL),
+(5, 'Le Thanh Long', '0123456783', 'Comic Book Artist', 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZycaAwan6jcpTNinqNG9VBlON9klV3ZmF8zoRo1e0Etb07N7o_w49ojQys-e0FGbCCHQ&usqp=CAU', NULL),
+(6, 'Ngo Quang Thang', '0986342445', 'Digital Illustrator', 61, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8VDRZGRkqHy8z0LhukSXkfdw59VCVIoXKDA3x1o8Vw0gkQiG3rlgAeEqXYbf4gDS_lGY&usqp=CAU', 'sb-47y97026783231@personal.example.com'),
+(7, 'James Miller', '0123456785', 'Street Artist', 63, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxWpZr0ZxT0wjShDqOYmT3TXyXwqd5ZQa9ghMkkZvX-KXbLk5ZQHmVvX_dldAxPa7abq0&usqp=CAU', NULL),
+(8, 'Olivia Taylor', '0923432354', 'Calligraphy Expert', 64, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK__qaa0XClwK7_ASIR35noXG2wgu0n_qg2EA5G8PZqkeuYhrBdVTfvH6lE8jIs4DcUZA&usqp=CAU', NULL),
+(9, 'William Anderson', '0123456787', 'Charcoal Sketch Artist', 66, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh0v22CyjBbwnu6ABJB58qxw6nAnP3IGYFDQ2xgQhxyYYByXQC_EZ3oIuaNmy3BEWCqfE&usqp=CAU', NULL),
+(10, 'Sophia White', '0123456788', 'Landscape Painter', 68, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv3Yj8yr3vjKvhXdqJxLJE6CYdQSMW_KPyAvWLlcoYsCwk9LRQSwQ910nyy206-ynt4GE&usqp=CAU', NULL),
+(11, 'Daniel Clark', '0123456789', 'Digital Concept Artist\r\n', 74, 'https://fiverr-res.cloudinary.com/videos/t_main1,q_auto,f_auto/rnk6p1ndtrxnzryriill/create-a-realistic-talking-ai-avatar.png', NULL),
+(12, 'Nguyen Quang Vinh', '0918125719', 'Potrait Sculptor', 75, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpP2yywZgMwoZbZ41ru5crr0m8G7QHGkcrxNgWzucFtCW1PTY54Kzr-0-0DYgTsBXBB64&usqp=CAU', 'vinhnqse170501@gmail.com'),
+(13, 'Ethan Hall', '0123456702', 'Pen and Ink Illustrator', 77, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLR3hKDmkDNmi2wbkMro4BaEkd1ih9hYKgrcuzX_AkEaLZRZcRl2tASARh0aDok8KSk_4&usqp=CAU', NULL),
+(14, 'Ava Garcia', '0123456703', 'Storyboard Artist', 79, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWKg18nmbOm6KCGbwwfjofQYBylIKJ0GLHa_Q1nlr909PmaZo4_gJQkrnFxBaEwcT_qLU&usqp=CAU', NULL),
+(15, 'Noah King', '0123456704', 'Graffiti Artist', 80, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOjzT1-pPv1-TMif77yJKFb43eylSm0Q0uPw1ZAMchP9AsS_CV7uKVCU5HeGh6Sh6HS-A&usqp=CAU', NULL),
+(16, 'James Hernandez', '0123456706', 'Wildlife Illustrator', 82, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTofOYwKajRd0tzJnKLF_NDbHJ1HaHaK9pgRh1n94_i9ZJReS1zHnr52CasK2WjffmJxls&usqp=CAU', NULL),
+(17, 'Emma Martinez', '0123456707', 'Architectural Illustrator', 84, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAUjlZswjSRd0YDeZ4GD9dwumU-wqMaT8Yw1umf_3FBgu77AetByxOIW8qiTgaMwt_K-8&usqp=CAU', NULL),
+(18, 'Benjamin Adams', '0123456708', 'Abstract Painter', 86, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnK41bbOoEIUruUufKeg9mZwQb2Wi1oczFHH4f04dwaZga8cJVrCDOh2_3m-A2jC3K4EU&usqp=CAU', NULL),
+(19, 'Chloe Turner', '0123456709', 'Tattoo Artist', 87, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSr66MdbJq0riRezq4UN0H2fvNzfNuPF0uS0foJA-y0fNrUPN4qgvteSUN3zpQn-r9KkQ&usqp=CAU', NULL),
+(20, 'Samuel Parker', ' 0123456710', 'Street Art Muralist', 93, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRD-fbyx-9rTd3whXxJrMMHjpZDNWa-92cKfbWt2o8oyQI5WxB2nFZVb6_tcbZlXGHU7z4&usqp=CAU', NULL),
+(21, 'hoangbaohuy', '1234567890', 'drawing course', 100, NULL, NULL),
+(22, 'Susan Smith', '0111111111', 'Modern Drawing', 101, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1084,13 +1088,13 @@ CREATE TABLE `salary` (
 --
 
 INSERT INTO `salary` (`id`, `amount`, `currency`, `email`, `recipient_wallet`, `instructor_id`, `salary_date`) VALUES
-(1, '378.00000', 'USD', 'kakata5455@gmail.com', 'PayPal', 1, '2023-11-16'),
-(2, '100.80000', 'USD', 'kakata284195565@gmail.com', 'PayPal', 2, '2023-11-16'),
-(3, '635.40000', 'USD', 'kakata284195562665@gmail.com', 'PayPal', 3, '2023-11-16'),
-(4, '328.50000', 'USD', 'kakata5612@gmail.com', 'PayPal', 4, '2023-11-16'),
-(5, '0.00000', 'USD', 'kakata55@gmail.com', 'PayPal', 5, '2023-11-16'),
-(6, '0.00000', 'USD', 'ngoquangthang123@gmail.com', 'PayPal', 6, '2023-11-16'),
-(7, '0.00000', 'USD', 'ngoquangthang345@gmail.com', 'PayPal', 7, '2023-11-16'),
+(1, '378.00000', 'USD', 'kakata5455@gmail.com', 'PayPal', 1, '2023-11-01'),
+(2, '100.80000', 'USD', 'kakata284195565@gmail.com', 'PayPal', 2, '2023-11-01'),
+(3, '635.40000', 'USD', 'kakata284195562665@gmail.com', 'PayPal', 3, '2023-11-01'),
+(4, '328.50000', 'USD', 'kakata5612@gmail.com', 'PayPal', 4, '2023-11-01'),
+(5, '0.00000', 'USD', 'kakata55@gmail.com', 'PayPal', 5, '2023-11-01'),
+(6, '0.00000', 'USD', 'ngoquangthang123@gmail.com', 'PayPal', 6, '2023-11-01'),
+(7, '0.00000', 'USD', 'ngoquangthang345@gmail.com', 'PayPal', 7, '2023-11-01'),
 (8, '0.00000', 'USD', 'ngoquangthang111@gmail.com', 'PayPal', 8, '2023-11-01'),
 (9, '0.00000', 'USD', 'ngoquangthang12345@gmail.com', 'PayPal', 9, '2023-11-01'),
 (10, '0.00000', 'USD', 'ngoquangthang123456@gmail.com', 'PayPal', 10, '2023-11-01'),
@@ -1371,6 +1375,13 @@ CREATE TABLE `staff` (
   `account_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `birthday`, `full_name`, `gender`, `injob_date`, `account_id`) VALUES
+(1, '2013-11-15', 'Good staff', 'MALE', '2023-11-17', 108);
+
 -- --------------------------------------------------------
 
 --
@@ -1573,7 +1584,7 @@ INSERT INTO `token` (`id`, `expired`, `revoked`, `token`, `token_type`, `account
 (184, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE2OTg0MzYwNDYsImV4cCI6MTY5ODUyMjQ0Nn0.t2FMiJ6QWsHrtqzF1Bul81bT8F6NENjLVO8cCnW16bs', 'BEARER', 75),
 (185, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzNDU2N0BnbWFpbC5jb20iLCJpYXQiOjE2OTg0NjE2NTEsImV4cCI6MTY5ODU0ODA1MX0.781kKbVMvskZqCwqY0aWoc71tXZjaJd3dMu9t5DaD34', 'BEARER', 74),
 (186, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGFuZ25xc2UxNzM0NDVAZnB0LmVkdS52biIsImlhdCI6MTY5ODQ2MTc3NCwiZXhwIjoxNjk4NTQ4MTc0fQ.PPHzhGJ4G_C33RmENWmwftj5btiPY0J_3UxVUXPn9HM', 'BEARER', 52),
-(187, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGFuZ25xc2UxNzM0NDVAZnB0LmVkdS52biIsImlhdCI6MTY5ODQ2MjcwMiwiZXhwIjoxNjk4NTQ5MTAyfQ.8BEmH8d89EvVw1ZXCMhpxYO440xjRsUT31Y8GKpReYE', 'BEARER', 52),
+(187, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGFuZ25xc2UxNzM0NDVAZnB0LmVkdS52biIsImlhdCI6MTY5ODQ2MjcwMiwiZXhwIjoxNjk4NTQ5MTAyfQ.8BEmH8d89EvVw1ZXCMhpxYO440xjRsUT31Y8GKpReYE', 'BEARER', 52),
 (188, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY5ODQ2MzQ0MywiZXhwIjoxNjk4NTQ5ODQzfQ.B5XYCPRe2FjFMXjCOaFXN9HltsmF41kanTu_CfATzKQ', 'BEARER', 61),
 (189, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzNDUiLCJpYXQiOjE2OTg0NjM3OTYsImV4cCI6MTY5ODU1MDE5Nn0.cFXO_QBP5IvjnOr4dCowUKmqdUnkAEEAy-SxZyO_iwA', 'BEARER', 91),
 (190, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzNDU2N0BnbWFpbC5jb20iLCJpYXQiOjE2OTg0NjUxODQsImV4cCI6MTY5ODU1MTU4NH0.OxvUnispI0lf-qfervsAqFaBmvv3Aa4UVRUrvcNqsuQ', 'BEARER', 74),
@@ -1725,7 +1736,7 @@ INSERT INTO `token` (`id`, `expired`, `revoked`, `token`, `token_type`, `account
 (335, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMDQwMzg1LCJleHAiOjE3MDAxMjY3ODV9.5BvqhhVYPgZpYDcwzuZSQsgnE08eAFFZXUaoO0RY-1g', 'BEARER', 33),
 (336, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYW5oc2UxNzA0MzVAZnB0LmVkdS52biIsImlhdCI6MTcwMDA0Nzc5OSwiZXhwIjoxNzAwMTM0MTk5fQ.KcLZjPjdtJizhfAqqpWSrqjTcZNUkRP2Yry7aRGafTk', 'BEARER', 92),
 (337, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMDQ3ODA0LCJleHAiOjE3MDAxMzQyMDR9.Ptrb5c6S1cc6U6sftbGvlxOjAitWIR1LrADeX1oe7wg', 'BEARER', 33),
-(338, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYW5oc2UxNzA0MzVAZnB0LmVkdS52biIsImlhdCI6MTcwMDA0ODIxNiwiZXhwIjoxNzAwMTM0NjE2fQ.Nu1pDy7xbn7o6F7Cj2a2TXbWALMc04iLpoVq92UyMvQ', 'BEARER', 92),
+(338, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYW5oc2UxNzA0MzVAZnB0LmVkdS52biIsImlhdCI6MTcwMDA0ODIxNiwiZXhwIjoxNzAwMTM0NjE2fQ.Nu1pDy7xbn7o6F7Cj2a2TXbWALMc04iLpoVq92UyMvQ', 'BEARER', 92),
 (339, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29ob2FuZ3RhbTExM0BnbWFpbC5jb20iLCJpYXQiOjE3MDAwNTYzOTgsImV4cCI6MTcwMDE0Mjc5OH0.2X2tU-i93CazLXrXVex7nWujl_40VVAkHwXKJJIr5wA', 'BEARER', 104),
 (340, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29ob2FuZ3RhbTExM0BnbWFpbC5jb20iLCJpYXQiOjE3MDAwNTcwNjUsImV4cCI6MTcwMDE0MzQ2NX0.VfIBxkU1Z21RyvSOgedXqnIUrQCA6QgqnjEtPf6eNvI', 'BEARER', 104),
 (341, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29ob2FuZ3RhbTExM0BnbWFpbC5jb20iLCJpYXQiOjE3MDAwNTg1ODksImV4cCI6MTcwMDE0NDk4OX0.bWOs5BdTeIkBHDCn5OwXhRev2kr7bMLkrmr8oM-0_qI', 'BEARER', 104),
@@ -1735,13 +1746,31 @@ INSERT INTO `token` (`id`, `expired`, `revoked`, `token`, `token_type`, `account
 (345, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxMDk5OTUsImV4cCI6MTcwMDE5NjM5NX0.0WaP1xTyctyXDihTS3mM7gigRR-gAkKgcxl_CXCJNsI', 'BEARER', 75),
 (346, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTEwNTExLCJleHAiOjE3MDAxOTY5MTF9.MYNvrl0uVqSODNKyDJp1zQhWwJe4bL7mdOndMRd0OjE', 'BEARER', 33),
 (347, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTExMjY1LCJleHAiOjE3MDAxOTc2NjV9.dMIihTBSRi_5c_OSSE0GTYEeETFrJbuiAj9WShvjVfM', 'BEARER', 33),
-(348, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDExNzg1MCwiZXhwIjoxNzAwMjA0MjUwfQ.uxM86kghK2B2nsIj99wOppOC0tmmWI6dPMYdChbLXnY', 'BEARER', 61),
-(349, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxMTk2OTYsImV4cCI6MTcwMDIwNjA5Nn0.NR9m9vcQQT1B4eWoqXrUqOm8ZD__6XbfeNJk97qUgKA', 'BEARER', 75),
+(348, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDExNzg1MCwiZXhwIjoxNzAwMjA0MjUwfQ.uxM86kghK2B2nsIj99wOppOC0tmmWI6dPMYdChbLXnY', 'BEARER', 61),
+(349, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxMTk2OTYsImV4cCI6MTcwMDIwNjA5Nn0.NR9m9vcQQT1B4eWoqXrUqOm8ZD__6XbfeNJk97qUgKA', 'BEARER', 75),
 (350, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTIyOTc4LCJleHAiOjE3MDAyMDkzNzh9.Re_nwEchM8aq1NDHvjWs4YpbDQpeWhWm_VREfGzH3eY', 'BEARER', 33),
 (351, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTI1MDM5LCJleHAiOjE3MDAyMTE0Mzl9.SaynXHRhgOgdf42eo4QcBM9hkAIcVxyyLZptHlOT-do', 'BEARER', 33),
 (352, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTU1NUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTI1OTUwLCJleHAiOjE3MDAyMTIzNTB9.qw9w81U-q6N--GVeiLZAiwEfpNrQddYL3O91OhMNjCc', 'BEARER', 36),
 (353, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTI3NTkzLCJleHAiOjE3MDAyMTM5OTN9.bEOehGATov3kUfgER16A__EopvxtD1CnyJbOoDZv9TI', 'BEARER', 33),
-(354, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTM0Mjk1LCJleHAiOjE3MDAyMjA2OTV9.CZGIFXG2l1JuHUgf4HaYB8s_UWSz2tr3bWSVv4nzUqo', 'BEARER', 33);
+(354, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTM0Mjk1LCJleHAiOjE3MDAyMjA2OTV9.CZGIFXG2l1JuHUgf4HaYB8s_UWSz2tr3bWSVv4nzUqo', 'BEARER', 33),
+(355, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDE1MTEwMSwiZXhwIjoxNzAwMjM3NTAxfQ.YkXtNX969lDiIBZzH_IRjV-4VXYPki2K9KBQN-SOW8w', 'BEARER', 61),
+(356, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoYW5oc2UxNzA0MzVAZnB0LmVkdS52biIsImlhdCI6MTcwMDE1MzUzMywiZXhwIjoxNzAwMjM5OTMzfQ.J7BSGeTGCXp95zeTDNGMQ9XdGCD16xQp3ox4b9fOS38', 'BEARER', 92),
+(357, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGFuZ25xc2UxNzM0NDVAZnB0LmVkdS52biIsImlhdCI6MTcwMDE1NDk5NCwiZXhwIjoxNzAwMjQxMzk0fQ.Tda1Ym7yGQjG1o7DhTbDrUw-HDZgX1Emr81NhJ0fJ-E', 'BEARER', 52),
+(358, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDE1NTE4OCwiZXhwIjoxNzAwMjQxNTg4fQ.Z8u3AXLoSvSJ0dJig8jH6POUxTomWA-WMt_u2I-N4RU', 'BEARER', 61),
+(359, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTU1ODk5LCJleHAiOjE3MDAyNDIyOTl9.9k51Ykx512NoKgeeHzGRsHdW2NU3Hh7TwBb9WIt2SJI', 'BEARER', 33),
+(360, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDE1Njc2NCwiZXhwIjoxNzAwMjQzMTY0fQ.Acu1tcyBVfYidIZ01EDyyConYRB6I8hstAEoEA4_dRI', 'BEARER', 61),
+(361, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFmZkBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNTc3MTgsImV4cCI6MTcwMDI0NDExOH0.cSqVm0A1R0ylk86IeVJuCOUo5rIEUTCiQlD31WYV39Y', 'BEARER', 108),
+(362, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxNTg1NDYsImV4cCI6MTcwMDI0NDk0Nn0.-KnXzBfdq3sN_Mm1uDkGDc95WzVXyZXX5d-P1LsEn54', 'BEARER', 75),
+(363, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDE2MzA0NCwiZXhwIjoxNzAwMjQ5NDQ0fQ.MlxHIYguYFbqpfs0RDS1rfQA0KevsnVrvqnJPcqtXAw', 'BEARER', 61),
+(364, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ29xdWFuZ3RoYW5nMTIzQGdtYWlsLmNvbSIsImlhdCI6MTcwMDE2NDU3OSwiZXhwIjoxNzAwMjUwOTc5fQ.149A8J2pC1YpTLMgKSojZ5zzTWlJJ_nZchyw7cppuuI', 'BEARER', 61),
+(365, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFmZkBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNjY2MDUsImV4cCI6MTcwMDI1MzAwNX0._MTj9Nv4fj18qz7DbehdxNgd9R_u-Q4uH9h0jNHONHA', 'BEARER', 108),
+(366, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFmZkBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNjgwMjEsImV4cCI6MTcwMDI1NDQyMX0._QKTrmwV-cROaGaoTbnsF7fqRTHP9zFd56DO-ThIzZs', 'BEARER', 108),
+(367, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFmZkBnbWFpbC5jb20iLCJpYXQiOjE3MDAxOTAzMTMsImV4cCI6MTcwMDI3NjcxM30.cs2E_UMMORoNQTpvV7l_Q4Nkv7AkKlTIivdJGGfZcOU', 'BEARER', 108),
+(368, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdGFmZkBnbWFpbC5jb20iLCJpYXQiOjE3MDAxOTI1MTMsImV4cCI6MTcwMDI3ODkxM30.rRSpH6XZL3wLeH29JBAr0Ol1aBWPvonSfzkaloVKZLY', 'BEARER', 108),
+(369, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMUBmcHQuZWR1LnZuIiwiaWF0IjoxNzAwMTkzNTYyLCJleHAiOjE3MDAyNzk5NjJ9.CbR5Qx8I5DBIkyEiRwnIVbYGo9tjPIn0JAlBUY1gXr0', 'BEARER', 33),
+(370, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZ3V5ZW50aGl0aGFuaGxhbTE5NzdAZ21haWwuY29tIiwiaWF0IjoxNzAwMTkzNjk0LCJleHAiOjE3MDAyODAwOTR9.m9cn2TNSthQ6I9wktw14-7J83gUvXZPwSPneqT8kReM', 'BEARER', 109),
+(371, b'1', b'1', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxOTM3NzEsImV4cCI6MTcwMDI4MDE3MX0.NVzPRtVPkFyhl2udskjTMfFYb5RzDv1RYGgh07LhYvE', 'BEARER', 75),
+(372, b'0', b'0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2aW5obnFzZTE3MDUwMTA5QGZwdC5lZHUudm4iLCJpYXQiOjE3MDAxOTQxMzEsImV4cCI6MTcwMDI4MDUzMX0.Gy2stx55pe7k8Kzp_gT82SI3EyUJ6MRkqY7Q_xGH9rI', 'BEARER', 75);
 
 -- --------------------------------------------------------
 
@@ -1984,7 +2013,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -2050,7 +2079,7 @@ ALTER TABLE `course_section_completion`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `exam`
@@ -2110,13 +2139,13 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `token`
 --
 ALTER TABLE `token`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=355;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=373;
 
 --
 -- AUTO_INCREMENT for table `transaction`
