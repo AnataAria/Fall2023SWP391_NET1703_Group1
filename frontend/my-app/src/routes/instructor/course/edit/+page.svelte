@@ -342,7 +342,11 @@
           >
             <!--Left-->
             <div class="col-span-1 sm:col-span-3 h-56">
-              <img class="items-center w-full" alt="" src="" />
+              <img
+                class="items-center w-full h-11/12 pt-5"
+                alt=""
+                src={courseInfo.courseInfo.thumbnail_path}
+              />
             </div>
             <!--Right-->
             {#if !editCourse}
