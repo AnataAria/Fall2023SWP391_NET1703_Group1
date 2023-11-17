@@ -1,14 +1,15 @@
 # ADEMY - DRAWING COURSE SELLING PLATFORM
 
 A web application for drawing courses selling
-
+https://img.shields.io/badge/CI/CD-passed-green
+[Web Staging](http://anataarisa.hopto.org:3000)
 ## Authors
 
 - [@AnataAria](https://github.com/AnataAria)
 - [@PoserDungeon20033](https://github.com/PoserDungeon2003)
 - [@thanlong421999](https://github.com/thanlong421999)
 - [@tungphan1011](https://github.com/tungphan1011)
-
+- [@HoangBaoHuy](https://github.com/hoangbaohuy)
 ## Mentor
 
 - [@vttvan](https://github.com/vttvan)
