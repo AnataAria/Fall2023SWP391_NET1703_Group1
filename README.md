@@ -1,14 +1,17 @@
 # ADEMY - DRAWING COURSE SELLING PLATFORM
-
+[![Create Pull Request](https://github.com/AnataAria/Fall2023SWP391_NET1703_Group1/actions/workflows/auto-create-pr.yml/badge.svg?branch=main)](https://github.com/AnataAria/Fall2023SWP391_NET1703_Group1/actions/workflows/auto-create-pr.yml)
+![Static Badge](https://img.shields.io/badge/CI/CD-passed-brightgreen)
+<br>
 A web application for drawing courses selling
-
+<br>
+[Web Staging](http://anataarisa.hopto.org:3000)
 ## Authors
 
 - [@AnataAria](https://github.com/AnataAria)
 - [@PoserDungeon20033](https://github.com/PoserDungeon2003)
 - [@thanlong421999](https://github.com/thanlong421999)
 - [@tungphan1011](https://github.com/tungphan1011)
-
+- [@HoangBaoHuy](https://github.com/hoangbaohuy)
 ## Mentor
 
 - [@vttvan](https://github.com/vttvan)
@@ -82,6 +85,39 @@ A web application for drawing courses selling
 </table>
 
 ---
+
+## Usage
+1. Pull project
+```bash
+git clone git@github.com:AnataAria/Fall2023SWP391_NET1703_Group1.git
+```
+2. Install Dockers
+3. Run docker compose local (dev)
+- On Linux
+```bash
+sudo docker compose -f docker-compose.local.yaml up -d
+```
+- On Windows
+```bash
+docker compose -f docker-compose.local.yaml up -d
+```
+### Note: If you are using docker compose version lower than 3.0, use this command
+- On Linux
+```bash
+sudo docker-compose -f docker-compose.local.yaml up -d
+```
+- On Windows
+```bash
+docker-compose -f docker-compose.local.yaml up -d
+```
+## Usage CI/CD
+1. Install Jenkins
+   [Jenkins Doc](https://www.jenkins.io/)
+2. Clone this project and pushing this project on your repo
+3. Set up Jenkins Pineline, using CIJenkinsfile on CI and Jenkinsfile on CD
+4. Enjoy your work
+
+
 
 ## Others
 
