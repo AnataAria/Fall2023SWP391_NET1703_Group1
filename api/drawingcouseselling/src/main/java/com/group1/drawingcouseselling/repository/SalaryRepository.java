@@ -21,6 +21,7 @@ public interface SalaryRepository extends JpaRepository<Salary, BigDecimal> {
             "YEAR(s.salaryDate) = YEAR(:salaryDate)" +
             " AND MONTH(s.salaryDate) = MONTH(:salaryDate) " +
             "AND s.instructor.paypalEmail IS NOT NULL AND " +
-            " s.instructor.paypalEmail <> ''")
+            " s.instructor.paypalEmail <> '' AND " +
+            "s.amount > 0")
     public Collection<Salary> getSalariesByYearsAndMonth(@Param(value = "salaryDate")Date salaryDate);
 }
