@@ -86,6 +86,39 @@ A web application for drawing courses selling
 
 ---
 
+## Usage
+1. Pull project
+```bash
+git clone git@github.com:AnataAria/Fall2023SWP391_NET1703_Group1.git
+```
+2. Install Dockers
+3. Run docker compose local (dev)
+- On Linux
+```bash
+sudo docker compose -f docker-compose.local.yaml up -d
+```
+- On Windows
+```bash
+docker compose -f docker-compose.local.yaml up -d
+```
+### Note: If you are using docker compose version lower than 3.0, use this command
+- On Linux
+```bash
+sudo docker-compose -f docker-compose.local.yaml up -d
+```
+- On Windows
+```bash
+docker-compose -f docker-compose.local.yaml up -d
+```
+## Usage CI/CD
+1. Install Jenkins
+   [Jenkins Doc](https://www.jenkins.io/)
+2. Clone this project and pushing this project on your repo
+3. Set up Jenkins Pineline, using CIJenkinsfile on CI and Jenkinsfile on CD
+4. Enjoy your work
+
+
+
 ## Others
 
 [Group Documentation](https://app.clickup.com/9008224118/v/dc/8cex5vp-25)
