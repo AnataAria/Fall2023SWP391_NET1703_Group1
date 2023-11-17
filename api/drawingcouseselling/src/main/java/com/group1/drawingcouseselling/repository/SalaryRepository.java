@@ -19,6 +19,8 @@ public interface SalaryRepository extends JpaRepository<Salary, BigDecimal> {
     public Optional<Salary> getSalariesByInstructorID(@Param(value = "instructorID") BigDecimal instructorID);
     @Query(value = "SELECT s FROM salary s WHERE " +
             "YEAR(s.salaryDate) = YEAR(:salaryDate)" +
-            " AND MONTH(s.salaryDate) = MONTH(:salaryDate)")
+            " AND MONTH(s.salaryDate) = MONTH(:salaryDate) " +
+            "AND s.instructor.paypalEmail IS NOT NULL AND " +
+            " s.instructor.paypalEmail <> ''")
     public Collection<Salary> getSalariesByYearsAndMonth(@Param(value = "salaryDate")Date salaryDate);
 }
