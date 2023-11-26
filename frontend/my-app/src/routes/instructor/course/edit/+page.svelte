@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   const id: number = $page.url.searchParams.get("courseId");
-  let apiKey = "rin7yni45fy4pbp6hub9mnmcpi5wrhapvxjyll03gr68j3og";
+  let apiKey = "cd5398hc4vqhe1oak59f0lfztp7s0i4dypcco5nuyz0uldpj";
   let conf = {
     plugins: [
       "a11ychecker",
@@ -114,7 +114,7 @@
 
   function fetchCourseContentToUI(
     sectionData: Section,
-    courseContentIn: CourseContent
+    courseContentIn: CourseContent,
   ) {
     sections.sectionOrder = sectionData.sectionOrder;
     sections.id = sectionData.id;
@@ -181,7 +181,7 @@
             headers: {
               Authorization: `Bearer ${GetCookie("USER")}`,
             },
-          }
+          },
         )
         .then((response) => {
           if (response.status === 200) {
@@ -237,7 +237,7 @@
             "There are more than 1 course content existing in this section",
             3000,
             1,
-            1
+            1,
           );
         } else {
           ShowMessage(`Error code: ${error.response?.status}`, 3000, 1, 1);
